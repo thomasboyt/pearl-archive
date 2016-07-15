@@ -10,9 +10,14 @@ abstract class Entity {
   zIndex: number = 0;
   angle?: number;
 
-  abstract draw?(ctx: CanvasRenderingContext2D): void;
-  abstract update?(dt: number): void;
-  abstract collision?(other: Entity): void;
+  draw(ctx: CanvasRenderingContext2D): void {
+  }
+
+  update(dt: number): void {
+  }
+
+  collision(other: Entity): void {
+  }
 }
 
 export default Entity;

@@ -18,9 +18,7 @@ function isSetupForCollisions(obj: Entity) {
 }
 
 function notifyEntityOfCollision(entity: Entity, other: Entity): void {
-  if (entity.collision !== undefined) {
-    entity.collision(other);
-  }
+  entity.collision(other);
 };
 
 export default class Collider {

@@ -4,7 +4,7 @@ import {rectanglesIntersecting, RADIANS_TO_DEGREES} from './util/maths';
 import Entity from './Entity';
 
 interface Drawable {
-  draw?(ctx: CanvasRenderingContext2D): void;
+  draw(ctx: CanvasRenderingContext2D): void;
   center?: Coordinates;
   angle?: number;
 }
@@ -114,19 +114,17 @@ export default class Renderer {
       .concat([...this._game.entities.all()].sort(zIndexSort));
 
     for (let drawable of drawables) {
-      if (drawable.draw) {
-        ctx.save();
+      ctx.save();
 
-        if (drawable.center !== undefined && drawable.angle !== undefined) {
-          ctx.translate(drawable.center.x, drawable.center.y);
-          ctx.rotate(drawable.angle * RADIANS_TO_DEGREES);
-          ctx.translate(-drawable.center.x, -drawable.center.y);
-        }
-
-        drawable.draw(ctx);
-
-        ctx.restore();
+      if (drawable.center !== undefined && drawable.angle !== undefined) {
+        ctx.translate(drawable.center.x, drawable.center.y);
+        ctx.rotate(drawable.angle * RADIANS_TO_DEGREES);
+        ctx.translate(-drawable.center.x, -drawable.center.y);
       }
+
+      drawable.draw(ctx);
+
+      ctx.restore();
     }
   }
 }

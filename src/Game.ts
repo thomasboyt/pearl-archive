@@ -18,8 +18,11 @@ abstract class Game {
     this.inputter = new Inputter();
   }
 
-  abstract update?: (dt: number) => void;
-  abstract draw?: (ctx: CanvasRenderingContext2D) => void;
+  update(dt: number): void {
+  }
+
+  draw(ctx: CanvasRenderingContext2D): void {
+  }
 
   run(opts: RendererOpts) {
     this.renderer.run(opts);
@@ -27,10 +30,7 @@ abstract class Game {
     this.inputter.bind(opts.canvas);
 
     this.ticker = new Ticker((dt: number) => {
-      if (this.update) {
-        this.update(dt);
-      }
-
+      this.update(dt);
       this.entities.update(dt);
       this.collider.update();
       this.renderer.update();
