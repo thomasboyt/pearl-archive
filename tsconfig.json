@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "declaration": true,
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "module": "commonjs",
+    "noEmitHelpers": false,
+    "target": "ES6",
+    "outDir": "./build",
+    "strictNullChecks": true
+  },
+  "formatCodeOptions": {
+    "indentSize": 2,
+    "tabSize": 2
+  },
+  "filesGlob": [
+    "src/**/*.ts"
+  ],
+  "atom": {
+    "rewriteTsconfig": true
+  },
+  "files": [
+    "src/Collider.ts",
+    "src/Entity.ts",
+    "src/EntityManager.ts",
+    "src/Game.ts",
+    "src/index.ts",
+    "src/Inputter/ButtonListener.ts",
+    "src/Inputter/index.ts",
+    "src/Inputter/MouseMoveListener.ts",
+    "src/Renderer.ts",
+    "src/Ticker.ts",
+    "src/types.ts",
+    "src/util/keyCodes.ts",
+    "src/util/maths.ts"
+  ]
+}
