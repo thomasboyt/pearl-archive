@@ -216,14 +216,12 @@ export function rectangleCorners(obj: Collidable): Coordinates[] {
 
   var angle = getAngle(obj) * RADIANS_TO_DEGREES;
 
-                    for (var i = 0; i < corners.length; i++) {
-                            var xOffset = corners[i].x - obj.center.x;
-                            var yOffset = corners[i].y - obj.center.y;
-                            corners[i].x = obj.center.x +
-      xOffset * Math.cos(angle) - yOffset * Math.sin(angle);
-                            corners[i].y = obj.center.y +
-      xOffset * Math.sin(angle) + yOffset * Math.cos(angle);
-                    }
+  for (var i = 0; i < corners.length; i++) {
+    var xOffset = corners[i].x - obj.center.x;
+    var yOffset = corners[i].y - obj.center.y;
+    corners[i].x = obj.center.x + xOffset * Math.cos(angle) - yOffset * Math.sin(angle);
+    corners[i].y = obj.center.y + xOffset * Math.sin(angle) + yOffset * Math.cos(angle);
+  }
 
   return corners;
 }
