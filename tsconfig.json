@@ -9,7 +9,7 @@
     "module": "commonjs",
     "noEmitHelpers": false,
     "target": "ES6",
-    "outDir": "./build",
+    "outDir": "./dist",
     "strictNullChecks": true
   },
   "formatCodeOptions": {

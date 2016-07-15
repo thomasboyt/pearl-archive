@@ -5,7 +5,7 @@ module.exports = {
 
   output: {
     filename: '[name].bundle.js',
-    path: './build/example'
+    path: './dist/example'
   },
 
   resolve: {
