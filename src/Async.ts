@@ -1,3 +1,5 @@
+// Implementation based on the `co` package https://github.com/tj/co
+
 export type Yieldable = Promise<any> | IterableIterator<Promise<any>>;
 export type CoroutineIterator = IterableIterator<Yieldable>;
 export type Coroutine = () => CoroutineIterator;

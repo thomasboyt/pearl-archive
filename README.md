@@ -19,6 +19,10 @@ and open `example/simple/index.html` in your browser.
 
 ### Coroutines
 
+Pearl has a small helper to allow you to use coroutines in your game. Coroutines can be started by entities to help manage state across multiple frames of execution, as well as to help schedule events to happen specific at specific times in the future.
+
+An example usage of coroutines (adapted from [Unity's docs](https://docs.unity3d.com/Manual/Coroutines.html)) can be found in `examples/coroutines/`.
+
 ## Design Principles
 
 ## API

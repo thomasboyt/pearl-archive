@@ -1,3 +1,6 @@
+// This demo is an adaptation of an example in the Unity docs:
+// https://docs.unity3d.com/Manual/Coroutines.html
+
 import * as Pearl from '../../src';
 
 interface TextOpts {
