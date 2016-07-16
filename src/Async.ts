@@ -1,17 +1,8 @@
 // Implementation based on the `co` package https://github.com/tj/co
 
-export type Yieldable = Promise<any> | IterableIterator<Promise<any>>;
+export type Yieldable = Promise<any> | IterableIterator<Yieldable>;
 export type CoroutineIterator = IterableIterator<Yieldable>;
 export type Coroutine = () => CoroutineIterator;
-
-function asPromise(val: Yieldable): Promise<any> {
-  if (val instanceof Promise) {
-    return val;
-  } else {
-    return this._run(val);
-  }
-}
-
 
 export default class AsyncManager {
   private _time: number;
@@ -19,6 +10,16 @@ export default class AsyncManager {
 
   startAt(time: number) {
     this._time = time;
+  }
+
+  private _asPromise(val: Yieldable): Promise<any> {
+    // TODO: having to cast to any to duck-type this sucks, is there something better that works in
+    // typescript?
+    if ((val as any).then) {
+      return val as Promise<any>;
+    } else {
+      return this._run(val);
+    }
   }
 
   private _run(genObj: CoroutineIterator): Promise<any> {
@@ -49,12 +50,11 @@ export default class AsyncManager {
 
       const next = (ret: IteratorResult<Yieldable>) => {
         if (ret.done) {
-          // generator is done!
           resolve();
           return;
         }
 
-        asPromise(ret.value).then(onFulfill, onReject);
+        this._asPromise(ret.value).then(onFulfill, onReject);
       }
 
       onFulfill();

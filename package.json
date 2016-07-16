@@ -30,6 +30,7 @@
     "babel": "inherit",
     "require": [
       "babel-register"
-    ]
+    ],
+    "timeout": "5s"
   }
 }
