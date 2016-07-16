@@ -17,12 +17,18 @@
     "tabSize": 2
   },
   "filesGlob": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "examples/**/*.ts",
+    "spec/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ],
   "atom": {
     "rewriteTsconfig": true
   },
   "files": [
+    "src/Async.ts",
     "src/Collider.ts",
     "src/Entity.ts",
     "src/EntityManager.ts",
@@ -35,6 +41,9 @@
     "src/Ticker.ts",
     "src/types.ts",
     "src/util/keyCodes.ts",
-    "src/util/maths.ts"
+    "src/util/maths.ts",
+    "examples/coroutines/game.ts",
+    "examples/simple/game.ts",
+    "spec/async.spec.ts"
   ]
 }

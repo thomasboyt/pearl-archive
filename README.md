@@ -17,6 +17,8 @@ and open `example/simple/index.html` in your browser.
 
 ## Usage
 
+### Coroutines
+
 ## Design Principles
 
 ## API
@@ -24,10 +26,10 @@ and open `example/simple/index.html` in your browser.
 ## Todo
 
 - [ ] Fix Entity/Collidable mismatch (think this will involve making Collidable fields nullable and adding `!` unwraps in a bunch of those functions?)
-- [ ] Fix abstract class usage
-- [ ] Port tests (maybe use ava js?)
-- [ ] New tests!
+- [ ] Port Coquette tests
 - [ ] Autofocus
 - [ ] Figure out how to include Coquette's license in this repo, I guess? Since it is a big ol' copy paste at the moment
 - [ ] Figure out how to ship a built JavaScript version alongside the TypeScript source (two different packages? look at @staltz's libraries, e.g. https://github.com/staltz/xstream)
-- [ ] Investigate coroutine scheduling (e.g. http://docs.unity3d.com/ScriptReference/MonoBehaviour.StartCoroutine.html?from=Coroutine)
+- [x] Fix abstract class usage
+- [x] New tests!
+- [x] Investigate coroutine scheduling (e.g. http://docs.unity3d.com/ScriptReference/MonoBehaviour.StartCoroutine.html?from=Coroutine)

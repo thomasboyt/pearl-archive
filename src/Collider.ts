@@ -13,17 +13,17 @@ export const enum BoundingBox {
   Circle = 1,
 }
 
-function isSetupForCollisions(obj: Entity) {
+function isSetupForCollisions(obj: Entity<any>) {
   return obj.center !== undefined && obj.size !== undefined;
 }
 
-function notifyEntityOfCollision(entity: Entity, other: Entity): void {
+function notifyEntityOfCollision(entity: Entity<any>, other: Entity<any>): void {
   entity.collision(other);
 };
 
 export default class Collider {
   private _game: Game;
-  private _currentCollisionPairs: [Entity, Entity][] = [];
+  private _currentCollisionPairs: [Entity<any>, Entity<any>][] = [];
 
   constructor(game: Game) {
     this._game = game;
@@ -54,12 +54,12 @@ export default class Collider {
     }
   }
 
-  collision(entity1: Entity, entity2: Entity) {
+  collision(entity1: Entity<any>, entity2: Entity<any>) {
     notifyEntityOfCollision(entity1, entity2);
     notifyEntityOfCollision(entity2, entity1);
   }
 
-  addEntity(entity: Entity) {
+  addEntity(entity: Entity<any>) {
     // When an entity is added, it's immediately added to the current collision pairs
     for (let other of this._game.entities.all()) {
       if (entity !== other) {
@@ -68,21 +68,21 @@ export default class Collider {
     }
   }
 
-  destroyEntity(entity: Entity) {
+  destroyEntity(entity: Entity<any>) {
     // Remove any collision pairs that include the destroyed entity
     this._currentCollisionPairs = this._currentCollisionPairs.filter((pair) => {
       return !(pair[0] === entity || pair[1] === entity);
     })
   }
 
-  isColliding(obj1: Entity, obj2: Entity) {
+  isColliding(obj1: Entity<any>, obj2: Entity<any>) {
     return obj1 !== obj2 &&
       isSetupForCollisions(obj1) &&
       isSetupForCollisions(obj2) &&
       this.isIntersecting(obj1, obj2);
   }
 
-  isIntersecting(obj1: Entity, obj2: Entity) {
+  isIntersecting(obj1: Entity<any>, obj2: Entity<any>) {
     const obj1BoundingBox = getBoundingBox(obj1);
     const obj2BoundingBox = getBoundingBox(obj2);
 

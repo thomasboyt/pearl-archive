@@ -1,11 +1,12 @@
 module.exports = {
   entry: {
-    simple: './example/simple/game.ts'
+    simple: './examples/simple/game.ts',
+    coroutines: './examples/coroutines/game.ts',
   },
 
   output: {
     filename: '[name].bundle.js',
-    path: './dist/example'
+    path: './dist/examples'
   },
 
   resolve: {
@@ -16,7 +17,7 @@ module.exports = {
   module: {
     loaders: [
       // all files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'
-      { test: /\.tsx?$/, loader: "ts-loader" }
+      { test: /\.tsx?$/, loades: ["babel", "ts"] }
     ]
   },
 
@@ -24,5 +25,9 @@ module.exports = {
     compilerOptions: {
       declaration: false,
     }
+  },
+
+  devServer: {
+    contentBase: './examples'
   }
 }

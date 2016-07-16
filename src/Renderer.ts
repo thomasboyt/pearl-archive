@@ -18,7 +18,7 @@ function viewOffset(viewCenter: Coordinates, viewSize: Coordinates): Coordinates
 
 // sorts passed array by zindex
 // elements with a higher zindex are drawn on top of those with a lower zindex
-function zIndexSort(a: Entity, b: Entity): number {
+function zIndexSort(a: Entity<any>, b: Entity<any>): number {
   return (a.zIndex || 0) < (b.zIndex || 0) ? -1 : 1;
 }
 

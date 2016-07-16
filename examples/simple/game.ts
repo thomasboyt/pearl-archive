@@ -5,11 +5,10 @@ interface PersonOptions {
   color: string;
 }
 
-class Person extends Pearl.Entity {
+class Person extends Pearl.Entity<PersonOptions> {
   color: string;
 
-  constructor(opts: PersonOptions) {
-    super();
+  init(opts: PersonOptions) {
     this.color = opts.color;
     this.center = opts.center;
     this.size = {x: 9, y: 9};
@@ -27,12 +26,11 @@ class Person extends Pearl.Entity {
 class Player extends Person {
   update(dt: number) {
     if (this.game!.inputter.isKeyDown(Pearl.Keys.upArrow)) {
-      console.log('key is down!!!');
       this.center!.y -= (4 / 100) * dt;
     }
   }
 
-  collision(other: Pearl.Entity) {
+  collision(other: Pearl.Entity<any>) {
     if (other instanceof Person) {
       other.center!.y = this.center!.y;  // follow the player
     }
@@ -43,7 +41,7 @@ class Game extends Pearl.Game {
   constructor() {
     super();
 
-    const paramour = new Person({
+    this.entities.add(new Person(), {
       center: {
         x: 250,
         y: 40,
@@ -51,16 +49,13 @@ class Game extends Pearl.Game {
       color: '#099',
     });
 
-    const player = new Player({
+    this.entities.add(new Player(), {
       center: {
         x: 256,
         y: 110,
       },
       color: '#f07',
     });
-
-    this.entities.add(paramour);
-    this.entities.add(player);
   }
 }
 
