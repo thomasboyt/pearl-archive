@@ -2,6 +2,8 @@
 
 const keyCodes = {
   upArrow: 38,
+  space: 32,
+  r: 82,
 }
 
 export default keyCodes;
