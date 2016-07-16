@@ -4,6 +4,7 @@ import Inputter from './Inputter';
 import Ticker from './Ticker';
 import Renderer, {RendererOpts} from './Renderer';
 import AsyncManager from './Async';
+import Runner from './Runner';
 
 abstract class Game {
   entities: EntityManager;
@@ -11,6 +12,7 @@ abstract class Game {
   inputter: Inputter;
   renderer: Renderer;
   ticker: Ticker;
+  runner: Runner;
   async: AsyncManager;
 
   constructor() {
@@ -18,6 +20,7 @@ abstract class Game {
     this.collider = new Collider(this);
     this.renderer = new Renderer(this);
     this.inputter = new Inputter();
+    this.runner = new Runner();
     this.async = new AsyncManager();
   }
 
@@ -36,6 +39,7 @@ abstract class Game {
     this.inputter.bind(opts.canvas);
 
     this.ticker = new Ticker((dt: number) => {
+      this.runner.update();
       this.update(dt);
       this.async.update(dt);
       this.entities.update(dt);

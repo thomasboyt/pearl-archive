@@ -38,6 +38,7 @@
     "src/Inputter/index.ts",
     "src/Inputter/MouseMoveListener.ts",
     "src/Renderer.ts",
+    "src/Runner.ts",
     "src/Ticker.ts",
     "src/types.ts",
     "src/util/coroutines.ts",
