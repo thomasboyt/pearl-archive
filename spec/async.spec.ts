@@ -43,3 +43,29 @@ test.cb('nested coroutines are correctly executed', (t) => {
     t.end();
   });
 });
+
+test.failing.cb('ensure timers are executed in the correct order when multiple timers are triggered in one frame', (t) => {
+  t.plan(2);
+
+  const asyncManager = new AsyncManager();
+  asyncManager.startAt(0);
+
+  let numReached = 0;
+
+  asyncManager.schedule(function* () {
+    yield asyncManager.waitMs(100);
+
+    numReached += 1;
+    t.is(numReached, 2);
+    t.end();
+  });
+
+  asyncManager.schedule(function* () {
+    yield asyncManager.waitMs(50);
+
+    numReached += 1;
+    t.is(numReached, 1);
+  });
+
+  asyncManager.update(200);
+});
