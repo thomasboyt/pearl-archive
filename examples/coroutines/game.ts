@@ -1,6 +1,9 @@
 // This demo is an adaptation of an example in the Unity docs:
 // https://docs.unity3d.com/Manual/Coroutines.html
 
+declare function require(name: string): any;
+require('babel-polyfill');
+
 import * as Pearl from '../../src';
 
 interface TextOpts {

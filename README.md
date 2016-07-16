@@ -10,10 +10,10 @@ Run:
 
 ```
 npm install
-npm build-examples
+npm run run-examples
 ```
 
-and open `example/simple/index.html` in your browser.
+and open `localhost:8080` in your browser.
 
 ## Usage
 
