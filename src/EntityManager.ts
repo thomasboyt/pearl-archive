@@ -33,7 +33,10 @@ export default class EntityManager {
     );
   }
 
-  add<T>(entity: Entity<T>, opts: T): Entity<T> {
+  // TODO: This doesn't properly type-check options. It does ensure the passed options are the
+  // correct type, but not for the presence of options, nor does it error if extra options are
+  // passed. Why?
+  add<T, P extends Entity<T>>(entity: P, opts: T): P {
     entity.game = this._game;
     entity.init(opts);
 
