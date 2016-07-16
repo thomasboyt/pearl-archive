@@ -1,69 +1,8 @@
-// Implementation based on the `co` package https://github.com/tj/co
-
-export type Yieldable = Promise<any> | CoroutineIterator;
-
-// the "interface" thing here is a workaround for not being able to nest types like e.g.
-// export type CoroutineIterator = IterableIterator<Yieldable>;
-export interface CoroutineIterator extends IterableIterator<Yieldable> {}
-
-export type Coroutine = () => CoroutineIterator;
+import {runCoroutine, Coroutine} from './util/coroutines';
 
 export default class AsyncManager {
   private _time: number;
   private _timers: Map<number, (value?: any) => void> = new Map();
-
-  startAt(time: number) {
-    this._time = time;
-  }
-
-  private _asPromise(val: Yieldable): Promise<any> {
-    // TODO: having to cast to any to duck-type this sucks, is there something better that works in
-    // typescript?
-    if ((val as any).then) {
-      return val as Promise<any>;
-    } else {
-      return this._run(val as CoroutineIterator);
-    }
-  }
-
-  private _run(genObj: CoroutineIterator): Promise<any> {
-    return new Promise((resolve, reject) => {
-      function onFulfill(res?: any) {
-        let ret: IteratorResult<Yieldable>;
-
-        try {
-          ret = genObj.next(res);
-        } catch(err) {
-          return reject(err);
-        }
-
-        next(ret);
-      }
-
-      function onReject(err: Error) {
-        let ret: IteratorResult<Yieldable>;
-
-        try {
-          ret = genObj.throw!(err);
-        } catch(err) {
-          return reject(err);
-        }
-
-        next(ret);
-      }
-
-      const next = (ret: IteratorResult<Yieldable>) => {
-        if (ret.done) {
-          resolve();
-          return;
-        }
-
-        this._asPromise(ret.value).then(onFulfill, onReject);
-      }
-
-      onFulfill();
-    });
-  }
 
   waitMs(ms: number): Promise<null> {
     return new Promise((resolve, reject) => {
@@ -72,7 +11,11 @@ export default class AsyncManager {
   }
 
   schedule(coroutine: Coroutine) {
-    this._run(coroutine());
+    runCoroutine(coroutine());
+  }
+
+  startAt(time: number) {
+    this._time = time;
   }
 
   update(dt: number) {

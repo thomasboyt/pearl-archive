@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import AsyncManager, {CoroutineIterator} from '../src/Async';
+import AsyncManager from '../src/Async';
 
 function* immediate() {
   yield new Promise((resolve) => {resolve()});
@@ -12,7 +12,7 @@ test.cb('scheduled coroutines are executed', (t) => {
   const asyncManager = new AsyncManager();
   asyncManager.startAt(0);
 
-  asyncManager.schedule(function* (): CoroutineIterator {
+  asyncManager.schedule(function* (): IterableIterator<Promise<any>> {
     t.pass();
     t.end();
   });

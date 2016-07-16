@@ -40,6 +40,7 @@
     "src/Renderer.ts",
     "src/Ticker.ts",
     "src/types.ts",
+    "src/util/coroutines.ts",
     "src/util/keyCodes.ts",
     "src/util/maths.ts",
     "examples/coroutines/game.ts",
