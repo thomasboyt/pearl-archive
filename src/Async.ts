@@ -1,7 +1,11 @@
 // Implementation based on the `co` package https://github.com/tj/co
 
-export type Yieldable = Promise<any> | IterableIterator<Yieldable>;
-export type CoroutineIterator = IterableIterator<Yieldable>;
+export type Yieldable = Promise<any> | CoroutineIterator;
+
+// the "interface" thing here is a workaround for not being able to nest types like e.g.
+// export type CoroutineIterator = IterableIterator<Yieldable>;
+export interface CoroutineIterator extends IterableIterator<Yieldable> {}
+
 export type Coroutine = () => CoroutineIterator;
 
 export default class AsyncManager {
@@ -18,7 +22,7 @@ export default class AsyncManager {
     if ((val as any).then) {
       return val as Promise<any>;
     } else {
-      return this._run(val);
+      return this._run(val as CoroutineIterator);
     }
   }
 
