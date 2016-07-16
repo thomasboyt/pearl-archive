@@ -22,6 +22,8 @@ abstract class Game {
     this.inputter = new Inputter();
     this.runner = new Runner();
     this.async = new AsyncManager();
+
+    (window as any).__pearl__ = this;
   }
 
   init(): void {
