@@ -44,6 +44,22 @@ test.cb('nested coroutines are correctly executed', (t) => {
   });
 });
 
+test.cb('ensure waitMs() yields correctly', (t) => {
+  t.plan(1);
+
+  const asyncManager = new AsyncManager();
+  asyncManager.startAt(0);
+
+  asyncManager.schedule(function* () {
+    yield asyncManager.waitMs(25);
+
+    t.pass();
+    t.end();
+  });
+
+  asyncManager.update(25);
+});
+
 test.failing.cb('ensure timers are executed in the correct order when multiple timers are triggered in one frame', (t) => {
   t.plan(2);
 

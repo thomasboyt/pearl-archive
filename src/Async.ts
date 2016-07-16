@@ -72,7 +72,6 @@ export default class AsyncManager {
   }
 
   schedule(coroutine: Coroutine) {
-    const obj = coroutine();
     this._run(coroutine());
   }
 
