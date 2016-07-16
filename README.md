@@ -57,6 +57,7 @@ Another example usage of coroutines (adapted from [Unity's docs](https://docs.un
 ## Todo
 
 - [ ] Fix Entity/Collidable mismatch (think this will involve making Collidable fields nullable and adding `!` unwraps in a bunch of those functions?)
+- [ ] Fix `entities.add()` type check (maybe completely overhaul entity creation, idk...)
 - [ ] Port Coquette tests
 - [ ] Autofocus
 - [ ] Figure out how to include Coquette's license in this repo, I guess? Since it is a big ol' copy paste at the moment
