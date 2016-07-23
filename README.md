@@ -83,7 +83,7 @@ Here's a relevant Unity discussion about some of the effects that pausing can ha
 
 ### Canvas scaling utilities
 
-~The canvas should be scaled for retina screens out of the box.~ It'd be great to offer other scaling utilities, like scaling-on-resize while maintaining the original aspect ratio (using `ctx.scale`, that is, not CSS that causes blurry images). It'd also be cool to have a full-screen toggle.
+~~The canvas should be scaled for retina screens out of the box.~~ It'd be great to offer other scaling utilities, like scaling-on-resize while maintaining the original aspect ratio (using `ctx.scale`, that is, not CSS that causes blurry images). It'd also be cool to have a full-screen toggle.
 
 ### Asset loading
 
