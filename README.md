@@ -56,6 +56,9 @@ Another example usage of coroutines (adapted from [Unity's docs](https://docs.un
 
 ## Todo
 
+- [ ] Improve coroutine API:
+  - https://twitter.com/machty/status/756266064049233920
+  - https://twitter.com/drosenwasser/status/756359260380856320
 - [ ] Fix Entity/Collidable mismatch (think this will involve making Collidable fields nullable and adding `!` unwraps in a bunch of those functions?)
 - [ ] Fix `entities.add()` type check (maybe completely overhaul entity creation, idk...)
 - [ ] Port Coquette tests
