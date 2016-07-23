@@ -46,6 +46,7 @@
     "src/util/maths.ts",
     "examples/coroutines/game.ts",
     "examples/simple/game.ts",
-    "spec/async.spec.ts"
+    "spec/async.spec.ts",
+    "spec/Renderer.spec.ts"
   ]
 }

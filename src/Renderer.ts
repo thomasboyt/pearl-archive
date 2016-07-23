@@ -50,9 +50,20 @@ export default class Renderer {
     this._ctx = canvas.getContext('2d')!;
     this._backgroundColor = opts.backgroundColor;
 
-    // TODO: account for retina scaling here!
-    canvas.width = opts.width;
-    canvas.height = opts.height;
+    // Scale for retina displays
+    let pixelRatio = 1;
+
+    if (window.devicePixelRatio !== undefined) {
+      pixelRatio = window.devicePixelRatio;
+    }
+
+    canvas.width = opts.width * pixelRatio;
+    canvas.height = opts.height * pixelRatio;
+
+    canvas.style.width = `${opts.width}px`;
+    canvas.style.height = `${opts.height}px`;
+
+    this._ctx.scale(pixelRatio, pixelRatio);
 
     this._viewSize = { x: opts.width, y: opts.height };
     this._viewCenter = { x: this._viewSize.x / 2, y: this._viewSize.y / 2 };
