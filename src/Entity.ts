@@ -21,6 +21,9 @@ abstract class Entity<Opts> {
 
   collision(other: Entity<any>): void {
   }
+
+  onDestroy(): void {
+  }
 }
 
 export default Entity;

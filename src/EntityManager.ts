@@ -47,6 +47,7 @@ export default class EntityManager {
   }
 
   destroy(entity: Entity<any>) {
+    entity.onDestroy();
     this._entities.delete(entity);
     this._game.collider.destroyEntity(entity);
   }
