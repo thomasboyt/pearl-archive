@@ -1,13 +1,7 @@
-import Game from './Game';
+import PearlInstance from './PearlInstance';
 import {Coordinates} from './types';
 import {rectanglesIntersecting, RADIANS_TO_DEGREES} from './util/maths';
-import Entity from './Entity';
-
-interface Drawable {
-  draw(ctx: CanvasRenderingContext2D): void;
-  center?: Coordinates;
-  angle?: number;
-}
+import GameObject from './GameObject';
 
 function viewOffset(viewCenter: Coordinates, viewSize: Coordinates): Coordinates {
   return {
@@ -18,7 +12,7 @@ function viewOffset(viewCenter: Coordinates, viewSize: Coordinates): Coordinates
 
 // sorts passed array by zindex
 // elements with a higher zindex are drawn on top of those with a lower zindex
-function zIndexSort(a: Entity<any>, b: Entity<any>): number {
+function zIndexSort(a: GameObject, b: GameObject): number {
   return (a.zIndex || 0) < (b.zIndex || 0) ? -1 : 1;
 }
 
@@ -30,15 +24,15 @@ export interface RendererOpts {
 }
 
 export default class Renderer {
-  private _game: Game;
+  private _pearl: PearlInstance;
   private _ctx: CanvasRenderingContext2D;
   private _backgroundColor?: string;
 
   private _viewSize: Coordinates;
   private _viewCenter: Coordinates;
 
-  constructor(game: Game) {
-    this._game = game;
+  constructor(game: PearlInstance) {
+    this._pearl = game;
   }
 
   run(opts: RendererOpts) {
@@ -121,8 +115,7 @@ export default class Renderer {
       ctx.clearRect(viewArgs[0], viewArgs[1], viewArgs[2], viewArgs[3]);
     }
 
-    const drawables = ([this._game] as Drawable[])
-      .concat([...this._game.entities.all()].sort(zIndexSort));
+    const drawables = [...this._pearl.entities.all()].sort(zIndexSort);
 
     for (let drawable of drawables) {
       ctx.save();

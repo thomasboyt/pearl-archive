@@ -1,5 +1,5 @@
-import Game from './Game';
-import Entity from './Entity';
+import PearlInstance from './PearlInstance';
+import GameObject from './GameObject';
 
 import {
   getBoundingBox,
@@ -13,20 +13,20 @@ export const enum BoundingBox {
   Circle = 1,
 }
 
-function isSetupForCollisions(obj: Entity<any>) {
+function isSetupForCollisions(obj: GameObject) {
   return obj.center !== undefined && obj.size !== undefined;
 }
 
-function notifyEntityOfCollision(entity: Entity<any>, other: Entity<any>): void {
+function notifyEntityOfCollision(entity: GameObject, other: GameObject): void {
   entity.collision(other);
 };
 
 export default class Collider {
-  private _game: Game;
-  private _currentCollisionPairs: [Entity<any>, Entity<any>][] = [];
+  private _pearl: PearlInstance;
+  private _currentCollisionPairs: [GameObject, GameObject][] = [];
 
-  constructor(game: Game) {
-    this._game = game;
+  constructor(pearl: PearlInstance) {
+    this._pearl = pearl;
   }
 
   update() {
@@ -34,7 +34,7 @@ export default class Collider {
 
     // add every pair of entities to test
     // TODO: Is there a way to do this without casting to an array?
-    const ent = [...this._game.entities.all()];
+    const ent = [...this._pearl.entities.all()];
 
     for (let i = 0; i < ent.length; i += 1) {
       for (let j = i + 1; j < ent.length;  j += 1) {
@@ -54,35 +54,35 @@ export default class Collider {
     }
   }
 
-  collision(entity1: Entity<any>, entity2: Entity<any>) {
+  collision(entity1: GameObject, entity2: GameObject) {
     notifyEntityOfCollision(entity1, entity2);
     notifyEntityOfCollision(entity2, entity1);
   }
 
-  addEntity(entity: Entity<any>) {
+  addEntity(entity: GameObject) {
     // When an entity is added, it's immediately added to the current collision pairs
-    for (let other of this._game.entities.all()) {
+    for (let other of this._pearl.entities.all()) {
       if (entity !== other) {
         this._currentCollisionPairs.push([entity, other])
       }
     }
   }
 
-  destroyEntity(entity: Entity<any>) {
+  destroyEntity(entity: GameObject) {
     // Remove any collision pairs that include the destroyed entity
     this._currentCollisionPairs = this._currentCollisionPairs.filter((pair) => {
       return !(pair[0] === entity || pair[1] === entity);
     })
   }
 
-  isColliding(obj1: Entity<any>, obj2: Entity<any>) {
+  isColliding(obj1: GameObject, obj2: GameObject) {
     return obj1 !== obj2 &&
       isSetupForCollisions(obj1) &&
       isSetupForCollisions(obj2) &&
       this.isIntersecting(obj1, obj2);
   }
 
-  isIntersecting(obj1: Entity<any>, obj2: Entity<any>) {
+  isIntersecting(obj1: GameObject, obj2: GameObject) {
     const obj1BoundingBox = getBoundingBox(obj1);
     const obj2BoundingBox = getBoundingBox(obj2);
 

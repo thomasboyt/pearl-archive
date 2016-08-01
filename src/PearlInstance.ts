@@ -6,7 +6,10 @@ import Renderer, {RendererOpts} from './Renderer';
 import AsyncManager from './Async';
 import Runner from './Runner';
 
-abstract class Game {
+import Component from './Component';
+import GameObject from './GameObject';
+
+export default class PearlInstance {
   entities: EntityManager;
   collider: Collider;
   inputter: Inputter;
@@ -15,7 +18,12 @@ abstract class Game {
   runner: Runner;
   async: AsyncManager;
 
-  constructor() {
+  obj: GameObject;
+  private rootComponents: Component<any>[]
+
+  constructor(rootComponents: Component<any>[]) {
+    this.rootComponents = rootComponents;
+
     this.entities = new EntityManager(this);
     this.collider = new Collider(this);
     this.renderer = new Renderer(this);
@@ -26,13 +34,14 @@ abstract class Game {
     (window as any).__pearl__ = this;
   }
 
-  init(): void {
-  }
+  init() {
+    this.obj = new GameObject({
+      name: 'Game',
+      components: this.rootComponents,
+      zIndex: -1,
+    });
 
-  update(dt: number): void {
-  }
-
-  draw(ctx: CanvasRenderingContext2D): void {
+    this.entities.add(this.obj);
   }
 
   run(opts: RendererOpts) {
@@ -42,7 +51,6 @@ abstract class Game {
 
     this.ticker = new Ticker((dt: number) => {
       this.runner.update();
-      this.update(dt);
       this.async.update(dt);
       this.entities.update(dt);
       this.collider.update();
@@ -56,4 +64,16 @@ abstract class Game {
   }
 }
 
-export default Game;
+export interface CreatePearlOpts {
+  rootComponents: Component<any>[],
+  canvas: HTMLCanvasElement,
+  width: number;
+  height: number;
+  backgroundColor?: string;
+}
+
+export function createPearl(opts: CreatePearlOpts) {
+  const game = new PearlInstance(opts.rootComponents);
+
+  return game.run(opts);
+}

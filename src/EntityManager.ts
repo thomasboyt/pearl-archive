@@ -1,13 +1,13 @@
-import Entity from './Entity';
-import Game from './Game';
+import GameObject from './GameObject';
+import PearlInstance from './PearlInstance';
 
 export default class EntityManager {
-  private _game: Game;
+  private _pearl: PearlInstance;
 
-  private _entities: Set<Entity<any>> = new Set();
+  private _entities: Set<GameObject> = new Set();
 
-  constructor(game: Game) {
-    this._game = game;
+  constructor(pearl: PearlInstance) {
+    this._pearl = pearl;
   }
 
   update(dt: number) {
@@ -21,7 +21,7 @@ export default class EntityManager {
   }
 
   // TODO: Ensure entity is typed to passed constructor
-  all(Constructor?: Function): Set<Entity<any>> {
+  all(Constructor?: Function): Set<GameObject> {
     // TODO: why doesn't this work
     if (!Constructor) {
       return new Set(this._entities);  // shallow clone
@@ -33,22 +33,19 @@ export default class EntityManager {
     );
   }
 
-  // TODO: This doesn't properly type-check options. It does ensure the passed options are the
-  // correct type, but not for the presence of options, nor does it error if extra options are
-  // passed. Why?
-  add<T, P extends Entity<T>>(entity: P, opts: T): P {
-    entity.game = this._game;
-    entity.init(opts);
+  add(entity: GameObject): GameObject {
+    entity.pearl = this._pearl;
+    entity.init();
 
     this._entities.add(entity);
-    this._game.collider.addEntity(entity);
+    this._pearl.collider.addEntity(entity);
 
     return entity;
   }
 
-  destroy(entity: Entity<any>) {
+  destroy(entity: GameObject) {
     entity.onDestroy();
     this._entities.delete(entity);
-    this._game.collider.destroyEntity(entity);
+    this._pearl.collider.destroyEntity(entity);
   }
 }

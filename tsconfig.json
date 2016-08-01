@@ -23,30 +23,5 @@
   ],
   "exclude": [
     "node_modules"
-  ],
-  "atom": {
-    "rewriteTsconfig": true
-  },
-  "files": [
-    "src/Async.ts",
-    "src/Collider.ts",
-    "src/Entity.ts",
-    "src/EntityManager.ts",
-    "src/Game.ts",
-    "src/index.ts",
-    "src/Inputter/ButtonListener.ts",
-    "src/Inputter/index.ts",
-    "src/Inputter/MouseMoveListener.ts",
-    "src/Renderer.ts",
-    "src/Runner.ts",
-    "src/Ticker.ts",
-    "src/types.ts",
-    "src/util/coroutines.ts",
-    "src/util/keyCodes.ts",
-    "src/util/maths.ts",
-    "examples/coroutines/game.ts",
-    "examples/simple/game.ts",
-    "spec/async.spec.ts",
-    "spec/Renderer.spec.ts"
   ]
 }
