@@ -1,3 +1,29 @@
+# Roadmap
+
+## New Features
+
+### Devtools Inspector
+
+Should be easy enough to configure [Coquette Inspect](https://github.com/thomasboyt/coquette-inspect) to work with Pearl.
+
+### Pause system
+
+A simple, built-in way to pause games would be great.
+
+The pause system should, ideally, use a "time scale" concept [like Unity](https://docs.unity3d.com/ScriptReference/Time-timeScale.html), rather than interrupting the run loop. This way, `update()` hooks will still fire (with a `dt` of `0`), and coroutines that *don't* depend on `waitMs()` will continue.
+
+Here's a relevant Unity discussion about some of the effects that pausing can have on a game and various workarounds for them: http://answers.unity3d.com/questions/7544/how-do-i-pause-my-game.html
+
+### Canvas scaling utilities
+
+~~The canvas should be scaled for retina screens out of the box.~~ It'd be great to offer other scaling utilities, like scaling-on-resize while maintaining the original aspect ratio (using `ctx.scale`, that is, not CSS that causes blurry images). It'd also be cool to have a full-screen toggle.
+
+## API Improvements
+
+* Colliders
+  * Add API to get collision information
+    * https://github.com/jriecken/sat-js#satresponse
+
 ## Design Questions
 
 * [ ] How are objects created/destroyed?
@@ -29,6 +55,7 @@
 * [ ] Figure out additional hooks for components
   * For example, collision needs to be broken up into "detection" and "resolution" phases, so that e.g. an enemy that turns around when it hits a block can be coded as two separate components
   * `FixedUpdate`-like hook? Does this even make sense in a single-threaded application? Seems suuuper difficult to time and schedule correctly.
+* [ ] Should a collision hook be introduced using the new Collider components?
 * [x] How should we look up components?
   * Components part of the current object: `self.getComponent(Type)`
 * [x] Should probably deprecate `constructor()` hooks on components in favor of doing all initialization in `init()`. That way constructing a component is "pure" in that it never kicks off any process.
