@@ -72,8 +72,10 @@ export interface CreatePearlOpts {
   backgroundColor?: string;
 }
 
-export function createPearl(opts: CreatePearlOpts) {
+export function createPearl(opts: CreatePearlOpts): PearlInstance {
   const game = new PearlInstance(opts.rootComponents);
 
-  return game.run(opts);
+  game.run(opts);
+
+  return game;
 }
