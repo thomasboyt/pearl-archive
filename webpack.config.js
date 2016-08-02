@@ -2,6 +2,7 @@ module.exports = {
   entry: {
     simple: './examples/simple/game.ts',
     coroutines: './examples/coroutines/game.ts',
+    helloWorld: './examples/hello-world/game.ts',
   },
 
   output: {

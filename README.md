@@ -2,7 +2,9 @@
 
 Pearl is a small framework for creating video games in the browser. It's written in TypeScript, but can be used in any language that compiles to JavaScript.
 
-Pearl is a rewrite (re: copy-paste, currently) of [Coquette](http://coquette.maryrosecook.com/). Unlike Coquette, Pearl is built with TypeScript and ES6 classes in mind. Currently the API is just about the same outside a couple of changes to make things more TypeScript-friendly, but I reckon it'll end up deviating quite a bit from Coquette's original design as things progress.
+Pearl aims to be a a simpler, code-only alternative to full-scale frameworks like [Unity](http://unity3d.com/) or [Superpowers](http://superpowers-html5.com/). Like those frameworks, Pearl uses the [Component](http://gameprogrammingpatterns.com/component.html) pattern to avoid complex object hierarchies and difficult-to-decompose entities. Unlike those frameworks, Pearl is a *code-only framework*, and does not include any editor or special tooling.
+
+**Pearl is in very early alpha stages,** and will probably undergo many significant breaking changes before the first `0.1.0` release. There are many unanswered questions in the current design.
 
 ## View Examples
 
@@ -15,7 +17,32 @@ npm run run-examples
 
 and open `localhost:8080` in your browser.
 
-## Usage
+## Getting Started
+
+Let's create a simple "hello world" app to get started.
+
+```typescript
+import {Component, createPearl} from 'pearl';
+
+class HelloWorld extends Component<null> {
+  render(ctx: CanvasRenderingContext2D) {
+    ctx.font = '16px Helvetica';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'black';
+
+    ctx.fillText('Hello world!', 150, 150);
+  }
+}
+
+createPearl({
+  rootComponents: [
+    new HelloWorld(),
+  ],
+  width: 300,
+  height: 300,
+  canvas: document.getElementById('game') as HTMLCanvasElement,
+});
+```
 
 ### Coroutines
 
