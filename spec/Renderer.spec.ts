@@ -1,14 +1,15 @@
 import test from 'ava';
 
 import Renderer from '../src/Renderer';
-import Game from '../src/Game';
-
-class GameImpl extends Game {
-}
+import PearlInstance from '../src/PearlInstance';
 
 test.beforeEach(() => {
   (window as any).devicePixelRatio = 1;
 });
+
+function createPearl() {
+  return new PearlInstance([]);
+}
 
 test('renderer scales the canvas for canvas displays', (t) => {
   (window as any).devicePixelRatio = 2;
@@ -22,7 +23,7 @@ test('renderer scales the canvas for canvas displays', (t) => {
     scaleY = y;
   };
 
-  const renderer = new Renderer(new GameImpl());
+  const renderer = new Renderer(createPearl());
 
   renderer.run({
     canvas,
