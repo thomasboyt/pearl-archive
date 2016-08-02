@@ -60,6 +60,33 @@ test.cb('ensure waitMs() yields correctly', (t) => {
   asyncManager.update(25);
 });
 
+test.cb('multiple waitForMs timers set for the same time are executed', (t) => {
+  const asyncManager = new AsyncManager();
+  asyncManager.startAt(0);
+
+  let numExecuted = 0;
+
+  const incExecuted = () => {
+    numExecuted += 1;
+    if (numExecuted === 2) {
+      t.pass();
+      t.end();
+    }
+  };
+
+  asyncManager.schedule(function* () {
+    yield asyncManager.waitMs(25);
+    incExecuted();
+  });
+
+  asyncManager.schedule(function* () {
+    yield asyncManager.waitMs(25);
+    incExecuted();
+  });
+
+  asyncManager.update(25);
+});
+
 test.failing.cb('ensure timers are executed in the correct order when multiple timers are triggered in one frame', (t) => {
   t.plan(2);
 
