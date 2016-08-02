@@ -6,7 +6,11 @@ Pearl aims to be a a simpler, code-only alternative to full-scale frameworks lik
 
 **Pearl is in very early alpha stages,** and will probably undergo many significant breaking changes before the first `0.1.0` release. There are many unanswered questions in the current design.
 
-## View Examples
+## Docs & Help
+
+[Work in progress documentation](/docs)
+
+### View Examples
 
 Run:
 
@@ -16,33 +20,6 @@ npm run run-examples
 ```
 
 and open `localhost:8080` in your browser.
-
-## Getting Started
-
-Let's create a simple "hello world" app to get started.
-
-```typescript
-import {Component, createPearl} from 'pearl';
-
-class HelloWorld extends Component<null> {
-  render(ctx: CanvasRenderingContext2D) {
-    ctx.font = '16px Helvetica';
-    ctx.textAlign = 'center';
-    ctx.fillStyle = 'black';
-
-    ctx.fillText('Hello world!', 150, 150);
-  }
-}
-
-createPearl({
-  rootComponents: [
-    new HelloWorld(),
-  ],
-  width: 300,
-  height: 300,
-  canvas: document.getElementById('game') as HTMLCanvasElement,
-});
-```
 
 ### Coroutines
 
