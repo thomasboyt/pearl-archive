@@ -38,7 +38,6 @@ export default class EntityManager {
     entity.init();
 
     this._entities.add(entity);
-    this._pearl.collider.addEntity(entity);
 
     return entity;
   }
@@ -46,6 +45,5 @@ export default class EntityManager {
   destroy(entity: GameObject) {
     entity.onDestroy();
     this._entities.delete(entity);
-    this._pearl.collider.destroyEntity(entity);
   }
 }

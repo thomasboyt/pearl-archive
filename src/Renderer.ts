@@ -118,17 +118,7 @@ export default class Renderer {
     const drawables = [...this._pearl.entities.all()].sort(zIndexSort);
 
     for (let drawable of drawables) {
-      ctx.save();
-
-      if (drawable.center !== undefined && drawable.angle !== undefined) {
-        ctx.translate(drawable.center.x, drawable.center.y);
-        ctx.rotate(drawable.angle * RADIANS_TO_DEGREES);
-        ctx.translate(-drawable.center.x, -drawable.center.y);
-      }
-
-      drawable.draw(ctx);
-
-      ctx.restore();
+      drawable.render(ctx);
     }
   }
 }

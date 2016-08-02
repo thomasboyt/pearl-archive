@@ -15,13 +15,7 @@ export interface CreateOpts {
 export default class GameObject {
   pearl: PearlInstance;
 
-  // Shim with old API
-  // Remove once old collider API split out to new component
-  center?: Coordinates;
-  size?: Coordinates;
-  boundingBox: BoundingBox = BoundingBox.Rectangle;
   zIndex: number = 0;
-  angle?: number;
 
   private name: string;
   private components: Component<any>[] = [];
@@ -128,8 +122,6 @@ export default class GameObject {
     this._children.delete(child);
   }
 
-  /* Pearl.Entity compatibility */
-
   init() {
     // game is set at this point
     for (let component of this.components) {
@@ -141,15 +133,6 @@ export default class GameObject {
     for (let component of this.components) {
       component.update(dt);
     }
-
-    const phys = this.maybeGetComponent(Physical);
-
-    if (phys) {
-      this.center = phys.center;
-      this.size = phys.size;
-      this.boundingBox = phys.boundingBox;
-      this.angle = phys.angle;
-    }
   }
 
   collision(other: GameObject) {
@@ -158,9 +141,11 @@ export default class GameObject {
     }
   }
 
-  draw(ctx: CanvasRenderingContext2D) {
+  render(ctx: CanvasRenderingContext2D) {
     for (let component of this.components) {
+      ctx.save();
       component.render(ctx);
+      ctx.restore();
     }
   }
 
