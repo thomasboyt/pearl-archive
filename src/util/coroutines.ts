@@ -26,7 +26,7 @@ export function runCoroutine(genObj: CoroutineIterator): Promise<any> {
 
       try {
         ret = genObj.next(res);
-      } catch(err) {
+      } catch (err) {
         return reject(err);
       }
 
@@ -38,14 +38,14 @@ export function runCoroutine(genObj: CoroutineIterator): Promise<any> {
 
       try {
         ret = genObj.throw!(err);
-      } catch(err) {
+      } catch (err) {
         return reject(err);
       }
 
       next(ret);
     }
 
-    const next = (ret: IteratorResult<Yieldable>) => {
+    function next(ret: IteratorResult<Yieldable>) {
       if (ret.done) {
         resolve();
         return;

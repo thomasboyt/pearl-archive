@@ -17,7 +17,7 @@ export default class PearlInstance {
   async: AsyncManager;
 
   obj: GameObject;
-  private rootComponents: Component<any>[]
+  private rootComponents: Component<any>[];
 
   constructor(rootComponents: Component<any>[]) {
     this.rootComponents = rootComponents;
@@ -61,8 +61,8 @@ export default class PearlInstance {
 }
 
 export interface CreatePearlOpts {
-  rootComponents: Component<any>[],
-  canvas: HTMLCanvasElement,
+  rootComponents: Component<any>[];
+  canvas: HTMLCanvasElement;
   width: number;
   height: number;
   backgroundColor?: string;

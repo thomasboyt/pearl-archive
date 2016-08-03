@@ -1,6 +1,4 @@
 import {Coordinates} from '../types';
-import {BoundingBox} from '../Collider';
-import GameObject from '../GameObject';
 import Component from '../Component';
 
 export interface PhysicalSettings {

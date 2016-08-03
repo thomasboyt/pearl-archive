@@ -63,7 +63,7 @@ export default class Collider {
     // When an entity is added, it's immediately added to the current collision pairs
     for (let other of this._pearl.entities.all()) {
       if (entity !== other) {
-        this._currentCollisionPairs.push([entity, other])
+        this._currentCollisionPairs.push([entity, other]);
       }
     }
   }
@@ -72,7 +72,7 @@ export default class Collider {
     // Remove any collision pairs that include the destroyed entity
     this._currentCollisionPairs = this._currentCollisionPairs.filter((pair) => {
       return !(pair[0] === entity || pair[1] === entity);
-    })
+    });
   }
 
   isColliding(obj1: GameObject, obj2: GameObject) {
@@ -100,7 +100,7 @@ export default class Collider {
       return circlesIntersecting(obj1, obj2);
 
     } else {
-      throw "Objects being collision tested have unsupported bounding box types."
+      throw new Error('Objects being collision tested have unsupported bounding box types.');
     }
   }
 }

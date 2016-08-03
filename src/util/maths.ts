@@ -1,6 +1,8 @@
 import {Coordinates} from '../types';
 import {BoundingBox} from '../Collider';
 
+export const RADIANS_TO_DEGREES = 0.01745;
+
 // a subset of Entity
 export interface Collidable {
   center: Coordinates;
@@ -33,10 +35,12 @@ export function rectanglesIntersecting(obj1: Collidable, obj2: Collidable): bool
   }
 }
 
-export function circleAndRectangleIntersecting(circleObj: Collidable, rectangleObj: Collidable): boolean {
-  var rectangleObjAngleRad = -getAngle(rectangleObj) * RADIANS_TO_DEGREES;
+export function circleAndRectangleIntersecting(
+  circleObj: Collidable, rectangleObj: Collidable
+): boolean {
+  const rectangleObjAngleRad = -getAngle(rectangleObj) * RADIANS_TO_DEGREES;
 
-  var unrotatedCircleCenter = {
+  const unrotatedCircleCenter = {
     x: Math.cos(rectangleObjAngleRad) *
       (circleObj.center.x - rectangleObj.center.x) -
       Math.sin(rectangleObjAngleRad) *
@@ -44,10 +48,10 @@ export function circleAndRectangleIntersecting(circleObj: Collidable, rectangleO
     y: Math.sin(rectangleObjAngleRad) *
       (circleObj.center.x - rectangleObj.center.x) +
       Math.cos(rectangleObjAngleRad) *
-      (circleObj.center.y - rectangleObj.center.y) + rectangleObj.center.y
+      (circleObj.center.y - rectangleObj.center.y) + rectangleObj.center.y,
   };
 
-  var closest = { x: 0, y: 0 };
+  const closest = { x: 0, y: 0 };
 
   if (unrotatedCircleCenter.x < rectangleObj.center.x - rectangleObj.size.x / 2) {
     closest.x = rectangleObj.center.x - rectangleObj.size.x / 2;
@@ -69,25 +73,25 @@ export function circleAndRectangleIntersecting(circleObj: Collidable, rectangleO
 }
 
 export function unrotatedRectanglesIntersecting(obj1: Collidable, obj2: Collidable): boolean {
-  if(obj1.center.x + obj1.size.x / 2 < obj2.center.x - obj2.size.x / 2) {
+  if (obj1.center.x + obj1.size.x / 2 < obj2.center.x - obj2.size.x / 2) {
     return false;
-  } else if(obj1.center.x - obj1.size.x / 2 > obj2.center.x + obj2.size.x / 2) {
+  } else if (obj1.center.x - obj1.size.x / 2 > obj2.center.x + obj2.size.x / 2) {
     return false;
-  } else if(obj1.center.y - obj1.size.y / 2 > obj2.center.y + obj2.size.y / 2) {
+  } else if (obj1.center.y - obj1.size.y / 2 > obj2.center.y + obj2.size.y / 2) {
     return false;
-  } else if(obj1.center.y + obj1.size.y / 2 < obj2.center.y - obj2.size.y / 2) {
-    return false
+  } else if (obj1.center.y + obj1.size.y / 2 < obj2.center.y - obj2.size.y / 2) {
+    return false;
   } else {
     return true;
   }
 }
 
 export function rotatedRectanglesIntersecting(obj1: Collidable, obj2: Collidable): boolean {
-  var obj1Normals = rectanglePerpendicularNormals(obj1);
-  var obj2Normals = rectanglePerpendicularNormals(obj2);
+  const obj1Normals = rectanglePerpendicularNormals(obj1);
+  const obj2Normals = rectanglePerpendicularNormals(obj2);
 
-  var obj1Corners = rectangleCorners(obj1);
-  var obj2Corners = rectangleCorners(obj2);
+  const obj1Corners = rectangleCorners(obj1);
+  const obj2Corners = rectangleCorners(obj2);
 
   if (projectionsSeparate(
     getMinMaxProjection(obj1Corners, obj1Normals[1]),
@@ -111,30 +115,30 @@ export function rotatedRectanglesIntersecting(obj1: Collidable, obj2: Collidable
 }
 
 export function pointInsideObj(point: Coordinates, obj: Collidable): boolean {
-  var objBoundingBox = getBoundingBox(obj);
+  const objBoundingBox = getBoundingBox(obj);
 
   if (objBoundingBox === BoundingBox.Rectangle) {
     return pointInsideRectangle(point, obj);
   } else if (objBoundingBox === BoundingBox.Circle) {
     return pointInsideCircle(point, obj);
   } else {
-    throw "Tried to see if point inside object with unsupported bounding box.";
+    throw new Error('Tried to see if point inside object with unsupported bounding box.');
   }
 }
 
 export function pointInsideRectangle(point: Coordinates, obj: Collidable): boolean {
-  var c = Math.cos(-getAngle(obj) * RADIANS_TO_DEGREES);
-  var s = Math.sin(-getAngle(obj) * RADIANS_TO_DEGREES);
+  const c = Math.cos(-getAngle(obj) * RADIANS_TO_DEGREES);
+  const s = Math.sin(-getAngle(obj) * RADIANS_TO_DEGREES);
 
-  var rotatedX = obj.center.x + c *
+  const rotatedX = obj.center.x + c *
       (point.x - obj.center.x) - s * (point.y - obj.center.y);
-  var rotatedY = obj.center.y + s *
+  const rotatedY = obj.center.y + s *
       (point.x - obj.center.x) + c * (point.y - obj.center.y);
 
-  var leftX = obj.center.x - obj.size.x / 2;
-  var rightX = obj.center.x + obj.size.x / 2;
-  var topY = obj.center.y - obj.size.y / 2;
-  var bottomY = obj.center.y + obj.size.y / 2;
+  const leftX = obj.center.x - obj.size.x / 2;
+  const rightX = obj.center.x + obj.size.x / 2;
+  const topY = obj.center.y - obj.size.y / 2;
+  const bottomY = obj.center.y + obj.size.y / 2;
 
   return leftX <= rotatedX && rotatedX <= rightX &&
     topY <= rotatedY && rotatedY <= bottomY;
@@ -145,15 +149,15 @@ export function pointInsideCircle(point: Coordinates, obj: Collidable): boolean 
 }
 
 export function distance(point1: Coordinates, point2: Coordinates): number {
-  var x = point1.x - point2.x;
-  var y = point1.y - point2.y;
+  const x = point1.x - point2.x;
+  const y = point1.y - point2.y;
   return Math.sqrt((x * x) + (y * y));
 }
 
 export function vectorTo(start: Coordinates, end: Coordinates): Coordinates {
   return {
     x: end.x - start.x,
-    y: end.y - start.y
+    y: end.y - start.y,
   };
 }
 
@@ -164,7 +168,7 @@ export function magnitude(vector: Coordinates): number {
 export function leftNormalizedNormal(vector: Coordinates): Coordinates {
   return {
     x: -vector.y,
-    y: vector.x
+    y: vector.x,
   };
 }
 
@@ -175,7 +179,7 @@ export function dotProduct(vector1: Coordinates, vector2: Coordinates): number {
 export function unitVector(vector: Coordinates): Coordinates {
   return {
     x: vector.x / magnitude(vector),
-    y: vector.y / magnitude(vector)
+    y: vector.y / magnitude(vector),
   };
 }
 
@@ -189,11 +193,11 @@ export function projectionsSeparate(proj1: Projection, proj2: Projection): boole
 }
 
 export function getMinMaxProjection(objCorners: Coordinates[], normal: Coordinates): Projection {
-  var min = dotProduct(objCorners[0], normal);
-  var max = dotProduct(objCorners[0], normal);
+  let min = dotProduct(objCorners[0], normal);
+  let max = dotProduct(objCorners[0], normal);
 
-  for (var i = 1; i < objCorners.length; i++) {
-    var current = dotProduct(objCorners[i], normal);
+  for (let i = 1; i < objCorners.length; i++) {
+    const current = dotProduct(objCorners[i], normal);
     if (min > current) {
       min = current;
     }
@@ -207,18 +211,18 @@ export function getMinMaxProjection(objCorners: Coordinates[], normal: Coordinat
 }
 
 export function rectangleCorners(obj: Collidable): Coordinates[] {
-  var corners = [ // unrotated
-    { x:obj.center.x - obj.size.x / 2, y: obj.center.y - obj.size.y / 2 },
-    { x:obj.center.x + obj.size.x / 2, y: obj.center.y - obj.size.y / 2 },
-    { x:obj.center.x + obj.size.x / 2, y: obj.center.y + obj.size.y / 2 },
-    { x:obj.center.x - obj.size.x / 2, y: obj.center.y + obj.size.y / 2 }
+  const corners = [ // unrotated
+    { x: obj.center.x - obj.size.x / 2, y: obj.center.y - obj.size.y / 2 },
+    { x: obj.center.x + obj.size.x / 2, y: obj.center.y - obj.size.y / 2 },
+    { x: obj.center.x + obj.size.x / 2, y: obj.center.y + obj.size.y / 2 },
+    { x: obj.center.x - obj.size.x / 2, y: obj.center.y + obj.size.y / 2 },
   ];
 
-  var angle = getAngle(obj) * RADIANS_TO_DEGREES;
+  const angle = getAngle(obj) * RADIANS_TO_DEGREES;
 
-  for (var i = 0; i < corners.length; i++) {
-    var xOffset = corners[i].x - obj.center.x;
-    var yOffset = corners[i].y - obj.center.y;
+  for (let i = 0; i < corners.length; i++) {
+    const xOffset = corners[i].x - obj.center.x;
+    const yOffset = corners[i].y - obj.center.y;
     corners[i].x = obj.center.x + xOffset * Math.cos(angle) - yOffset * Math.sin(angle);
     corners[i].y = obj.center.y + xOffset * Math.sin(angle) + yOffset * Math.cos(angle);
   }
@@ -227,21 +231,19 @@ export function rectangleCorners(obj: Collidable): Coordinates[] {
 }
 
 export function rectangleSideVectors(obj: Collidable): Coordinates[] {
-  var corners = rectangleCorners(obj);
+  const corners = rectangleCorners(obj);
   return [
     { x: corners[0].x - corners[1].x, y: corners[0].y - corners[1].y },
     { x: corners[1].x - corners[2].x, y: corners[1].y - corners[2].y },
     { x: corners[2].x - corners[3].x, y: corners[2].y - corners[3].y },
-    { x: corners[3].x - corners[0].x, y: corners[3].y - corners[0].y }
+    { x: corners[3].x - corners[0].x, y: corners[3].y - corners[0].y },
   ];
 }
 
 export function rectanglePerpendicularNormals(obj: Collidable): Coordinates[] {
-  var sides = rectangleSideVectors(obj);
+  const sides = rectangleSideVectors(obj);
   return [
     leftNormalizedNormal(sides[0]),
-    leftNormalizedNormal(sides[1])
+    leftNormalizedNormal(sides[1]),
   ];
 }
-
-export const RADIANS_TO_DEGREES = 0.01745;

@@ -10,7 +10,7 @@ export default class SpriteSheet {
 
   constructor(img: HTMLImageElement, spriteWidth: number, spriteHeight: number) {
     if (!img) {
-      throw new Error('nonexistent image')
+      throw new Error('nonexistent image');
     }
 
     this.img = img;
@@ -22,9 +22,9 @@ export default class SpriteSheet {
    * Return a new `Sprite` object for a sprite at a given index
    */
   get(num: number): Sprite {
-    var x = num * this.spriteWidth;
+    let x = num * this.spriteWidth;
 
-    var row = 0;
+    let row = 0;
     while (x > (this.img.width - this.spriteWidth)) {
       row++;
       x -= this.img.width;

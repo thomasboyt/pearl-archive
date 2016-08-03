@@ -1,8 +1,8 @@
 export default class Ticker {
+  time: number;
+
   private _nextTickFn: () => void;
   private _loopFn: (dt: number) => void;
-
-  time: number;
 
   constructor(gameLoop: (dt: number) => void) {
     this._loopFn = gameLoop;
@@ -25,6 +25,6 @@ export default class Ticker {
   }
 
   stop() {
-    this._nextTickFn = () => {};
+    this._nextTickFn = () => { /* no-op */ };
   }
 }

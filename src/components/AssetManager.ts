@@ -4,10 +4,10 @@ import AudioManager from './AudioManager';
 
 export type AssetMap = {
   images: {
-    [key:string]: HTMLImageElement;
+    [key: string]: HTMLImageElement;
   };
   audio: {
-    [key:string]: AudioBuffer;
+    [key: string]: AudioBuffer;
   };
 }
 
@@ -21,12 +21,13 @@ export type AssetCfg = {
 }
 
 export default class AssetManager extends Component<AssetCfg> {
-  private assets: AssetMap;
   numTotal: number;
   numLoaded: number = 0;
   audioCtx: AudioContext;
 
   _assetCfg: AssetCfg;
+
+  private assets: AssetMap;
 
   init(assetCfg: AssetCfg) {
     this.assets = {

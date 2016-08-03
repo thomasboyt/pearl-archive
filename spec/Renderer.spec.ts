@@ -17,7 +17,8 @@ test('renderer scales the canvas for canvas displays', (t) => {
   const canvas = document.createElement('canvas');
 
   // TODO: this is a lazy lil mock here, might be better ways to do this...
-  let scaleX: number = 1, scaleY: number = 1;
+  let scaleX: number = 1;
+  let scaleY: number = 1;
   canvas.getContext('2d')!.scale = function(x, y) {
     scaleX = x;
     scaleY = y;

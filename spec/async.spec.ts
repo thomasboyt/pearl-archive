@@ -3,7 +3,7 @@ import test from 'ava';
 import AsyncManager from '../src/Async';
 
 function* immediate() {
-  yield new Promise((resolve) => {resolve()});
+  yield new Promise((resolve) => {resolve(); });
 }
 
 test.cb('scheduled coroutines are executed', (t) => {
@@ -25,7 +25,7 @@ test.cb('coroutines that yield promises are correctly executed', (t) => {
   asyncManager.startAt(0);
 
   asyncManager.schedule(function* () {
-    yield new Promise((resolve) => {resolve()});
+    yield new Promise((resolve) => {resolve(); });
     t.pass();
     t.end();
   });
@@ -87,7 +87,9 @@ test.cb('multiple waitForMs timers set for the same time are executed', (t) => {
   asyncManager.update(25);
 });
 
-test.failing.cb('ensure timers are executed in the correct order when multiple timers are triggered in one frame', (t) => {
+test.failing.cb(
+  'ensure timers are executed in the correct order when multiple timers are triggered in one frame',
+  (t) => {
   t.plan(2);
 
   const asyncManager = new AsyncManager();

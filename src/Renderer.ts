@@ -1,13 +1,12 @@
 import PearlInstance from './PearlInstance';
 import {Coordinates} from './types';
-import {rectanglesIntersecting, RADIANS_TO_DEGREES} from './util/maths';
 import GameObject from './GameObject';
 
 function viewOffset(viewCenter: Coordinates, viewSize: Coordinates): Coordinates {
   return {
     x: -(viewCenter.x - viewSize.x / 2),
-    y: -(viewCenter.y - viewSize.y / 2)
-  }
+    y: -(viewCenter.y - viewSize.y / 2),
+  };
 }
 
 // sorts passed array by zindex
@@ -17,7 +16,7 @@ function zIndexSort(a: GameObject, b: GameObject): number {
 }
 
 export interface RendererOpts {
-  canvas: HTMLCanvasElement,
+  canvas: HTMLCanvasElement;
   width: number;
   height: number;
   backgroundColor?: string;
@@ -105,7 +104,7 @@ export default class Renderer {
       this._viewCenter.x - this._viewSize.x / 2,
       this._viewCenter.y - this._viewSize.y / 2,
       this._viewSize.x,
-      this._viewSize.y
+      this._viewSize.y,
     ];
 
     if (this._backgroundColor !== undefined) {

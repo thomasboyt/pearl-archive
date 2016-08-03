@@ -6,7 +6,7 @@ class HelloWorld extends Component<null> {
     ctx.textAlign = 'center';
     ctx.fillStyle = 'black';
 
-    ctx.fillText('Hello world!', 150, 150)
+    ctx.fillText('Hello world!', 150, 150);
   }
 }
 

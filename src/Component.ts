@@ -13,15 +13,19 @@ abstract class Component<Settings> {
   // public hooks
 
   init(settings: Settings) {
+    // no-op
   }
 
   update(dt: number) {
+    // no-op
   }
 
   render(ctx: CanvasRenderingContext2D) {
+    // no-op
   }
 
   onDestroy() {
+    // no-op
   }
 
   /*

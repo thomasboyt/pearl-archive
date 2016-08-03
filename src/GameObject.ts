@@ -1,7 +1,5 @@
-import {Coordinates} from './types';
-import {BoundingBox} from './Collider';
+/* tslint:disable:member-ordering */
 
-import Physical from './components/Physical';
 import Component from './Component';
 import PearlInstance from './PearlInstance';
 

@@ -87,10 +87,10 @@ export default class ButtonListener {
       if (e.which === 3 || e.button === 2) {
         return MouseButton.right;
       } else if (e.which === 1 || e.button === 0 || e.button === 1) {
-        return MouseButton.left
+        return MouseButton.left;
       }
     }
 
-    throw "Cannot judge button pressed on passed mouse button event";
+    throw new Error('Cannot judge button pressed on passed mouse button event');
   }
 }

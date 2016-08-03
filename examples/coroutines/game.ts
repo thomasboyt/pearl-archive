@@ -18,7 +18,7 @@ class FadingText extends Pearl.Entity<TextOpts> {
 
   init(opts: TextOpts) {
     this.center = opts.center;
-    this.text = opts.text
+    this.text = opts.text;
     this.game!.async.schedule(this.animateFade.bind(this));
   }
 

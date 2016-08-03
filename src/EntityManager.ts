@@ -21,15 +21,15 @@ export default class EntityManager {
   }
 
   // TODO: Ensure entity is typed to passed constructor
-  all(Constructor?: Function): Set<GameObject> {
+  all(ctor?: Function): Set<GameObject> {
     // TODO: why doesn't this work
-    if (!Constructor) {
+    if (!ctor) {
       return new Set(this._entities);  // shallow clone
     }
 
     return new Set(
       [...(this._entities)]
-      .filter((entity) => entity instanceof Constructor!)
+      .filter((entity) => entity instanceof ctor!)
     );
   }
 

@@ -8,13 +8,13 @@ function getWindow(document: any): Window {
 }
 
 function getElementPosition(element: HTMLElement): Coordinates {
-  var rect = element.getBoundingClientRect();
-  var document = element.ownerDocument;
-  var body = document.body;
-  var window = getWindow(document);
+  const rect = element.getBoundingClientRect();
+  const document = element.ownerDocument;
+  const body = document.body;
+  const window = getWindow(document);
   return {
     x: rect.left + (window.pageXOffset || body.scrollLeft) - (body.clientLeft || 0),
-    y: rect.top + (window.pageYOffset || body.scrollTop) - (body.clientTop || 0)
+    y: rect.top + (window.pageYOffset || body.scrollTop) - (body.clientTop || 0),
   };
 };
 
@@ -29,7 +29,7 @@ export default class MouseMoveListener {
 
       this._mousePosition = {
         x: absoluteMousePosition.x - elementPosition.x,
-        y: absoluteMousePosition.y - elementPosition.y
+        y: absoluteMousePosition.y - elementPosition.y,
       };
 
       for (let bindingFn of this._bindings) {
@@ -42,6 +42,14 @@ export default class MouseMoveListener {
     return this._mousePosition;
   }
 
+  addListener(fn: MouseListenerFn) {
+    this._bindings.add(fn);
+  }
+
+  removeListener(fn: MouseListenerFn) {
+    this._bindings.delete(fn);
+  }
+
   private _getAbsoluteMousePosition(e: MouseEvent): Coordinates {
     if (e.pageX) {
       return {x: e.pageX, y: e.pageY};
@@ -50,11 +58,4 @@ export default class MouseMoveListener {
     }
   }
 
-  addListener(fn: MouseListenerFn) {
-    this._bindings.add(fn);
-  }
-
-  removeListener(fn: MouseListenerFn) {
-    this._bindings.delete(fn);
-  }
 }
