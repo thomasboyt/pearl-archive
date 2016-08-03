@@ -1,4 +1,4 @@
-# Pearl
+# Pearl [![Build Status](https://travis-ci.org/thomasboyt/pearl.svg)](https://travis-ci.org/thomasboyt/pearl) [![npm](https://img.shields.io/npm/v/pearl.svg?maxAge=2592000)](https://www.npmjs.com/package/pearl)
 
 Pearl is a small framework for creating video games in the browser. It's written in TypeScript, but can be used in any language that compiles to JavaScript.
 
