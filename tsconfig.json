@@ -16,7 +16,8 @@
   "include": [
     "src/**/*.ts",
     "spec/**/*.ts",
-    "examples/**/*.ts"
+    "examples/**/*.ts",
+    "types/**/*.ts"
   ],
   "formatCodeOptions": {
     "indentSize": 2,

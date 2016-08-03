@@ -17,6 +17,11 @@ import AnimationManager from './components/AnimationManager';
 import AssetManager from './components/AssetManager';
 import AudioManager from './components/AudioManager';
 
+export {default as PolygonCollider} from './components/PolygonCollider';
+import PolygonRenderer from './components/PolygonRenderer';
+import CircleCollider from './components/CircleCollider';
+import CircleRenderer from './components/CircleRenderer';
+
 export {
   BoundingBox,
   Maths,
@@ -30,8 +35,13 @@ export {
   Component,
   AnimationManager,
   AssetManager,
+
   Physical,
   AudioManager,
   Sprite,
   SpriteSheet,
+
+  PolygonRenderer,
+  CircleCollider,
+  CircleRenderer
 };
