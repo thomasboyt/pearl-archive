@@ -18,9 +18,6 @@ abstract class Component<Settings> {
   update(dt: number) {
   }
 
-  collision(other: GameObject) {
-  }
-
   render(ctx: CanvasRenderingContext2D) {
   }
 

@@ -135,12 +135,6 @@ export default class GameObject {
     }
   }
 
-  collision(other: GameObject) {
-    for (let component of this.components) {
-      component.collision(other);
-    }
-  }
-
   render(ctx: CanvasRenderingContext2D) {
     for (let component of this.components) {
       ctx.save();
