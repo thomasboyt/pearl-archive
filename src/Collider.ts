@@ -8,7 +8,7 @@ import {
   circlesIntersecting,
 } from './util/maths';
 
-export const enum BoundingBox {
+export enum BoundingBox {
   Rectangle = 0,
   Circle = 1,
 }
