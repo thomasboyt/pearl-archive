@@ -36,14 +36,24 @@ export default class PolygonCollider extends Component<Options> {
 
     const angle = opts.angle || 0;
 
-    return new PolygonCollider({
+    const poly = new PolygonCollider({
       points,
       angle,
     });
+
+    poly.width = opts.width;
+    poly.height = opts.height;
+
+    return poly;
   }
 
   points: [number, number][] = [];
   angle: number = 0;
+
+  // These properties only exist on Boxes, and maybe should be moved to an actual BoxCollider
+  // subclass of this. Hm.
+  width?: number;
+  height?: number;
 
   active: boolean = true;
 
