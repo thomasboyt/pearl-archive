@@ -1,6 +1,6 @@
 {
   "name": "pearl",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A tiny framework for games",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
