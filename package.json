@@ -8,7 +8,8 @@
     "build": "tsc",
     "build-examples": "webpack",
     "run-examples": "webpack-dev-server",
-    "test": "tsc && ava"
+    "test": "tsc && ava",
+    "lint": "tslint 'src/**/*.ts' 'examples/**/*.ts' 'spec/**/*.ts'"
   },
   "author": "Thomas Boyt <me@thomasboyt.com>",
   "license": "MIT",
@@ -22,6 +23,7 @@
     "canvas": "^1.4.0",
     "jsdom": "^9.4.1",
     "ts-loader": "^0.8.2",
+    "tslint": "^3.14.0",
     "typescript": "^2.0.0",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
