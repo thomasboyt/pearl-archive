@@ -12,9 +12,29 @@ Pearl aims to be a a simpler, code-only alternative to full-scale frameworks lik
 * [Documentation](/docs)
 * [Roadmap](/Roadmap.md)
 
+## Development Overview
+
+Pearl's build pipeline is slightly more complicated than most TypeScript projects because, after TypeScript compilation, it transpiles to ES5 using Babel. This is due to Pearl's usage of several features that TypeScript does not transpile, such as iterators and generators.
+
+Hopefully, Pearl will at some point have a proper build pipeline powered by Gulp or Broccoli that can handle per-file builds and have a nice watcher, but for now, I just wrote up a quick build script and stuck it in `scripts/builder.js`.
+
+### Build
+
+```
+npm run build
+```
+
+### Test
+
+Tests are run through [ava](https://github.com/avajs/ava). Ava has a built-in Babel compile step (yay!) but does not have built-in TypeScript compilation (boo), so the TypeScript part of `scripts/builder.js` is run first.
+
+```
+npm test
+```
+
 ### View Examples
 
-Run:
+Examples are built and hosted through Webpack/webpack-dev-server. Run:
 
 ```
 npm install
@@ -25,13 +45,13 @@ and open `localhost:8080` in your browser.
 
 ## Todo
 
-- [ ] Ship babel-compiled version
 - [ ] Improve coroutine API:
   - https://twitter.com/machty/status/756266064049233920
   - https://twitter.com/drosenwasser/status/756359260380856320
 - [ ] Port Coquette tests
 - [ ] Write more tests!
 - [ ] Autofocus
+- [x] Ship babel-compiled version
 - [x] Add retina scaling to canvas
 - [x] Fix abstract class usage
 - [x] New tests!
