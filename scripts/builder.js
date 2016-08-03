@@ -8,7 +8,7 @@ const childProcess = require('child_process');
 const execSync = childProcess.execSync;
 const spawn = childProcess.spawn;
 
-const getBinPath = (name) => path.join(__dirname, `../node_modules/.bin/${name}`)
+const getBinPath = (name) => path.join(__dirname, `../node_modules/.bin/${name}`);
 
 const testBuild = process.env.NODE_ENV === 'test';
 
@@ -64,7 +64,7 @@ function main() {
         return runBabel()
           .then(() => copyDist());
       }
-    })
+    });
 }
 
 process.on('unhandledRejection', (err) => {
