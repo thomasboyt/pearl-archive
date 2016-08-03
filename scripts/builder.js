@@ -46,10 +46,11 @@ function runBabel() {
 }
 
 function copyDist() {
+  execSync('rm -rf dist/');
   execSync('mkdir -p dist/es');
   execSync('mkdir -p dist/cjs');
-  execSync('cp -r tmp/es/src dist/es');
-  execSync('cp -r tmp/cjs/src dist/cjs');
+  execSync('cp -r tmp/es/src/* dist/es');
+  execSync('cp -r tmp/cjs/src/* dist/cjs');
 }
 
 function main() {
