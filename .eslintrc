@@ -1,0 +1,22 @@
+{
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true,
+    "es6": true
+  },
+  "rules": {
+    "semi": 1,
+    "strict": 0,
+    "quotes": [2, "single"],
+    "no-underscore-dangle": [0],
+    "new-cap": 0,
+    "no-shadow": 0,
+    "no-console": 0,
+    "comma-dangle": 0
+  }
+}
