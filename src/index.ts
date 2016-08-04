@@ -1,47 +1,27 @@
-import {Coordinates} from './types';
-import {BoundingBox} from './Collider';
-import {MouseButton} from './Inputter/ButtonListener';
-import Keys from './util/keyCodes';
+export {Coordinates} from './types';
+export {default as BoundingBox} from './Collider';
+export {default as MouseButton} from './Inputter/ButtonListener';
+export {default as Keys} from './util/keyCodes';
+
+// export Maths from './util/maths';
 import * as Maths from './util/maths';
+export {Maths};
 
-import PearlInstance, {createPearl} from './PearlInstance';
+export {default as PearlInstance, createPearl} from './PearlInstance';
 
-import GameObject from './GameObject';
-import Component from './Component';
+export {default as GameObject} from './GameObject';
+export {default as Component} from './Component';
 
-import Sprite from './util/Sprite';
-import SpriteSheet from './util/SpriteSheet';
+export {default as Sprite} from './util/Sprite';
+export {default as SpriteSheet} from './util/SpriteSheet';
 
-import Physical from './components/Physical';
-import AnimationManager from './components/AnimationManager';
-import AssetManager from './components/AssetManager';
-import AudioManager from './components/AudioManager';
+export {default as Physical} from './components/Physical';
+export {default as AnimationManager} from './components/AnimationManager';
+export {default as AssetManager} from './components/AssetManager';
+export {default as AudioManager} from './components/AudioManager';
 
+export {CollisionResponse} from './components/Collider';
 export {default as PolygonCollider} from './components/PolygonCollider';
-import PolygonRenderer from './components/PolygonRenderer';
-import CircleCollider from './components/CircleCollider';
-import CircleRenderer from './components/CircleRenderer';
-
-export {
-  BoundingBox,
-  Maths,
-  Coordinates,
-  MouseButton,
-  Keys,
-
-  PearlInstance,
-  createPearl,
-  GameObject,
-  Component,
-  AnimationManager,
-  AssetManager,
-
-  Physical,
-  AudioManager,
-  Sprite,
-  SpriteSheet,
-
-  PolygonRenderer,
-  CircleCollider,
-  CircleRenderer
-};
+export {default as PolygonRenderer} from './components/PolygonRenderer';
+export {default as CircleCollider} from './components/CircleCollider';
+export {default as CircleRenderer} from './components/CircleRenderer';

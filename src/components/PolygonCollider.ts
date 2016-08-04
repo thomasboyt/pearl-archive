@@ -1,13 +1,12 @@
 import * as SAT from 'sat';
 import crosses from 'robust-segment-intersect';
 
-import Component from '../Component';
 import Physical from './Physical';
+import Collider, {CollisionResponse, ColliderType} from './Collider';
 import CircleCollider from './CircleCollider';
 
 import {rotatePoint} from '../util/maths';
 
-export type Collider = PolygonCollider | CircleCollider;
 export type Point = [number, number];
 export type Segment = [Point, Point];
 
@@ -22,7 +21,7 @@ export interface Options {
   angle?: number;
 }
 
-export default class PolygonCollider extends Component<Options> {
+export default class PolygonCollider extends Collider<Options> {
   /**
    * Convenience method to create a rectangular polygon.
    */
@@ -47,6 +46,8 @@ export default class PolygonCollider extends Component<Options> {
     return poly;
   }
 
+  type: ColliderType = ColliderType.Polygon;
+
   points: [number, number][] = [];
   angle: number = 0;
 
@@ -54,8 +55,6 @@ export default class PolygonCollider extends Component<Options> {
   // subclass of this. Hm.
   width?: number;
   height?: number;
-
-  active: boolean = true;
 
   init(options: Options = {}) {
     if (options.points) {
@@ -66,35 +65,10 @@ export default class PolygonCollider extends Component<Options> {
     }
   }
 
-  isColliding(other: Collider): boolean {
-    if (!this.active || !other.active) {
-      return false;
-    }
-
-    if (other instanceof PolygonCollider) {
-      return this.testPolygon(other);
-    } else if (other instanceof CircleCollider) {
-      return this.testCircle(other);
-    } else {
-      throw new Error(`unrecognizde collider type: ${other}`);
-    }
-  }
-
-  testPolygon(other: PolygonCollider): boolean {
-    const selfPoly = this.getSATPolygon();
-    const otherPoly = other.getSATPolygon();
-
-    return SAT.testPolygonPolygon(selfPoly, otherPoly);
-  }
-
-  testCircle(other: CircleCollider): boolean {
-    const selfPoly = this.getSATPolygon();
-    const otherCircle = other.getSATCircle();
-
-    return SAT.testPolygonCircle(selfPoly, otherCircle);
-  }
-
-  testRayCollision(ray: Segment, other: PolygonCollider) {
+  /**
+   * Test whether a given line segment intersects with this collider.
+   */
+  segmentIntersects(ray: Segment) {
     if (!this.active) {
       return false;
     }
@@ -127,6 +101,34 @@ export default class PolygonCollider extends Component<Options> {
     polygon.translate(x, y);
 
     return polygon;
+  }
+
+  protected testPolygon(other: PolygonCollider): CollisionResponse | null {
+    const selfPoly = this.getSATPolygon();
+    const otherPoly = other.getSATPolygon();
+
+    const resp = new SAT.Response();
+    const collided = SAT.testPolygonPolygon(selfPoly, otherPoly, resp);
+
+    if (collided) {
+      return this.responseFromSAT(resp);
+    } else {
+      return null;
+    }
+  }
+
+  protected testCircle(other: CircleCollider): CollisionResponse | null {
+    const selfPoly = this.getSATPolygon();
+    const otherCircle = other.getSATCircle();
+
+    const resp = new SAT.Response();
+    const collided = SAT.testPolygonCircle(selfPoly, otherCircle, resp);
+
+    if (collided) {
+      return this.responseFromSAT(resp);
+    } else {
+      return null;
+    }
   }
 
 }

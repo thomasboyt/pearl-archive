@@ -1,19 +1,17 @@
 import * as SAT from 'sat';
 
-import Component from '../Component';
 import Physical from './Physical';
 import PolygonCollider from './PolygonCollider';
-
-export type Collider = PolygonCollider | CircleCollider;
+import Collider, {CollisionResponse, ColliderType} from './Collider';
 
 export interface Options {
   radius?: number;
 }
 
-export default class CircleCollider extends Component<Options> {
-  radius: number;
+export default class CircleCollider extends Collider<Options> {
+  type: ColliderType = ColliderType.Polygon;
 
-  active: boolean = true;
+  radius: number;
 
   init(options: Options = {}) {
     if (options.radius) {
@@ -21,38 +19,38 @@ export default class CircleCollider extends Component<Options> {
     }
   }
 
-  isColliding(other: PolygonCollider | CircleCollider): boolean {
-    if (!this.active || !other.active) {
-      return false;
-    }
-
-    if (other instanceof PolygonCollider) {
-      return this.testPolygon(other);
-    } else if (other instanceof CircleCollider) {
-      return this.testCircle(other);
-    } else {
-      throw new Error(`unrecognized collider type: ${other}`);
-    }
-  }
-
-  testPolygon(other: PolygonCollider): boolean {
-    const selfCircle = this.getSATCircle();
-    const otherPoly = other.getSATPolygon();
-
-    return SAT.testCirclePolygon(selfCircle, otherPoly);
-  }
-
-  testCircle(other: CircleCollider): boolean {
-    const selfCircle = this.getSATCircle();
-    const otherCircle = other.getSATCircle();
-
-    return SAT.testCircleCircle(selfCircle, otherCircle);
-  }
-
   getSATCircle(): SAT.Circle {
     const {x, y} = this.getComponent(Physical).center;
     const circle = new SAT.Circle(new SAT.Vector(x, y), this.radius);
     return circle;
+  }
+
+  protected testPolygon(other: PolygonCollider): CollisionResponse | null {
+    const selfCircle = this.getSATCircle();
+    const otherPoly = other.getSATPolygon();
+
+    const resp = new SAT.Response();
+    const collided = SAT.testCirclePolygon(selfCircle, otherPoly, resp);
+
+    if (collided) {
+      return this.responseFromSAT(resp);
+    } else {
+      return null;
+    }
+  }
+
+  protected testCircle(other: CircleCollider): CollisionResponse | null {
+    const selfCircle = this.getSATCircle();
+    const otherCircle = other.getSATCircle();
+
+    const resp = new SAT.Response();
+    const collided = SAT.testCircleCircle(selfCircle, otherCircle, resp);
+
+    if (collided) {
+      return this.responseFromSAT(resp);
+    } else {
+      return null;
+    }
   }
 
 }
