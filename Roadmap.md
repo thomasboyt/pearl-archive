@@ -1,5 +1,56 @@
 # Roadmap
 
+## Collision System
+
+Pearl now has components for polygonal and circular collision, but currently, collision detection has to manually used from the `update()` hook:
+
+```typescript
+class PlatformerPhysics extends Component<Options> {
+  update(dt: number) {
+    this.testPlatformCollisions();
+  }
+
+  private testPlatformCollisions() {
+    const blocks = [...this.world.children].filter((entity) => entity.hasTag(Tags.block));
+
+    const phys = this.getComponent(Physical);
+
+    for (let block of blocks) {
+      const selfPoly = this.getComponent(PolygonCollider);
+      const otherPoly = block.getComponent(PolygonCollider);
+
+      const collision = selfPoly.getCollision(otherPoly);
+      if (collision) {
+        this.resolvePlatformCollision(collision);
+      }
+    }
+  }
+}
+```
+
+This works, but is far from ideal.
+
+Some frameworks, from Coquette to Unity, offer some sort of collision hook at the entity/component level, and then use some process. Other frameworks, like Superpowers, have helpful methods you can call within the `update` hook.
+
+Prior art:
+
+* Unity
+  * https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnCollisionEnter2D.html
+* Superpowers
+  * http://docs.superpowers-html5.com/en/tutorials/collision-2d
+
+Questions:
+
+* Could entities be grouped into a single top-level "scene" component?
+  * Scene component would get all children and create collision pair tests between them
+* Is it fine for collisions to exist as just another system in a component's update hook, or should it have special component hooks and exist in a special system?
+  * Unity does the latter - why?
+    * Superpowers *does not*, fwiw, and there may be others that don't.
+  * Collisions generally need to be resolved *before* updates happen (see Coquette)
+    * Pre-update hook?
+* Long-term considerations
+  * Collision layers? Would help avoid triggering/calculating unnecessary collisions
+
 ## New Features
 
 ### Devtools Inspector
@@ -18,13 +69,9 @@ Here's a relevant Unity discussion about some of the effects that pausing can ha
 
 ~~The canvas should be scaled for retina screens out of the box.~~ It'd be great to offer other scaling utilities, like scaling-on-resize while maintaining the original aspect ratio (using `ctx.scale`, that is, not CSS that causes blurry images). It'd also be cool to have a full-screen toggle.
 
-## API Improvements
+## Design Questions, etc.
 
-* Colliders
-  * Add API to get collision information
-    * https://github.com/jriecken/sat-js#satresponse
-
-## Design Questions
+This is an unsorted list of things I've been thinking about.
 
 * [ ] How are objects created/destroyed?
   * Figure out better API for `entities.add`/`entities.destroy`
