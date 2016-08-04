@@ -23,7 +23,7 @@ abstract class Collider<T> extends Component<any> {
    * Returns true if this object is colliding with the passed collider
    */
   isColliding(other: Collider<any>): boolean {
-    return this.getCollision(other) === null;
+    return this.getCollision(other) !== null;
   }
 
   /**
