@@ -1,5 +1,4 @@
 export {Coordinates} from './types';
-export {default as BoundingBox} from './Collider';
 export {default as MouseButton} from './Inputter/ButtonListener';
 export {default as Keys} from './util/keyCodes';
 
