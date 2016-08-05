@@ -8,6 +8,16 @@ import Runner from './Runner';
 import Component from './Component';
 import GameObject from './GameObject';
 
+/**
+ * The current *instance* of Pearl, which can be referenced by child components using `this.pearl`.
+ *
+ * This instance holds things that would often be singletons or globals in other frameworks,
+ * including utilities for adding/removing entities from the world, input handling, and coroutine
+ * scheduling.
+ *
+ * In addition, it also holds a reference to the top-level GameObject at `obj`, which can be used
+ * to quickly access root-level components.
+ */
 export default class PearlInstance {
   entities: EntityManager;
   inputter: Inputter;
@@ -16,6 +26,9 @@ export default class PearlInstance {
   runner: Runner;
   async: AsyncManager;
 
+  /**
+   * The top-level GameObject, which holds components defined in rootComponents.
+   */
   obj: GameObject;
   private rootComponents: Component<any>[];
 
@@ -68,6 +81,10 @@ export interface CreatePearlOpts {
   backgroundColor?: string;
 }
 
+/**
+ * Create a Pearl instance with the passed root components and canvas configuration, initializing
+ * your game.
+ */
 export function createPearl(opts: CreatePearlOpts): PearlInstance {
   const game = new PearlInstance(opts.rootComponents);
 

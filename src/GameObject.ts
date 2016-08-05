@@ -4,12 +4,34 @@ import Component from './Component';
 import PearlInstance from './PearlInstance';
 
 export interface CreateOpts {
+  /**
+   * The name of this GameObject, used to for displaying in debug tools.
+   */
   name: string;
+
+  /**
+   * The components attached to this GameObject
+   */
   components: Component<any>[];
+
+  /**
+   * The z-layer that this GameObject's components should render at. Defaults to 0, except for the
+   * root GameObject, which defaults to -1.
+   */
   zIndex?: number;
+
+  /**
+   * Tags attached to this GameObject (see hasTag())
+   */
   tags?: string[];
 }
 
+/**
+ * A GameObject is an entity in the world that holds a collection of components.
+ *
+ * It is instantiated directly, but is not registered in the world until passed to
+ * pearl.entities.add() or gameObject.addChild().
+ */
 export default class GameObject {
   pearl: PearlInstance;
 
@@ -40,8 +62,11 @@ export default class GameObject {
     this.components.push(component);
   }
 
-  // TODO: probably use a Set or Map for this
+  /**
+   * Check whether this component has the specified tag.
+   */
   hasTag(tag: string): boolean {
+    // TODO: probably use a Set or Map for this
     return !!this.tags.find((val) => val === tag);
   }
 
@@ -119,6 +144,10 @@ export default class GameObject {
   private removeChild(child: GameObject) {
     this._children.delete(child);
   }
+
+  /*
+   * Internal hooks
+   */
 
   init() {
     // game is set at this point
