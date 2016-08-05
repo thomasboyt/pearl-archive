@@ -12,7 +12,7 @@ abstract class Component<Settings> {
    */
   gameObject: GameObject;
 
-  private initialSettings?: Settings;
+  initialSettings?: Settings;
 
   constructor(settings?: Settings) {
     this.initialSettings = settings;
