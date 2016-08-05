@@ -16,7 +16,7 @@ Pearl aims to be a a simpler, code-only alternative to full-scale frameworks lik
 
 Pearl's build pipeline is slightly more complicated than most TypeScript projects because, after TypeScript compilation, it transpiles to ES5 using Babel. This is due to Pearl's usage of several features that TypeScript does not transpile, such as iterators and generators.
 
-To make this easy to manage, Pearl uses Gulp to build. This configuration semi-incremental builds - basically, the TypeScript build is incremental, but the Babel build is not. On my somewhat-underpowered Macbook, I get 3-5 second builds, which are Good Enough For Now(tm). In the future, I might look into fully-incremental rebuilds through some Gulp magic.
+To make this easy to manage, Pearl uses Gulp to build. This has configuration semi-incremental builds - basically, the TypeScript build is incremental, but the Babel build is not. On my somewhat-underpowered Macbook, I get 3-5 second builds, which are Good Enough For Now(tm). In the future, I might look into fully-incremental rebuilds through some Gulp magic.
 
 ### Build
 
