@@ -6,6 +6,18 @@ export default class AsyncManager {
   private _time: number;
   private _timers: Map<number, Resolve[]> = new Map();
 
+  /**
+   * Schedule a coroutine to be executed.
+   */
+  schedule(coroutine: Coroutine) {
+    runCoroutine(coroutine());
+  }
+
+  /**
+   * Returns a yieldable promise to wait a certain amount of milliseconds. Once a time-scale system
+   * is implemented, this will wait the *time-scaled* duration - so if you wait 50 ms and set your
+   * time scale to 1/2 speed, it will take 100 ms to resolve.
+   */
   waitMs(ms: number): Promise<null> {
     return new Promise((resolve, reject) => {
       const scheduledTime = this._time + ms;
@@ -16,10 +28,6 @@ export default class AsyncManager {
         this._timers.set(this._time + ms, [resolve]);
       }
     });
-  }
-
-  schedule(coroutine: Coroutine) {
-    runCoroutine(coroutine());
   }
 
   startAt(time: number) {
