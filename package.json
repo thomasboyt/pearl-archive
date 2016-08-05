@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "build": "gulp build",
+    "watch": "gulp watch",
     "build-examples": "webpack --config webpack/examples.config.js",
     "run-examples": "webpack-dev-server --config webpack/examples.config.js",
     "test": "gulp build && ava",
