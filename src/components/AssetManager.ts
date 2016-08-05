@@ -43,6 +43,13 @@ export default class AssetManager extends Component<AssetCfg> {
     );
 
     const audioCtx = this.getComponent(AudioManager).ctx;
+
+    if (!audioCtx) {
+      throw new Error(
+        'AudioManager\'s AudioContext not yet initialized - make sure AudioManager is before ' +
+        'AssetManager in your components array');
+    }
+
     this.audioCtx = audioCtx;
   }
 
