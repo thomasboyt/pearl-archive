@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": "./tmp/es",
     "module": "es2015",
     "target": "es2015",
     "moduleResolution": "node",
