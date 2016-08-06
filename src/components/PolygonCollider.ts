@@ -67,8 +67,16 @@ export default class PolygonCollider extends Collider<Options> {
 
   /**
    * Test whether a given line segment intersects with this collider.
+   *
+   * Takes into account the velocity this collider has on the current frame. This is done because
+   * currently, it's assumed the passed segment is a ray from a point to its point on the next
+   * frame (e.g. [[center.x, center.y], [center.x + vel.x * dt, center.y + vel.y * dt]]). If you
+   * don't move the collider forward by its own velocity, this collision test can fail.
+   *
+   * Long term, I don't think this API really makes sense, and maybe should be replaced with a
+   * method that more-explictly compares two velocity-shifted objects?
    */
-  segmentIntersects(ray: Segment) {
+  segmentIntersects(ray: Segment, dt: number) {
     if (!this.active) {
       return false;
     }
@@ -77,7 +85,9 @@ export default class PolygonCollider extends Collider<Options> {
 
     const points = this.points
       .map((point) => rotatePoint(point, this.angle))
-      .map((point) => [point[0] + phys.center.x, point[1] + phys.center.y] as [number, number]);
+      .map((point) => [
+        point[0] + phys.center.x + phys.vel.x * dt,
+        point[1] + phys.center.y + phys.vel.y * dt] as [number, number]);
 
     const [a, b] = ray;
 
