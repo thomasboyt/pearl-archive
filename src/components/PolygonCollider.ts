@@ -21,6 +21,37 @@ export interface Options {
   angle?: number;
 }
 
+export interface Bounds {
+  xMin: number;
+  xMax: number;
+  yMin: number;
+  yMax: number;
+}
+
+function getBoundsFromPolygon(polygon: SAT.Polygon): Bounds {
+  const points = polygon.calcPoints;
+  let xMin = points[0].x;
+  let yMin = points[0].y;
+  let xMax = points[0].x;
+  let yMax = points[0].y;
+
+  for (let i = 1; i < points.length; i++) {
+    const point = points[i];
+    if (point.x < xMin) {
+      xMin = point.x;
+    } else if (point.x > xMax) {
+      xMax = point.x;
+    }
+    if (point.y < yMin) {
+      yMin = point.y;
+    } else if (point.y > yMax) {
+      yMax = point.y;
+    }
+  }
+
+  return {xMin, yMin, xMax, yMax};
+}
+
 export default class PolygonCollider extends Collider<Options> {
   /**
    * Convenience method to create a rectangular polygon.
@@ -53,6 +84,7 @@ export default class PolygonCollider extends Collider<Options> {
 
   // These properties only exist on Boxes, and maybe should be moved to an actual BoxCollider
   // subclass of this. Hm.
+  // https://docs.unity3d.com/ScriptReference/Renderer-bounds.html might be worth looking into
   width?: number;
   height?: number;
 
@@ -63,6 +95,11 @@ export default class PolygonCollider extends Collider<Options> {
     if (options.angle) {
       this.angle = options.angle;
     }
+  }
+
+  getBounds(): Bounds {
+    const polygon = this.getSATPolygon();
+    return getBoundsFromPolygon(polygon);
   }
 
   /**
