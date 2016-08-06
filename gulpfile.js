@@ -11,6 +11,7 @@ const clone = require('gulp-clone');
 
 const src = './src/**/*.ts';
 const spec = './spec/**/*.ts';
+const types = './types/**/*.ts';
 
 const tsProject = typescript.createProject('tsconfig.json', {
   typescript: require('typescript'),
@@ -32,7 +33,7 @@ function distCopy(input, out) {
 }
 
 gulp.task('build', ['clean'], () => {
-  const tsResult = gulp.src([src, spec], {base: '.'})
+  const tsResult = gulp.src([src, spec, types], {base: '.'})
     .pipe(typescript(tsProject));
 
   // ES2015 output
