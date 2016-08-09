@@ -97,6 +97,9 @@ export default class PolygonCollider extends Collider<Options> {
     }
   }
 
+  /**
+   * Returns the AABB bounding box for this polygon as rendered on screen.
+   */
   getBounds(): Bounds {
     const polygon = this.getSATPolygon();
     return getBoundsFromPolygon(polygon);
