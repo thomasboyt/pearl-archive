@@ -75,6 +75,9 @@ export default class Renderer {
     return this._viewCenter;
   }
 
+  /**
+   * Set the center coordinates of the viewport.
+   */
   setViewCenter(pos: Coordinates) {
     this._viewCenter = {
       x: pos.x,
@@ -82,20 +85,18 @@ export default class Renderer {
     };
   }
 
+  /**
+   * Set the background color of the game.
+   */
   setBackground(color: string) {
     this._backgroundColor = color;
   }
 
-  // TODO: (a) this needs a null-check on obj.center, (b) why does this only support rectangles??
-  // onScreen(obj: Entity): boolean {
-  //   return rectanglesIntersecting(obj, {
-  //     size: this._viewSize,
-  //     center: this._viewCenter,
-  //   });
-  // }
-
   update() {
     const ctx = this.getCtx();
+
+    ctx.save();
+
     const viewTranslate = viewOffset(this._viewCenter, this._viewSize);
 
     ctx.translate(viewTranslate.x, viewTranslate.y);
@@ -119,5 +120,7 @@ export default class Renderer {
     for (let drawable of drawables) {
       drawable.render(ctx);
     }
+
+    ctx.restore();
   }
 }
