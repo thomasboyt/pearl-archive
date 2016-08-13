@@ -122,7 +122,7 @@ export default class GameObject {
    * This GameObject's parent GameObject, or null if it is a top-level object.
    */
   get parent(): GameObject | null {
-    return this.parent;
+    return this._parent;
   }
 
   private setParent(parent: GameObject) {
