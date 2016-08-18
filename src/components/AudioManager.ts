@@ -5,6 +5,14 @@ export interface Options {
   defaultGain: number;
 }
 
+function getAudioContextClass(): typeof AudioContext {
+  if (!(window as any).AudioContext) {
+    return (window as any).webkitAudioContext;
+  } else {
+    return AudioContext;
+  }
+}
+
 /**
  * Provides a single location for playing audio assets loaded through `AudioManager`.
  *
@@ -19,7 +27,8 @@ export default class AudioManager extends Component<Options> {
   defaultGain: number;
 
   init(opts: Options) {
-    this.ctx = new AudioContext();
+    const envAudioContext = getAudioContextClass();
+    this.ctx = new envAudioContext();
 
     this.volumeNode = this.ctx.createGain();
     this.volumeNode.connect(this.ctx.destination);
