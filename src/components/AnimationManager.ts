@@ -2,17 +2,17 @@ import Component from '../Component';
 import Physical from './Physical';
 
 import Sprite from '../util/Sprite';
-import SpriteSheet from '../util/SpriteSheet';
+import {ISpriteSheet} from '../util/SpriteSheet';
 
 const blankSprite = new Sprite(new Image(), 0, 0, 0, 0);
 
 export interface AnimationConfig {
-  frames: number[];
+  frames: any[];
   frameLengthMs: number | null;
 }
 
 class Animation {
-  private _sheet: SpriteSheet;
+  private _sheet: ISpriteSheet;
   private _frameLengthMs: number | null;
 
   private _frames: number[];
@@ -20,7 +20,7 @@ class Animation {
 
   private _elapsed: number;
 
-  constructor(sheet: SpriteSheet, cfg: AnimationConfig) {
+  constructor(sheet: ISpriteSheet, cfg: AnimationConfig) {
     this._sheet = sheet;
 
     this._frames = cfg.frames;
@@ -65,13 +65,13 @@ export interface AnimationConfigMap {
 }
 
 export interface Options {
-  sheet: SpriteSheet;
+  sheet: ISpriteSheet;
   initialState: string;
   animations: AnimationConfigMap;
 }
 
 export default class AnimationManager extends Component<Options> {
-  private _sheet: SpriteSheet;
+  private _sheet: ISpriteSheet;
   private _animationConfig: AnimationConfigMap;
   private _currentState: string;
   private _current: Animation;

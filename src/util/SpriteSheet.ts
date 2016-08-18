@@ -1,9 +1,13 @@
 import Sprite from './Sprite';
 
+export interface ISpriteSheet {
+  get(name: any): Sprite;
+}
+
 /**
  * Creates `Sprite` objects from a sprite sheet.
  */
-export default class SpriteSheet {
+export default class SpriteSheet implements ISpriteSheet {
   img: HTMLImageElement;
   spriteWidth: number;
   spriteHeight: number;

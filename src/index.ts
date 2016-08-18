@@ -12,7 +12,7 @@ export {default as GameObject} from './GameObject';
 export {default as Component} from './Component';
 
 export {default as Sprite} from './util/Sprite';
-export {default as SpriteSheet} from './util/SpriteSheet';
+export {default as SpriteSheet, ISpriteSheet} from './util/SpriteSheet';
 
 export {default as Physical} from './components/Physical';
 export {default as AnimationManager} from './components/AnimationManager';
