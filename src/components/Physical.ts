@@ -11,6 +11,8 @@ export interface PhysicalSettings {
    * The angle of this object, in radians.
    */
   angle?: number;
+
+  vel?: Coordinates;
 }
 
 /**
@@ -44,6 +46,10 @@ export default class Physical extends Component<PhysicalSettings> {
   init(settings: PhysicalSettings = {}) {
     if (settings.center) {
       this.center = settings.center;
+    }
+
+    if (settings.vel) {
+      this.vel = settings.vel;
     }
 
     this.angle = settings.angle || 0;
