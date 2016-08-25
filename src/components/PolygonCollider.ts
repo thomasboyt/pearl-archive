@@ -57,22 +57,13 @@ export default class PolygonCollider extends Collider<Options> {
    * Convenience method to create a rectangular polygon.
    */
   static createBox(opts: BoxOptions): PolygonCollider {
-    const points: Point[] = [
-      [-opts.width / 2, -opts.height / 2],
-      [opts.width / 2, -opts.height / 2],
-      [opts.width / 2, opts.height / 2],
-      [-opts.width / 2, opts.height / 2],
-    ];
+    const poly = new PolygonCollider();
 
-    const angle = opts.angle || 0;
-
-    const poly = new PolygonCollider({
-      points,
-      angle,
+    poly.setBoxSize({
+      width: opts.width,
+      height: opts.height,
+      angle: opts.angle,
     });
-
-    poly.width = opts.width;
-    poly.height = opts.height;
 
     return poly;
   }
@@ -95,6 +86,24 @@ export default class PolygonCollider extends Collider<Options> {
     if (options.angle) {
       this.angle = options.angle;
     }
+  }
+
+  /**
+   * Replace the points in this collider with a box.
+   */
+  setBoxSize(opts: BoxOptions) {
+    const points: Point[] = [
+      [-opts.width / 2, -opts.height / 2],
+      [opts.width / 2, -opts.height / 2],
+      [opts.width / 2, opts.height / 2],
+      [-opts.width / 2, opts.height / 2],
+    ];
+
+    this.points = points;
+    this.angle = opts.angle || 0;
+
+    this.width = opts.width;
+    this.height = opts.height;
   }
 
   /**
