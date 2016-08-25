@@ -79,10 +79,18 @@ export default class AnimationManager extends Component<Options> {
   private scaleX: number = 1;
   private scaleY: number = 1;
 
+  get current() {
+    return this._currentState;
+  }
+
   init(opts: Options) {
     this._sheet = opts.sheet;
     this._animationConfig = opts.animations;
     this.set(opts.initialState);
+  }
+
+  getSprite(): Sprite {
+    return this._current.getSprite();
   }
 
   set(state: string) {
