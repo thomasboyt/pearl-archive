@@ -10,13 +10,9 @@ Pearl aims to be a a simpler, code-only alternative to full-scale frameworks lik
 
 * [Getting Started](/docs/getting-started.md)
 * [Documentation](/docs)
-* [Roadmap](/Roadmap.md)
+* [Roadmap](/docs/roadmap.md)
 
 ## Development Overview
-
-Pearl's build pipeline is slightly more complicated than most TypeScript projects because, after TypeScript compilation, it transpiles to ES5 using Babel. This is due to Pearl's usage of several features that TypeScript does not transpile, such as iterators and generators.
-
-To make this easy to manage, Pearl uses Gulp to build. This has configuration semi-incremental builds - basically, the TypeScript build is incremental, but the Babel build is not. On my somewhat-underpowered Macbook, I get 3-5 second builds, which are Good Enough For Now(tm). In the future, I might look into fully-incremental rebuilds through some Gulp magic.
 
 ### Build
 
@@ -34,17 +30,15 @@ npm run watch
 
 ### Test
 
-Tests are run through [ava](https://github.com/avajs/ava). Ava has a built-in Babel compile step (yay!) but does not have built-in TypeScript compilation (boo), so `gulp build` is run first.
+Tests are run through jest:
 
 ```
 npm test
 ```
 
-Tests currently don't have a watcher. Theoretically, ava has a watch flag that will watch the output from Gulp, but I don't know how reliable it is.
-
 ### View Examples
 
-Examples are built and hosted through Webpack/webpack-dev-server. Run:
+Examples are built and hosted through Webpack. Run:
 
 ```
 npm install
