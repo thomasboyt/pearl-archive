@@ -2,21 +2,22 @@
   "compilerOptions": {
     "module": "es2015",
     "target": "es2015",
+    "outDir": "./dist",
     "moduleResolution": "node",
     "inlineSourceMap": true,
     "inlineSources": true,
     "declaration": true,
     "removeComments": false,
     "preserveConstEnums": true,
-    "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
-    "strictNullChecks": true
+    "strict": true,
+    "strictPropertyInitialization": false
   },
   "include": [
-    "src/**/*.ts",
-    "spec/**/*.ts",
-    "examples/**/*.ts",
-    "types/**/*.ts"
+    "src/**/*"
+  ],
+  "exclude": [
+    "src/**/*.spec.*"
   ],
   "formatCodeOptions": {
     "indentSize": 2,
