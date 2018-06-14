@@ -1,34 +1,43 @@
+const path = require('path');
+
 module.exports = {
+  mode: 'development',
+  devtool: 'inline-source-map',
+
   entry: {
-    simple: './examples/simple/game.ts',
-    coroutines: './examples/coroutines/game.ts',
     helloWorld: './examples/hello-world/game.ts',
   },
 
   output: {
     filename: '[name].bundle.js',
-    path: './dist/examples'
-  },
-
-  resolve: {
-    // Add '.ts' and '.tsx' as a resolvable extension.
-    extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
+    path: path.resolve(__dirname, '../dist/examples'),
   },
 
   module: {
-    loaders: [
-      // all files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'
-      { test: /\.tsx?$/, loaders: ["babel", "ts"] }
-    ]
+    rules: [
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+
+        use: [{
+          loader: 'ts-loader',
+          options: {
+            compilerOptions: {
+              declaration: false,
+              outDir: null,
+            }
+          }
+        }],
+      },
+    ],
   },
 
-  ts: {
-    compilerOptions: {
-      declaration: false,
-    }
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
 
-  devServer: {
-    contentBase: './examples'
+  serve: {
+    content: './examples',
+    hot: false
   }
-}
+};
