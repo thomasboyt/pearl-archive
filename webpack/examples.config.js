@@ -19,15 +19,17 @@ module.exports = {
         test: /\.tsx?$/,
         exclude: /node_modules/,
 
-        use: [{
-          loader: 'ts-loader',
-          options: {
-            compilerOptions: {
-              declaration: false,
-              outDir: null,
-            }
-          }
-        }],
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              compilerOptions: {
+                declaration: false,
+                outDir: null,
+              },
+            },
+          },
+        ],
       },
     ],
   },
@@ -38,6 +40,6 @@ module.exports = {
 
   serve: {
     content: './examples',
-    hot: false
-  }
+    hot: false,
+  },
 };

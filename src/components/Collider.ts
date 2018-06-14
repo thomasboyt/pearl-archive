@@ -53,7 +53,9 @@ abstract class Collider<T> extends Component<any> {
     };
   }
 
-  protected abstract testPolygon(other: Collider<any>): CollisionResponse | null;
+  protected abstract testPolygon(
+    other: Collider<any>
+  ): CollisionResponse | null;
   protected abstract testCircle(other: Collider<any>): CollisionResponse | null;
 }
 

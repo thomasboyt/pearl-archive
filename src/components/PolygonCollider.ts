@@ -2,10 +2,10 @@ import * as SAT from 'sat';
 import crosses from 'robust-segment-intersect';
 
 import Physical from './Physical';
-import Collider, {CollisionResponse, ColliderType} from './Collider';
+import Collider, { CollisionResponse, ColliderType } from './Collider';
 import CircleCollider from './CircleCollider';
 
-import {rotatePoint} from '../util/maths';
+import { rotatePoint } from '../util/maths';
 
 export type Point = [number, number];
 export type Segment = [Point, Point];
@@ -49,7 +49,7 @@ function getBoundsFromPolygon(polygon: SAT.Polygon): Bounds {
     }
   }
 
-  return {xMin, yMin, xMax, yMax};
+  return { xMin, yMin, xMax, yMax };
 }
 
 export default class PolygonCollider extends Collider<Options> {
@@ -134,9 +134,13 @@ export default class PolygonCollider extends Collider<Options> {
 
     const points = this.points
       .map((point) => rotatePoint(point, this.angle))
-      .map((point) => [
-        point[0] + phys.center.x + phys.vel.x * dt,
-        point[1] + phys.center.y + phys.vel.y * dt] as [number, number]);
+      .map(
+        (point) =>
+          [
+            point[0] + phys.center.x + phys.vel.x * dt,
+            point[1] + phys.center.y + phys.vel.y * dt,
+          ] as [number, number]
+      );
 
     const [a, b] = ray;
 
@@ -155,7 +159,7 @@ export default class PolygonCollider extends Collider<Options> {
     const polygon = new SAT.Polygon(new SAT.Vector(0, 0), vectors);
 
     // ...but this part can't!
-    const {x, y} = this.getComponent(Physical).center;
+    const { x, y } = this.getComponent(Physical).center;
     polygon.rotate(this.angle);
     polygon.translate(x, y);
 
@@ -189,5 +193,4 @@ export default class PolygonCollider extends Collider<Options> {
       return null;
     }
   }
-
 }

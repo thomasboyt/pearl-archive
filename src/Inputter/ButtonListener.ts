@@ -13,21 +13,37 @@ export default class ButtonListener {
     // allows canvas to receive keyboard events & get focus
     canvas.contentEditable = 'true';
 
-    canvas.addEventListener('keydown', (e) => {
-      this._keyDown(e.keyCode);
-    }, false);
+    canvas.addEventListener(
+      'keydown',
+      (e) => {
+        this._keyDown(e.keyCode);
+      },
+      false
+    );
 
-    canvas.addEventListener('keyup', (e) => {
-      this._keyUp(e.keyCode);
-    }, false);
+    canvas.addEventListener(
+      'keyup',
+      (e) => {
+        this._keyUp(e.keyCode);
+      },
+      false
+    );
 
-    canvas.addEventListener('mousedown', (e) => {
-      this._mouseDown(this._getMouseButton(e));
-    }, false);
+    canvas.addEventListener(
+      'mousedown',
+      (e) => {
+        this._mouseDown(this._getMouseButton(e));
+      },
+      false
+    );
 
-    canvas.addEventListener('mouseup', (e) => {
-      this._mouseUp(this._getMouseButton(e));
-    }, false);
+    canvas.addEventListener(
+      'mouseup',
+      (e) => {
+        this._mouseUp(this._getMouseButton(e));
+      },
+      false
+    );
   }
 
   clearPressed() {

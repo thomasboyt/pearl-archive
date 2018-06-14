@@ -1,10 +1,10 @@
-import {Coordinates} from '../types';
+import { Coordinates } from '../types';
 
 export type MouseListenerFn = (mousePos: Coordinates) => void;
 
 // TODO: what should document actually be here?
 function getWindow(document: any): Window {
- return document.parentWindow || document.defaultView;
+  return document.parentWindow || document.defaultView;
 }
 
 function getElementPosition(element: HTMLElement): Coordinates {
@@ -13,14 +13,18 @@ function getElementPosition(element: HTMLElement): Coordinates {
   const body = document.body;
   const window = getWindow(document);
   return {
-    x: rect.left + (window.pageXOffset || body.scrollLeft) - (body.clientLeft || 0),
-    y: rect.top + (window.pageYOffset || body.scrollTop) - (body.clientTop || 0),
+    x:
+      rect.left +
+      (window.pageXOffset || body.scrollLeft) -
+      (body.clientLeft || 0),
+    y:
+      rect.top + (window.pageYOffset || body.scrollTop) - (body.clientTop || 0),
   };
-};
+}
 
 export default class MouseMoveListener {
   private _bindings: Set<MouseListenerFn> = new Set();
-  private _mousePosition: Coordinates = {x: 0, y: 0};
+  private _mousePosition: Coordinates = { x: 0, y: 0 };
 
   bind(canvas: HTMLCanvasElement) {
     canvas.addEventListener('mousemove', (e) => {
@@ -52,10 +56,9 @@ export default class MouseMoveListener {
 
   private _getAbsoluteMousePosition(e: MouseEvent): Coordinates {
     if (e.pageX) {
-      return {x: e.pageX, y: e.pageY};
+      return { x: e.pageX, y: e.pageY };
     } else {
-      return {x: e.clientX, y: e.clientY};
+      return { x: e.clientX, y: e.clientY };
     }
   }
-
 }

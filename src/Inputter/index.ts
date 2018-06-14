@@ -1,6 +1,6 @@
-import {Coordinates} from '../types';
-import ButtonListener, {MouseButton} from './ButtonListener';
-import MouseMoveListener, {MouseListenerFn} from './MouseMoveListener';
+import { Coordinates } from '../types';
+import ButtonListener, { MouseButton } from './ButtonListener';
+import MouseMoveListener, { MouseListenerFn } from './MouseMoveListener';
 
 export default class Inputter {
   private _buttonListener: ButtonListener = new ButtonListener();

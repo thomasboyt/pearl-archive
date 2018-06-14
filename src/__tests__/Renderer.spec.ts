@@ -42,4 +42,4 @@ describe('renderer', () => {
     expect(ctx.canvas.style.width).toBe('400px');
     expect(ctx.canvas.style.height).toBe('300px');
   });
-})
+});

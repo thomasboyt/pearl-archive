@@ -25,6 +25,8 @@ export default class Ticker {
   }
 
   stop() {
-    this._nextTickFn = () => { /* no-op */ };
+    this._nextTickFn = () => {
+      /* no-op */
+    };
   }
 }

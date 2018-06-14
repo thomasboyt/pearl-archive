@@ -12,7 +12,11 @@ export default class SpriteSheet implements ISpriteSheet {
   spriteWidth: number;
   spriteHeight: number;
 
-  constructor(img: HTMLImageElement, spriteWidth: number, spriteHeight: number) {
+  constructor(
+    img: HTMLImageElement,
+    spriteWidth: number,
+    spriteHeight: number
+  ) {
     if (!img) {
       throw new Error('nonexistent image');
     }
@@ -29,11 +33,17 @@ export default class SpriteSheet implements ISpriteSheet {
     let x = num * this.spriteWidth;
 
     let row = 0;
-    while (x > (this.img.width - this.spriteWidth)) {
+    while (x > this.img.width - this.spriteWidth) {
       row++;
       x -= this.img.width;
     }
 
-    return new Sprite(this.img, x, row * this.spriteHeight, this.spriteWidth, this.spriteHeight);
+    return new Sprite(
+      this.img,
+      x,
+      row * this.spriteHeight,
+      this.spriteWidth,
+      this.spriteHeight
+    );
   }
 }

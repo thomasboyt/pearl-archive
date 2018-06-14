@@ -70,8 +70,12 @@ export default class GameObject {
     return !!this.tags.find((val) => val === tag);
   }
 
-  maybeGetComponent<T extends Component<any>>(componentType: {new(...args: any[]): T}): T | null {
-    const c = this.components.find((component) => component instanceof componentType);
+  maybeGetComponent<T extends Component<any>>(componentType: {
+    new (...args: any[]): T;
+  }): T | null {
+    const c = this.components.find(
+      (component) => component instanceof componentType
+    );
 
     if (!c) {
       return null;
@@ -82,7 +86,9 @@ export default class GameObject {
     return c as T;
   }
 
-  getComponent<T extends Component<any>>(componentType: {new(...args: any[]): T}): T {
+  getComponent<T extends Component<any>>(componentType: {
+    new (...args: any[]): T;
+  }): T {
     const c = this.maybeGetComponent(componentType);
 
     if (!c) {
@@ -106,7 +112,7 @@ export default class GameObject {
 
   /* Object tree system */
 
-  private _parent: GameObject | null = null;  // top-level game object doesn't have a parent
+  private _parent: GameObject | null = null; // top-level game object doesn't have a parent
   private _children: Set<GameObject> = new Set();
 
   /**

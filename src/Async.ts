@@ -1,4 +1,4 @@
-import {runCoroutine, Coroutine} from './util/coroutines';
+import { runCoroutine, Coroutine } from './util/coroutines';
 
 type Resolve = (value?: any) => void;
 

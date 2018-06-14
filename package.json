@@ -21,6 +21,7 @@
     "canvas-prebuilt": "^1.6.5-prerelease.1",
     "eslint": "^3.2.2",
     "jest": "^23.1.0",
+    "prettier": "^1.13.5",
     "ts-jest": "^22.4.6",
     "ts-loader": "^4.4.1",
     "typescript": "^2.9.0",

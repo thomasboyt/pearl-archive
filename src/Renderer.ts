@@ -1,8 +1,11 @@
 import PearlInstance from './PearlInstance';
-import {Coordinates} from './types';
+import { Coordinates } from './types';
 import GameObject from './GameObject';
 
-function viewOffset(viewCenter: Coordinates, viewSize: Coordinates): Coordinates {
+function viewOffset(
+  viewCenter: Coordinates,
+  viewSize: Coordinates
+): Coordinates {
   return {
     x: -(viewCenter.x - viewSize.x / 2),
     y: -(viewCenter.y - viewSize.y / 2),
@@ -37,7 +40,7 @@ export default class Renderer {
   run(opts: RendererOpts) {
     const canvas = opts.canvas;
 
-    canvas.style.outline = 'none';   // stop browser outlining canvas when it has focus
+    canvas.style.outline = 'none'; // stop browser outlining canvas when it has focus
     canvas.style.cursor = 'default'; // keep pointer normal when hovering over canvas
 
     this._ctx = canvas.getContext('2d')!;

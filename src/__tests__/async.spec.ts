@@ -3,26 +3,29 @@
 import AsyncManager from '../Async';
 
 function* immediate() {
-  yield new Promise((resolve) => {resolve(); });
+  yield new Promise((resolve) => {
+    resolve();
+  });
 }
 
 describe('async manager', () => {
   test('runs scheduled coroutines', (done) => {
-
     const asyncManager = new AsyncManager();
     asyncManager.startAt(0);
 
-    asyncManager.schedule(function* (): IterableIterator<Promise<any>> {
+    asyncManager.schedule(function*(): IterableIterator<Promise<any>> {
       done();
     });
-  })
+  });
 
   test('coroutines that yield promises are correctly executed', (done) => {
     const asyncManager = new AsyncManager();
     asyncManager.startAt(0);
 
-    asyncManager.schedule(function* () {
-      yield new Promise((resolve) => {resolve(); });
+    asyncManager.schedule(function*() {
+      yield new Promise((resolve) => {
+        resolve();
+      });
       done();
     });
   });
@@ -31,7 +34,7 @@ describe('async manager', () => {
     const asyncManager = new AsyncManager();
     asyncManager.startAt(0);
 
-    asyncManager.schedule(function* () {
+    asyncManager.schedule(function*() {
       yield immediate();
       done();
     });
@@ -41,7 +44,7 @@ describe('async manager', () => {
     const asyncManager = new AsyncManager();
     asyncManager.startAt(0);
 
-    asyncManager.schedule(function* () {
+    asyncManager.schedule(function*() {
       yield asyncManager.waitMs(25);
 
       done();
@@ -63,12 +66,12 @@ describe('async manager', () => {
       }
     };
 
-    asyncManager.schedule(function* () {
+    asyncManager.schedule(function*() {
       yield asyncManager.waitMs(25);
       incExecuted();
     });
 
-    asyncManager.schedule(function* () {
+    asyncManager.schedule(function*() {
       yield asyncManager.waitMs(25);
       incExecuted();
     });
@@ -77,15 +80,13 @@ describe('async manager', () => {
   });
 
   // TODO
-  test.skip(
-    'ensure timers are executed in the correct order when multiple timers are triggered in one frame',
-    (done) => {
+  test.skip('ensure timers are executed in the correct order when multiple timers are triggered in one frame', (done) => {
     const asyncManager = new AsyncManager();
     asyncManager.startAt(0);
 
     let numReached = 0;
 
-    asyncManager.schedule(function* () {
+    asyncManager.schedule(function*() {
       yield asyncManager.waitMs(100);
 
       numReached += 1;
@@ -93,7 +94,7 @@ describe('async manager', () => {
       done();
     });
 
-    asyncManager.schedule(function* () {
+    asyncManager.schedule(function*() {
       yield asyncManager.waitMs(50);
 
       numReached += 1;

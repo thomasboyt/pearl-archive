@@ -66,7 +66,9 @@ abstract class Component<Settings> {
   /**
    * Get a sibling component on the same object by type.
    */
-  getComponent<T extends Component<any>>(componentType: {new(...args: any[]): T}): T {
+  getComponent<T extends Component<any>>(componentType: {
+    new (...args: any[]): T;
+  }): T {
     return this.gameObject.getComponent(componentType);
   }
 }

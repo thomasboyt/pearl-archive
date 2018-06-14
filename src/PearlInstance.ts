@@ -1,7 +1,7 @@
 import EntityManager from './EntityManager';
 import Inputter from './Inputter';
 import Ticker from './Ticker';
-import Renderer, {RendererOpts} from './Renderer';
+import Renderer, { RendererOpts } from './Renderer';
 import AsyncManager from './Async';
 import Runner from './Runner';
 

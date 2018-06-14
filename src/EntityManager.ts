@@ -24,12 +24,11 @@ export default class EntityManager {
   all(ctor?: Function): Set<GameObject> {
     // TODO: why doesn't this work
     if (!ctor) {
-      return new Set(this._entities);  // shallow clone
+      return new Set(this._entities); // shallow clone
     }
 
     return new Set(
-      [...(this._entities)]
-      .filter((entity) => entity instanceof ctor!)
+      [...this._entities].filter((entity) => entity instanceof ctor!)
     );
   }
 

@@ -9,7 +9,7 @@ export type AssetMap = {
   audio: {
     [key: string]: AudioBuffer;
   };
-}
+};
 
 export interface StringMap {
   [key: string]: string;
@@ -18,7 +18,7 @@ export interface StringMap {
 export type AssetCfg = {
   images: StringMap;
   audio: StringMap;
-}
+};
 
 export default class AssetManager extends Component<AssetCfg> {
   numTotal: number;
@@ -31,23 +31,23 @@ export default class AssetManager extends Component<AssetCfg> {
 
   init(assetCfg: AssetCfg) {
     this.assets = {
-      'images': {},
-      'audio': {},
+      images: {},
+      audio: {},
     };
 
     this._assetCfg = assetCfg;
 
-    this.numTotal = (
+    this.numTotal =
       Object.keys(this._assetCfg.images).length +
-      Object.keys(this._assetCfg.audio).length
-    );
+      Object.keys(this._assetCfg.audio).length;
 
     const audioCtx = this.getComponent(AudioManager).ctx;
 
     if (!audioCtx) {
       throw new Error(
-        'AudioManager\'s AudioContext not yet initialized - make sure AudioManager is before ' +
-        'AssetManager in your components array');
+        "AudioManager's AudioContext not yet initialized - make sure AudioManager is before " +
+          'AssetManager in your components array'
+      );
     }
 
     this.audioCtx = audioCtx;
@@ -118,5 +118,4 @@ export default class AssetManager extends Component<AssetCfg> {
 
     return sound;
   }
-
 }

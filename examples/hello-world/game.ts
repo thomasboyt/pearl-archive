@@ -1,4 +1,4 @@
-import {Component, createPearl} from '../../src';
+import { Component, createPearl } from '../../src';
 
 class HelloWorld extends Component<null> {
   render(ctx: CanvasRenderingContext2D) {
@@ -11,9 +11,7 @@ class HelloWorld extends Component<null> {
 }
 
 createPearl({
-  rootComponents: [
-    new HelloWorld(),
-  ],
+  rootComponents: [new HelloWorld()],
   width: 300,
   height: 300,
   canvas: document.getElementById('canvas') as HTMLCanvasElement,

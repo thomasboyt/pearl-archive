@@ -2,7 +2,7 @@ import Component from '../Component';
 import Physical from './Physical';
 
 import Sprite from '../util/Sprite';
-import {ISpriteSheet} from '../util/SpriteSheet';
+import { ISpriteSheet } from '../util/SpriteSheet';
 
 const blankSprite = new Sprite(new Image(), 0, 0, 0, 0);
 
@@ -57,7 +57,6 @@ class Animation {
       return this._sheet.get(frame);
     }
   }
-
 }
 
 export interface AnimationConfigMap {

@@ -2,7 +2,7 @@ import * as SAT from 'sat';
 
 import Physical from './Physical';
 import PolygonCollider from './PolygonCollider';
-import Collider, {CollisionResponse, ColliderType} from './Collider';
+import Collider, { CollisionResponse, ColliderType } from './Collider';
 
 export interface Options {
   radius?: number;
@@ -20,7 +20,7 @@ export default class CircleCollider extends Collider<Options> {
   }
 
   getSATCircle(): SAT.Circle {
-    const {x, y} = this.getComponent(Physical).center;
+    const { x, y } = this.getComponent(Physical).center;
     const circle = new SAT.Circle(new SAT.Vector(x, y), this.radius);
     return circle;
   }
@@ -52,5 +52,4 @@ export default class CircleCollider extends Collider<Options> {
       return null;
     }
   }
-
 }
