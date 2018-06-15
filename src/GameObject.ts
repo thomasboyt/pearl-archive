@@ -1,4 +1,4 @@
-/* tslint:disable:member-ordering */
+import * as uuidv4 from 'uuid/v4';
 
 import Component from './Component';
 import PearlInstance from './PearlInstance';
@@ -37,7 +37,9 @@ export default class GameObject {
 
   zIndex: number = 0;
 
-  private name: string;
+  id = uuidv4();
+
+  readonly name: string;
   private components: Component<any>[] = [];
   private tags: string[] = [];
 
