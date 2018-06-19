@@ -1,7 +1,7 @@
 import Sprite from './Sprite';
 
 export interface ISpriteSheet {
-  get(name: any): Sprite;
+  createSprite(name: any): Sprite;
 }
 
 /**
@@ -11,6 +11,7 @@ export default class SpriteSheet implements ISpriteSheet {
   img: HTMLImageElement;
   spriteWidth: number;
   spriteHeight: number;
+  sprites: Sprite[];
 
   constructor(
     img: HTMLImageElement,
@@ -29,7 +30,7 @@ export default class SpriteSheet implements ISpriteSheet {
   /**
    * Return a new `Sprite` object for a sprite at a given index
    */
-  get(num: number): Sprite {
+  createSprite(num: number): Sprite {
     let x = num * this.spriteWidth;
 
     let row = 0;

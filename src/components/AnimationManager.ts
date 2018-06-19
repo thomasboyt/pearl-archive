@@ -1,7 +1,7 @@
 import Component from '../Component';
 import Physical from './Physical';
 
-import Sprite from '../util/Sprite';
+import Sprite, { RGB } from '../util/Sprite';
 import { ISpriteSheet } from '../util/SpriteSheet';
 
 const blankSprite = new Sprite(new Image(), 0, 0, 0, 0);
@@ -16,6 +16,7 @@ class Animation {
   private _frameLengthMs: number | null;
 
   private _frames: number[];
+  private _sprites: Sprite[] = [];
   private _currentFrameIdx: number;
 
   private _elapsed: number;
@@ -25,6 +26,10 @@ class Animation {
 
     this._frames = cfg.frames;
     this._frameLengthMs = cfg.frameLengthMs;
+
+    for (let frame of this._frames) {
+      this._sprites.push(this._sheet.createSprite(frame));
+    }
 
     this._currentFrameIdx = 0;
     this._elapsed = 0;
@@ -49,13 +54,7 @@ class Animation {
   }
 
   getSprite() {
-    const frame = this._frames[this._currentFrameIdx];
-
-    if (frame === null) {
-      return blankSprite;
-    } else {
-      return this._sheet.get(frame);
-    }
+    return this._sprites[this._currentFrameIdx];
   }
 }
 
@@ -78,6 +77,10 @@ export default class AnimationManager extends Component<Options> {
   private scaleX: number = 1;
   private scaleY: number = 1;
 
+  private masked = false;
+  private maskFrom: [number, number, number];
+  private maskTo: [number, number, number];
+
   get current() {
     return this._currentState;
   }
@@ -90,6 +93,18 @@ export default class AnimationManager extends Component<Options> {
 
   getSprite(): Sprite {
     return this._current.getSprite();
+  }
+
+  mask(from: RGB, to: RGB) {
+    this.masked = true;
+    this.maskFrom = from;
+    this.maskTo = to;
+  }
+
+  unmask() {
+    this.masked = false;
+    delete this.maskFrom;
+    delete this.maskTo;
   }
 
   set(state: string) {
@@ -125,7 +140,12 @@ export default class AnimationManager extends Component<Options> {
 
     ctx.scale(this.scaleX, this.scaleY);
 
-    sprite.draw(ctx, destX, destY);
+    if (this.masked) {
+      sprite.drawMasked(ctx, destX, destY, this.maskFrom, this.maskTo);
+    } else {
+      sprite.draw(ctx, destX, destY);
+    }
+
     ctx.restore();
   }
 }

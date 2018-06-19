@@ -31,6 +31,8 @@
   "dependencies": {
     "@types/sat": "0.0.29",
     "@types/uuid": "^3.4.3",
+    "fast-equals": "^1.5.3",
+    "micro-memoize": "^2.0.3",
     "robust-segment-intersect": "^1.0.1",
     "sat": "^0.5.0",
     "uuid": "^3.2.1"
