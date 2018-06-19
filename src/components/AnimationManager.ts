@@ -74,8 +74,8 @@ export default class AnimationManager extends Component<Options> {
   private _currentState: string;
   private _current: Animation;
 
-  private scaleX: number = 1;
-  private scaleY: number = 1;
+  scaleX: number = 1;
+  scaleY: number = 1;
 
   private masked = false;
   private maskFrom: [number, number, number];
