@@ -132,6 +132,7 @@ export default class AnimationManager extends Component<Options> {
     const phys = this.getComponent(Physical);
 
     ctx.translate(phys.center.x, phys.center.y);
+    ctx.rotate(phys.angle);
 
     const sprite = this._current.getSprite();
 
