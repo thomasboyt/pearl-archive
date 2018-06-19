@@ -49,6 +49,7 @@ and open `localhost:8080` in your browser.
 
 ## Todo
 
+- [ ] Impliment max substeps in update loop
 - [ ] Fix mysterious test race condition
   - I think the known-failure test is timing out, which counts as an "exception" instead of a "failure"?
 - [ ] Fix `"Cannot find module 'sat'"` errors when importing TypeScript definition
