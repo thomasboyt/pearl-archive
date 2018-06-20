@@ -76,6 +76,7 @@ export default class AnimationManager extends Component<Options> {
 
   scaleX: number = 1;
   scaleY: number = 1;
+  visible: boolean = true;
 
   private masked = false;
   private maskFrom: [number, number, number];
@@ -127,6 +128,10 @@ export default class AnimationManager extends Component<Options> {
   }
 
   render(ctx: CanvasRenderingContext2D) {
+    if (!this.visible) {
+      return;
+    }
+
     ctx.save();
 
     const phys = this.getComponent(Physical);
