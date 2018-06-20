@@ -25,6 +25,13 @@ abstract class Component<Settings> {
   /**
    * Hook called when this object is created with its passed-in settings.
    */
+  create(settings: Settings) {
+    // no-op
+  }
+
+  /**
+   * Hook called when this object is added to the world.
+   */
   init(settings: Settings) {
     // no-op
   }

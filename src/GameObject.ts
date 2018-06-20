@@ -48,6 +48,7 @@ export default class GameObject {
 
     for (let component of opts.components) {
       this.addComponent(component);
+      component.create(component.initialSettings);
     }
 
     if (opts.zIndex !== undefined) {

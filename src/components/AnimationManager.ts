@@ -85,7 +85,7 @@ export default class AnimationManager extends Component<Options> {
     return this._currentState;
   }
 
-  init(opts: Options) {
+  create(opts: Options) {
     this._sheet = opts.sheet;
     this._animationConfig = opts.animations;
     this.set(opts.initialState);
