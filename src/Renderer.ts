@@ -63,6 +63,12 @@ export default class Renderer {
 
     this._viewSize = { x: opts.width, y: opts.height };
     this._viewCenter = { x: this._viewSize.x / 2, y: this._viewSize.y / 2 };
+
+    // disable image smoothing
+    // TODO: make this an option
+    this._ctx.mozImageSmoothingEnabled = false;
+    this._ctx.webkitImageSmoothingEnabled = false;
+    this._ctx.imageSmoothingEnabled = false;
   }
 
   // TODO: Evaluate the usefulness of these
