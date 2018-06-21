@@ -13,7 +13,7 @@ export default class CircleCollider extends Collider<Options> {
 
   radius: number;
 
-  init(options: Options = {}) {
+  create(options: Options = {}) {
     if (options.radius) {
       this.radius = options.radius;
     }

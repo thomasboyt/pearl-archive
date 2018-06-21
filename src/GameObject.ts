@@ -42,13 +42,13 @@ export default class GameObject {
   readonly name: string;
   private components: Component<any>[] = [];
   private tags: string[] = [];
+  private initialized = false;
 
   constructor(opts: CreateOpts) {
     this.name = opts.name;
 
     for (let component of opts.components) {
       this.addComponent(component);
-      component.create(component.initialSettings);
     }
 
     if (opts.zIndex !== undefined) {
@@ -158,14 +158,22 @@ export default class GameObject {
    * Internal hooks
    */
 
-  init() {
+  create() {
     // game is set at this point
     for (let component of this.components) {
-      component.init(component.initialSettings);
+      component.create(component.initialSettings);
     }
   }
 
   update(dt: number) {
+    if (!this.initialized) {
+      for (let component of this.components) {
+        component.init(component.initialSettings);
+      }
+
+      this.initialized = true;
+    }
+
     for (let component of this.components) {
       component.update(dt);
     }

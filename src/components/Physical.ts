@@ -43,7 +43,7 @@ export default class Physical extends Component<PhysicalSettings> {
     y: 0,
   };
 
-  init(settings: PhysicalSettings = {}) {
+  create(settings: PhysicalSettings = {}) {
     if (settings.center) {
       this.center = settings.center;
     }

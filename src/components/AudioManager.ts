@@ -26,7 +26,7 @@ export default class AudioManager extends Component<Options> {
   volumeNode: GainNode;
   defaultGain: number;
 
-  init(opts: Options) {
+  create(opts: Options) {
     const envAudioContext = getAudioContextClass();
     this.ctx = new envAudioContext();
 

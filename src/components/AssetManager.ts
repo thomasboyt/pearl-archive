@@ -29,7 +29,7 @@ export default class AssetManager extends Component<AssetCfg> {
 
   private assets: AssetMap;
 
-  init(assetCfg: AssetCfg) {
+  create(assetCfg: AssetCfg) {
     this.assets = {
       images: {},
       audio: {},
@@ -40,7 +40,9 @@ export default class AssetManager extends Component<AssetCfg> {
     this.numTotal =
       Object.keys(this._assetCfg.images).length +
       Object.keys(this._assetCfg.audio).length;
+  }
 
+  init() {
     const audioCtx = this.getComponent(AudioManager).ctx;
 
     if (!audioCtx) {

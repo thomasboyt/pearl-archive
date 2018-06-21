@@ -79,7 +79,7 @@ export default class PolygonCollider extends Collider<Options> {
   width?: number;
   height?: number;
 
-  init(options: Options = {}) {
+  create(options: Options = {}) {
     if (options.points) {
       this.points = options.points;
     }

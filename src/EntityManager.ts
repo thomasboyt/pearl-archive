@@ -14,9 +14,7 @@ export default class EntityManager {
     // We call this.all() here so that if any entities are created or destroyed during the update()
     // cycle, it doesn't affect our iteration
     for (let entity of this.all()) {
-      if (entity.update) {
-        entity.update(dt);
-      }
+      entity.update(dt);
     }
   }
 
@@ -34,7 +32,7 @@ export default class EntityManager {
 
   add(entity: GameObject): GameObject {
     entity.pearl = this._pearl;
-    entity.init();
+    entity.create();
 
     this._entities.add(entity);
 

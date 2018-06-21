@@ -11,7 +11,7 @@ export default class CircleRenderer extends Component<Options> {
   fillStyle: string | null = null;
   strokeStyle: string | null = null;
 
-  init(opts: Options = {}) {
+  create(opts: Options = {}) {
     this.fillStyle = opts.fillStyle || null;
     this.strokeStyle = opts.strokeStyle || null;
   }
