@@ -8,7 +8,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "prepare": "tsc",
     "watch": "tsc --watch",
     "build-examples": "webpack --config webpack/examples.config.js",
     "run-examples": "webpack-serve webpack/examples.config.js",
