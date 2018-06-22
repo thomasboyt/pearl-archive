@@ -1,7 +1,17 @@
+import Keys from '../util/keyCodes';
+
 export enum MouseButton {
   left,
   right,
 }
+
+const interruptKeyCodes = new Set([
+  Keys.leftArrow,
+  Keys.rightArrow,
+  Keys.upArrow,
+  Keys.downArrow,
+  Keys.space,
+]);
 
 export default class ButtonListener {
   _keyDownState: Map<number, boolean> = new Map();
@@ -17,6 +27,11 @@ export default class ButtonListener {
       'keydown',
       (e) => {
         this._keyDown(e.keyCode);
+
+        if (interruptKeyCodes.has(e.keyCode)) {
+          e.preventDefault();
+          return false;
+        }
       },
       false
     );
