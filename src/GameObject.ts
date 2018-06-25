@@ -181,6 +181,10 @@ export default class GameObject {
 
   render(ctx: CanvasRenderingContext2D) {
     for (let component of this.components) {
+      if (!component.isVisible) {
+        continue;
+      }
+
       ctx.save();
       component.render(ctx);
       ctx.restore();

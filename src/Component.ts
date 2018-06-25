@@ -7,12 +7,17 @@ import PearlInstance from './PearlInstance';
  * component is instantiated.
  */
 abstract class Component<Settings> {
+  initialSettings?: Settings;
+
   /**
    * The gameObject that this component is attached to.
    */
   gameObject: GameObject;
 
-  initialSettings?: Settings;
+  /**
+   * Whether this component's render() should be skipped.
+   */
+  isVisible: boolean = true;
 
   constructor(settings?: Settings) {
     this.initialSettings = settings;
