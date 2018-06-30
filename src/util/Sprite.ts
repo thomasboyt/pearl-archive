@@ -10,7 +10,7 @@ export default class Sprite {
   width: number;
   height: number;
 
-  private canvas: HTMLCanvasElement;
+  canvas: HTMLCanvasElement;
 
   constructor(
     img: HTMLImageElement,
