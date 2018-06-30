@@ -26,6 +26,8 @@ export interface CreateOpts {
   tags?: string[];
 }
 
+export type GameObjectState = 'created' | 'initialized' | 'destroyed';
+
 /**
  * A GameObject is an entity in the world that holds a collection of components.
  *
@@ -42,7 +44,11 @@ export default class GameObject {
   readonly name: string;
   private components: Component<any>[] = [];
   private tags: string[] = [];
-  private initialized = false;
+
+  private _state: GameObjectState = 'created';
+  get state() {
+    return this._state;
+  }
 
   constructor(opts: CreateOpts) {
     this.name = opts.name;
@@ -166,12 +172,12 @@ export default class GameObject {
   }
 
   update(dt: number) {
-    if (!this.initialized) {
+    if (this.state === 'created') {
       for (let component of this.components) {
         component.init(component.initialSettings);
       }
 
-      this.initialized = true;
+      this._state = 'initialized';
     }
 
     for (let component of this.components) {
@@ -208,5 +214,7 @@ export default class GameObject {
 
     // remove reference to allow GC
     this._children = new Set();
+
+    this._state = 'destroyed';
   }
 }
