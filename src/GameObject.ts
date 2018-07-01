@@ -78,7 +78,7 @@ export default class GameObject {
    */
   hasTag(tag: string): boolean {
     // TODO: probably use a Set or Map for this
-    return !!this.tags.find((val) => val === tag);
+    return this.tags.some((val) => val === tag);
   }
 
   maybeGetComponent<T extends Component<any>>(componentType: {

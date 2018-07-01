@@ -19,15 +19,14 @@ export default class EntityManager {
   }
 
   // TODO: Ensure entity is typed to passed constructor
-  all(ctor?: Function): Set<GameObject> {
-    // TODO: why doesn't this work
-    if (!ctor) {
-      return new Set(this._entities); // shallow clone
-    }
+  all(...tags: string[]): GameObject[] {
+    const all = [...this._entities.values()];
 
-    return new Set(
-      [...this._entities].filter((entity) => entity instanceof ctor!)
-    );
+    if (tags.length) {
+      return all.filter((obj) => tags.some((tag) => obj.hasTag(tag)));
+    } else {
+      return all;
+    }
   }
 
   add(entity: GameObject): GameObject {
