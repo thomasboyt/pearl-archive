@@ -42,8 +42,10 @@ export default class GameObject {
   id = uuidv4();
 
   readonly name: string;
-  private components: Component<any>[] = [];
   private tags: string[] = [];
+
+  // TODO: maybe make this frozen to the outside world
+  components: Component<any>[] = [];
 
   private _state: GameObjectState = 'created';
   get state() {
