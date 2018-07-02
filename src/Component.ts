@@ -1,5 +1,6 @@
 import GameObject from './GameObject';
 import PearlInstance from './PearlInstance';
+import { Yieldable } from '@tboyt/coroutine-manager';
 
 /**
  * A base class for components. The component's options interface should be passed as a type
@@ -82,6 +83,16 @@ abstract class Component<Settings> {
     new (...args: any[]): T;
   }): T {
     return this.gameObject.getComponent(componentType);
+  }
+
+  runCoroutine(
+    generatorFn: () => IterableIterator<Yieldable>
+  ): IterableIterator<undefined> {
+    return this.gameObject.runCoroutine(generatorFn.bind(this));
+  }
+
+  cancelCoroutine(coroutine: IterableIterator<undefined>) {
+    this.gameObject.cancelCoroutine(coroutine);
   }
 }
 

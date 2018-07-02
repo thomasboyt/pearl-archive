@@ -2,6 +2,7 @@ import * as uuidv4 from 'uuid/v4';
 
 import Component from './Component';
 import PearlInstance from './PearlInstance';
+import CoroutineManager, { Yieldable } from '@tboyt/coroutine-manager';
 
 export interface CreateOpts {
   /**
@@ -185,6 +186,8 @@ export default class GameObject {
     for (let component of this.components) {
       component.update(dt);
     }
+
+    this.coroutineManager.tick();
   }
 
   render(ctx: CanvasRenderingContext2D) {
@@ -218,5 +221,17 @@ export default class GameObject {
     this._children = new Set();
 
     this._state = 'destroyed';
+  }
+
+  private coroutineManager = new CoroutineManager();
+
+  runCoroutine(
+    generatorFn: () => IterableIterator<Yieldable>
+  ): IterableIterator<undefined> {
+    return this.coroutineManager.run(generatorFn);
+  }
+
+  cancelCoroutine(coroutine: IterableIterator<undefined>) {
+    this.coroutineManager.cancel(coroutine);
   }
 }

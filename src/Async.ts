@@ -1,17 +1,10 @@
-import { runCoroutine, Coroutine } from './util/coroutines';
+import GameObject from './GameObject';
 
 type Resolve = (value?: any) => void;
 
 export default class AsyncManager {
   private _time: number;
   private _timers: Map<number, Resolve[]> = new Map();
-
-  /**
-   * Schedule a coroutine to be executed.
-   */
-  schedule(coroutine: Coroutine) {
-    runCoroutine(coroutine());
-  }
 
   /**
    * Returns a yieldable promise to wait a certain amount of milliseconds. Once a time-scale system
