@@ -30,7 +30,7 @@
     "webpack-serve": "^1.0.4"
   },
   "dependencies": {
-    "@tboyt/coroutine-manager": "0.0.1",
+    "@tboyt/coroutine-manager": "0.0.2",
     "@types/sat": "0.0.29",
     "@types/uuid": "^3.4.3",
     "fast-equals": "^1.5.3",
