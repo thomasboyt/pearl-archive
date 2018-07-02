@@ -11,16 +11,17 @@ export default class EntityManager {
   }
 
   update(dt: number) {
-    // We call this.all() here so that if any entities are created or destroyed during the update()
-    // cycle, it doesn't affect our iteration
-    for (let entity of this.all()) {
+    for (let entity of this._entities) {
       entity.update(dt);
     }
   }
 
-  // TODO: Ensure entity is typed to passed constructor
   all(...tags: string[]): GameObject[] {
-    const all = [...this._entities.values()];
+    // TODO: THIS IS KINDA HACKY LOL Prevent rendering or use of objects that have not been
+    // instantiated yet
+    const all = [...this._entities.values()].filter((obj) => {
+      return obj.state === 'initialized';
+    });
 
     if (tags.length) {
       return all.filter((obj) => tags.some((tag) => obj.hasTag(tag)));
