@@ -1,5 +1,6 @@
 import { Coordinates } from '../types';
 import Component from '../Component';
+import { addVector } from '../util/maths';
 
 export interface PhysicalSettings {
   /**
@@ -22,7 +23,23 @@ export default class Physical extends Component<PhysicalSettings> {
   /**
    * The center of this object.
    */
-  center: Coordinates;
+  _localCenter: Readonly<Coordinates>;
+
+  get center(): Readonly<Coordinates> {
+    return this.localToWorld(this._localCenter);
+  }
+
+  set center(worldCenter: Readonly<Coordinates>) {
+    this._localCenter = this.worldToLocal(worldCenter);
+  }
+
+  get localCenter(): Readonly<Coordinates> {
+    return this._localCenter;
+  }
+
+  set localCenter(val: Readonly<Coordinates>) {
+    this._localCenter = val;
+  }
 
   /**
    * The angle of this object, in radians.
@@ -43,6 +60,43 @@ export default class Physical extends Component<PhysicalSettings> {
     y: 0,
   };
 
+  translate(vec: Coordinates) {
+    this.center = addVector(this.center, vec);
+  }
+
+  worldToLocal(worldPos: Coordinates): Coordinates {
+    const parent = this.getParentPhys();
+
+    if (!parent) {
+      return worldPos;
+    } else {
+      return {
+        x: worldPos.x - parent.center.x,
+        y: worldPos.y - parent.center.y,
+      };
+    }
+  }
+
+  localToWorld(localPos: Coordinates): Coordinates {
+    const parent = this.getParentPhys();
+
+    if (!parent) {
+      return localPos;
+    } else {
+      return {
+        x: localPos.x + parent.center.x,
+        y: localPos.y + parent.center.y,
+      };
+    }
+  }
+
+  private getParentPhys(): Physical | null {
+    return (
+      this.gameObject.parent &&
+      this.gameObject.parent.maybeGetComponent(Physical)
+    );
+  }
+
   create(settings: PhysicalSettings = {}) {
     if (settings.center) {
       this.center = settings.center;
@@ -58,8 +112,10 @@ export default class Physical extends Component<PhysicalSettings> {
   update(dt: number) {
     if (!this.frozen) {
       // TODO: Use angle here
-      this.center.x += this.vel.x * dt;
-      this.center.y += this.vel.y * dt;
+      this.translate({
+        x: this.vel.x * dt,
+        y: this.vel.y * dt,
+      });
     }
   }
 }

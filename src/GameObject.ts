@@ -151,12 +151,22 @@ export default class GameObject {
    * Instantiates a passed GameObject and adds it as a child object to this GameObject.
    *
    * Returns the GameObject for convenience.
+   *
+   * @deprecated
    */
   addChild(child: GameObject): GameObject {
     child.setParent(this);
     this._children.add(child);
     this.pearl.entities.add(child);
     return child;
+  }
+
+  /**
+   * Adds an existing child object to this object's children, and update the parent of the child.
+   */
+  appendChild(child: GameObject) {
+    child.setParent(this);
+    this._children.add(child);
   }
 
   private removeChild(child: GameObject) {
