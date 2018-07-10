@@ -114,6 +114,21 @@ export default class PolygonCollider extends Collider<Options> {
     return getBoundsFromPolygon(polygon);
   }
 
+  getLocalBounds(): Bounds {
+    const bounds = this.getBounds();
+    const phys = this.getComponent(Physical);
+
+    const min = phys.worldToLocal({ x: bounds.xMin, y: bounds.yMin });
+    const max = phys.worldToLocal({ x: bounds.xMax, y: bounds.yMax });
+
+    return {
+      xMin: min.x,
+      xMax: max.x,
+      yMin: min.y,
+      yMax: max.y,
+    };
+  }
+
   /**
    * Test whether a given line segment intersects with this collider.
    *
