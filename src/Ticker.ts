@@ -21,7 +21,7 @@ export default class Ticker {
     };
 
     this._nextTickFn = tick;
-    window.requestAnimationFrame(this._nextTickFn);
+    requestAnimationFrame(this._nextTickFn);
   }
 
   stop() {

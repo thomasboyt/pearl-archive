@@ -19,7 +19,7 @@ export { default as AnimationManager } from './components/AnimationManager';
 export { default as AssetManager } from './components/AssetManager';
 export { default as AudioManager } from './components/AudioManager';
 
-export { CollisionResponse } from './components/Collider';
+export { default as Collider, CollisionResponse } from './components/Collider';
 export { default as PolygonCollider } from './components/PolygonCollider';
 export { default as PolygonRenderer } from './components/PolygonRenderer';
 export { default as CircleCollider } from './components/CircleCollider';

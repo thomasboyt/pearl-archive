@@ -6,7 +6,7 @@ beforeEach(() => {
 });
 
 function createPearl() {
-  return new PearlInstance([]);
+  return new PearlInstance();
 }
 
 describe('renderer', () => {

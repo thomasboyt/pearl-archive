@@ -30,11 +30,14 @@ export default class PearlInstance {
    * The top-level GameObject, which holds components defined in rootComponents.
    */
   obj: GameObject;
-  private rootComponents: Component<any>[];
 
-  constructor(rootComponents: Component<any>[]) {
-    this.rootComponents = rootComponents;
+  /**
+   * Factor by which to speed up or slow down the in-engine time. This affects the delta-time passed
+   * to `update()` as well as the internal timer for `async.waitMs()`.
+   */
+  timeScale: number = 1;
 
+  constructor() {
     this.entities = new EntityManager(this);
     this.renderer = new Renderer(this);
     this.inputter = new Inputter();
@@ -44,22 +47,13 @@ export default class PearlInstance {
     (window as any).__pearl__ = this;
   }
 
-  init() {
-    this.obj = new GameObject({
-      name: 'Game',
-      components: this.rootComponents,
-      zIndex: -1,
-    });
-
-    this.entities.add(this.obj);
-  }
-
-  run(opts: RendererOpts) {
+  run(opts: CreatePearlOpts) {
     this.renderer.run(opts);
 
     this.inputter.bind(opts.canvas);
 
-    this.ticker = new Ticker((dt: number) => {
+    this.ticker = new Ticker((realDt: number) => {
+      const dt = realDt * this.timeScale;
       this.runner.update();
       this.async.update(dt);
       this.entities.update(dt);
@@ -69,7 +63,13 @@ export default class PearlInstance {
 
     this.async.startAt(this.ticker.time);
 
-    this.init();
+    this.obj = new GameObject({
+      name: 'Game',
+      components: opts.rootComponents,
+      zIndex: -1,
+    });
+
+    this.entities.add(this.obj);
   }
 }
 
@@ -86,7 +86,7 @@ export interface CreatePearlOpts {
  * your game.
  */
 export function createPearl(opts: CreatePearlOpts): PearlInstance {
-  const game = new PearlInstance(opts.rootComponents);
+  const game = new PearlInstance();
 
   game.run(opts);
 
