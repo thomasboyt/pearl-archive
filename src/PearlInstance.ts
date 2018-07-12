@@ -43,8 +43,6 @@ export default class PearlInstance {
     this.inputter = new Inputter();
     this.runner = new Runner();
     this.async = new AsyncManager();
-
-    (window as any).__pearl__ = this;
   }
 
   run(opts: CreatePearlOpts) {
@@ -87,8 +85,7 @@ export interface CreatePearlOpts {
  */
 export function createPearl(opts: CreatePearlOpts): PearlInstance {
   const game = new PearlInstance();
-
   game.run(opts);
-
+  (window as any).__pearl__ = game;
   return game;
 }
