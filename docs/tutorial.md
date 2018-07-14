@@ -2,7 +2,9 @@
 
 In this tutorial, we'll make a very simple game, in which the heroic player, as represented by a box, shall pick up a sword to slay the terrifying, massive enemy, as represented by a somewhat larger box.
 
-## Set up
+To get a sense of what we're making, it may make sense to preview the completed game [here](http://pearl-tutorial.surge.sh/). You can use the arrow keys to move.
+
+## Setting up the boilerplate
 
 You can use anything that knows how to build TypeScript to compile games in Pearl, but Pearl recommends the _lingua franca_ of build systems, [Webpack](https://webpack.js.org/), to build. Don't worry, for this tutorial you won't need to configure it yourself. To follow along at home, just clone the tutorial repo:
 
