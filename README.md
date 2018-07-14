@@ -8,9 +8,9 @@ Pearl aims to be a a simpler, code-only alternative to full-scale frameworks lik
 
 ## Docs & Help
 
-* [Getting Started](getting-started.md)
+* [Getting Started](docs/getting-started.md)
 * [Documentation](https://github.com/thomasboyt/pearl/tree/a61555e173878c8680e94c606d189df18876d859/docs/README.md)
-* [Roadmap](docs/roadmap.md)
+* [Roadmap](docs/docs/roadmap.md)
 
 ## Development Overview
 

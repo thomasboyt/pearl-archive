@@ -2,9 +2,9 @@
 
 * [Pearl](../README.md)
 * [Getting Started](getting-started.md)
-* [docs](README.md)
-  * [Entity & Component Lifecycle](lifecycle.md)
-  * [Tutorial](tutorial.md)
-  * [Coroutines](coroutines.md)
-  * [Roadmap](roadmap.md)
+* [Tutorial](tutorial.md)
+* [docs](docs/README.md)
+  * [Entity & Component Lifecycle](docs/entity-and-component-lifecycle.md)
+  * [Coroutines](docs/coroutines.md)
+  * [Roadmap](docs/roadmap.md)
 
