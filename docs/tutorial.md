@@ -4,7 +4,9 @@ In this tutorial, we'll make a very simple game, in which the heroic player, as 
 
 ## Set up
 
+{% hint style="warning" %}
 **TODO**: This tutorial is currently missing details about setting up Webpack, TypeScript, etc. Looking at the `examples.config.js` webpack config in this repo may help somewhat with this. Eventually, the tutorial and example project will be moved out to a separate repo, with its own Webpack configuration.
+{% endhint %}
 
 ## Creating the game world and player object
 
@@ -300,6 +302,7 @@ Now, if you run the game, you should see a nice game over message appear when yo
 
 We've seen how to render polygons using `PolygonRenderer`, and text using canvas drawing instructions. Now, for our sword, let's add a proper sword sprite, drawn by `SpriteRenderer`. The `SpriteRenderer` component simply renders a single sprite, while the `AnimationManager` can be used to add timed animations and multiple animation states to a component.
 
+{% hint style="warning" %}
 **TODO:** Pearl should have an actual first class asset loader. For now, you'll need to figure out your own strategy for loading images. Pearl wants sprite \(or sprite sheets\) to be loaded as `Image()` objects:
 
 ```typescript
@@ -310,7 +313,9 @@ swordImage.src = require('./sprites/sword.png');
 ```
 
 Images _need to be loaded when the sprites are constructed._ Eventually I want to provide some generic tools for this \(`AssetManager` was an attempt at one, but I don't like its API now, and don't think an asset manager should actually be tied into the Component system\). For now, I recommend a preloading strategy:
+{% endhint %}
 
+{% hint style="warning" %}
 ```typescript
 swordImage.onload = () => {
   createPearl({
@@ -321,10 +326,13 @@ swordImage.onload = () => {
   });
 };
 ```
+{% endhint %}
 
+{% hint style="info" %}
 Images can be used to construct either `Sprite` or `SpriteSheet` objects. `AnimationManager` can use the latter, but `SpriteRenderer` needs the former.
+{% endhint %}
 
-So, with your sprite image loaded, we can create a `Sprite` from it and use it in an entity:
+With the sprite image loaded, we can create a `Sprite` from it and use it in an entity:
 
 ```typescript
 class Game extends Component<null> {
@@ -431,7 +439,9 @@ export default class Player extends Component<null> {
 
 Now, when we pick up the sword, we'll see it move along with us!
 
+{% hint style="warning" %}
 **TODO**: Eventually, I'd like child objects to render with their _angle_ relative to their parent's, not just their _position_. Once this is done, this would be a good time show off the sword also _rotating_ when the player turns \(though I'd also have to add some logic to set the player's angle... maybe this should all be done once player is also rendered by a sprite\).
+{% endhint %}
 
 ## Slaying the enemy
 
