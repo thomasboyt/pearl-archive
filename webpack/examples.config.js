@@ -6,6 +6,7 @@ module.exports = {
 
   entry: {
     helloWorld: './examples/hello-world/game.ts',
+    tutorial: './examples/tutorial/game.ts',
   },
 
   output: {
@@ -30,6 +31,12 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: /\.(png|jpg|gif|ttf)$/,
+        use: {
+          loader: 'url-loader',
+        },
       },
     ],
   },

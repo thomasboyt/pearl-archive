@@ -73,6 +73,8 @@ Here's a relevant Unity discussion about some of the effects that pausing can ha
 
 This is an unsorted list of things I've been thinking about.
 
+* [ ] Coroutines should be scoped to be destroyed when a components/object is destroyed
+  * https://stackoverflow.com/questions/37391433/unity-are-running-coroutines-destroyed-upon-loading-new-scene
 * [ ] How are objects created/destroyed?
   * Figure out better API for `entities.add`/`entities.destroy`
   * Maybe `this.createObject({...})` / `this.destroyObject({...})`

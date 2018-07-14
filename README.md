@@ -50,16 +50,13 @@ and open `localhost:8080` in your browser.
 ## Todo
 
 - [ ] Impliment max substeps in update loop
-- [ ] Fix mysterious test race condition
-  - I think the known-failure test is timing out, which counts as an "exception" instead of a "failure"?
-- [ ] Fix `"Cannot find module 'sat'"` errors when importing TypeScript definition
 - [ ] Add new examples
-- [ ] Improve coroutine API:
-  - https://twitter.com/machty/status/756266064049233920
-  - https://twitter.com/drosenwasser/status/756359260380856320
-- [ ] Port some Coquette tests
 - [ ] Write more tests!
 - [ ] Autofocus
+- [x] Improve coroutine API:
+  - https://twitter.com/machty/status/756266064049233920
+  - https://twitter.com/drosenwasser/status/756359260380856320
+- [x] Fix `"Cannot find module 'sat'"` errors when importing TypeScript definition
 - [x] Ship babel-compiled version
 - [x] Add retina scaling to canvas
 - [x] Fix abstract class usage

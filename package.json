@@ -11,7 +11,7 @@
     "prepare": "tsc",
     "watch": "tsc --watch",
     "build-examples": "webpack --config webpack/examples.config.js",
-    "run-examples": "webpack-serve webpack/examples.config.js",
+    "examples": "webpack-serve webpack/examples.config.js",
     "test": "jest"
   },
   "author": "Thomas Boyt <me@thomasboyt.com>",
@@ -26,6 +26,7 @@
     "ts-jest": "^22.4.6",
     "ts-loader": "^4.4.1",
     "typescript": "^2.9.0",
+    "url-loader": "^1.0.1",
     "webpack": "^4.12.0",
     "webpack-serve": "^1.0.4"
   },
