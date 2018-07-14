@@ -1,7 +1,6 @@
 # Table of contents
 
 * [Pearl](../README.md)
-* [Getting Started](getting-started.md)
 * [Tutorial](tutorial.md)
 * [Writing Components](writing-components/README.md)
   * [Entity & Component Lifecycle](writing-components/entity-and-component-lifecycle.md)
