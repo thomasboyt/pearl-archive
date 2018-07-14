@@ -4,16 +4,22 @@ In this tutorial, we'll make a very simple game, in which the heroic player, as 
 
 ## Set up
 
-{% hint style="warning" %}
-**TODO**: This tutorial is currently missing details about setting up Webpack, TypeScript, etc. Looking at the `examples.config.js` webpack config in this repo may help somewhat with this. Eventually, the tutorial and example project will be moved out to a separate repo, with its own Webpack configuration.
-{% endhint %}
+You can use anything that knows how to build TypeScript to compile games in Pearl, but Pearl recommends the _lingua franca_ of build systems, [Webpack](https://webpack.js.org/), to build. Don't worry, for this tutorial you won't need to configure it yourself. To follow along at home, just clone the tutorial repo:
+
+```
+git clone git@github.com:thomasboyt/pearl-tutorial.git
+cd pearl-tutorial
+npm install
+```
+
+Once npm finishes installing all dependencies (that is: TypeScript, Webpack, several Webpack loaders, and Pearl itself), you can start the dev server with `npm run dev`, then navigate to `localhost:8080`. If you see a blank white screen with no console errors, you're all set up!
 
 ## Creating the game world and player object
 
-First off, let's just create a game world that contains the player:
+First off, let's just create a game world that contains the player. `index.ts` already has the scaffolding for a game, so we'll fill it out further:
 
 ```typescript
-// game.ts
+// index.ts
 
 import {
   Component,
