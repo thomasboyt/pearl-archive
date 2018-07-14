@@ -313,9 +313,7 @@ swordImage.src = require('./sprites/sword.png');
 ```
 
 Images _need to be loaded when the sprites are constructed._ Eventually I want to provide some generic tools for this \(`AssetManager` was an attempt at one, but I don't like its API now, and don't think an asset manager should actually be tied into the Component system\). For now, I recommend a preloading strategy:
-{% endhint %}
 
-{% hint style="warning" %}
 ```typescript
 swordImage.onload = () => {
   createPearl({
