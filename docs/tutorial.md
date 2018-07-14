@@ -182,7 +182,7 @@ This code should look familar, with only a few values changed from the player cr
 
 If you refresh, you'll see a big red box at the bottom of the screen, our new enemy. Currently, we can run right up to it - or through it - and laugh at it, since it currently has no way to fight back. Let's make it so that if you run into the enemy without a weapon, the enemy will, as expected, kill you.
 
-## Creating collision detection
+## Adding collision detection
 
 While Pearl includes `PolygonCollider` and `CircleCollider` components, it doesn't automatically _do_ anything with them, unlike some fancier frameworks. This is partially so that you have control over handling and resolving collisions - since the way Pac-Man handles collisions is a heck of a lot different than how Mario would - but is also because I haven't come up with a good, magical collision API yet. It might get there eventually!
 
@@ -252,7 +252,7 @@ So, with entity lookup taken care of, we then use the `isColliding()` method of 
 
 So now the player dies when they poke the evil enemy, and can no longer move or win the game. To emphasize this point, we'll add a _game over_ display.
 
-## Creating a Game Over Display
+## Creating a game over display
 
 A simple UI will serve as a good introduction to canvas rendering in Pearl. Unlike `PolygonRenderer`, Pearl currently doesn't have a drop-in component for displaying text content. That's okay, though, as it's very easy to add.
 
@@ -296,7 +296,7 @@ class Game extends Component<null> {
 
 Now, if you run the game, you should see a nice game over message appear when you touch the enemy. Now the fun part: let's let the player win!
 
-## Creating a Sword
+## Creating a sword
 
 We've seen how to render polygons using `PolygonRenderer`, and text using canvas drawing instructions. Now, for our sword, let's add a proper sword sprite, drawn by `SpriteRenderer`. The `SpriteRenderer` component simply renders a single sprite, while the `AnimationManager` can be used to add timed animations and multiple animation states to a component.
 
@@ -433,7 +433,7 @@ Now, when we pick up the sword, we'll see it move along with us!
 
 **TODO**: Eventually, I'd like child objects to render with their _angle_ relative to their parent's, not just their _position_. Once this is done, this would be a good time show off the sword also _rotating_ when the player turns \(though I'd also have to add some logic to set the player's angle... maybe this should all be done once player is also rendered by a sprite\).
 
-## Slaying the Enemy
+## Slaying the enemy
 
 There are only two pieces remaining now. When the player collides with the enemy, the enemy should be killed - that is, removed from the game world:
 
@@ -490,7 +490,7 @@ class Game extends Component<null> {
 
 All done!
 
-Exercises for the reader:
+## Exercises for the reader
 
 * Can you make it so that the _sword_, not the player, has to collide with the enemy to defeat it? This should require creating a new component for either the sword or the enemy.
 * Experiment with adding sprites for the player and enemy.
