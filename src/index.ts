@@ -24,3 +24,4 @@ export { default as PolygonCollider } from './components/PolygonCollider';
 export { default as PolygonRenderer } from './components/PolygonRenderer';
 export { default as CircleCollider } from './components/CircleCollider';
 export { default as CircleRenderer } from './components/CircleRenderer';
+export { default as SpriteRenderer } from './components/SpriteRenderer';
