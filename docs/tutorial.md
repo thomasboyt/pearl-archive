@@ -57,7 +57,7 @@ createPearl({
 });
 ```
 
-Start by looking at the bottom  of the file: we're creating a new Pearl instance using `createPearl`. In addition to setting the canvas to use, and its width and height, we define a _root component_. This component is instantiated when the game starts, and is generally used as an "entry point" into the game. It's attached to a root entity, which can be accessed at `this.pearl.obj`.
+Start by looking at the bottom of the file: we're creating a new Pearl instance using `createPearl`. In addition to setting the canvas to use, and its width and height, we define a _root component_. This component is instantiated when the game starts, and is generally used as an "entry point" into the game. It's attached to a root entity, which can be accessed at `this.pearl.obj`.
 
 When the game component is initialized, we create a new entity, the player. The player entity is composed of a `Physical` component, giving it a position, a `PolygonCollider` component, which creates a rectangular collider, and a `PolygonRenderer` component, which renders the polygon defined by the `PolygonCollider`.
 
@@ -99,7 +99,7 @@ class Game extends Component<null> {
 
 Now, we can add our input logic to `Player`.
 
-To move the player, we need to do two things: read the input from the keyboard (that is, which arrow keys are being pressed), and then apply a velocity to the entity's `Physical` component:
+To move the player, we need to do two things: read the input from the keyboard \(that is, which arrow keys are being pressed\), and then apply a velocity to the entity's `Physical` component:
 
 ```typescript
 import { Component, Keys, Physical } from 'pearl';
@@ -137,7 +137,7 @@ export default class Player extends Component<null> {
 
 Here, we've defined a method, `move()`, which gets called on every frame through the `update()` hook. `move()` reads the currently-pressed keys via the `pearl.inputter` API, which is available in any component. The x and y velocities are just set to `0`, `1`, `-1` to indicate direction.
 
-When we go to move the entity, we use the `Physical` component's `translate()` method, which moves the entity by a given x and y distance. To give the actual distance to move, the velocities are multiplied by `dt`, or delta-time. This is the amount of time, in ms, that have passed since the last frame. This is what allows objects to move smoothly over a variable framerate  -  e.g., whether your game runs at 30 frames a second or 60 frames a second, as long as you use delta-time as a factor in movement calculations, players will move the same distance over time. This is then multiplied by a `playerSpeed` factor that can be thought of as "pixels per millisecond." Our entity will move at `0.1` pixels per millisecond in the direction pushed, or `100` pixels a second.
+When we go to move the entity, we use the `Physical` component's `translate()` method, which moves the entity by a given x and y distance. To give the actual distance to move, the velocities are multiplied by `dt`, or delta-time. This is the amount of time, in ms, that have passed since the last frame. This is what allows objects to move smoothly over a variable framerate - e.g., whether your game runs at 30 frames a second or 60 frames a second, as long as you use delta-time as a factor in movement calculations, players will move the same distance over time. This is then multiplied by a `playerSpeed` factor that can be thought of as "pixels per millisecond." Our entity will move at `0.1` pixels per millisecond in the direction pushed, or `100` pixels a second.
 
 If you reload the game, you'll see that you can move around the game world with the arrow keys. Great! Now we need something to defeat with our newfound mobility.
 
@@ -246,7 +246,7 @@ class Game extends Component<null> {
 
 However, what if we later wanted to add multiple enemies? Managing an array of enemies would be annoying, especially since we'd have to ensure the enemy is removed from the array when destroyed. In addition, if we later made it so enemies could spawn over time, or from other events in the game world, it might be annoying to look up the player every time.
 
-In general, looking up entities from the game world is Fast Enough(tm) for most games. If you profile your game and find `entities.all()` becoming a bottleneck, you might want to add some level of caching - especially if you need to do some complex filtering beyond just looking at tags, such as "only get entities in a certain area of the world" - but using `entities.all()` is the easiest way to get started.
+In general, looking up entities from the game world is Fast Enough\(tm\) for most games. If you profile your game and find `entities.all()` becoming a bottleneck, you might want to add some level of caching - especially if you need to do some complex filtering beyond just looking at tags, such as "only get entities in a certain area of the world" - but using `entities.all()` is the easiest way to get started.
 
 So, with entity lookup taken care of, we then use the `isColliding()` method of `PolygonCollider`, which can check against another `PolygonCollider`, to see if the entities are colliding. If they are, we just set the player to dead. Now, if you refresh the game, you should see the player rendered helplessly immobile after touching the enemy, presumedly because the enemy has eaten or stabbed or done something equally horrendous.
 
@@ -300,7 +300,7 @@ Now, if you run the game, you should see a nice game over message appear when yo
 
 We've seen how to render polygons using `PolygonRenderer`, and text using canvas drawing instructions. Now, for our sword, let's add a proper sword sprite, drawn by `SpriteRenderer`. The `SpriteRenderer` component simply renders a single sprite, while the `AnimationManager` can be used to add timed animations and multiple animation states to a component.
 
-**TODO:** Pearl should have an actual first class asset loader. For now, you'll need to figure out your own strategy for loading images. Pearl wants sprite (or sprite sheets) to be loaded as `Image()` objects:
+**TODO:** Pearl should have an actual first class asset loader. For now, you'll need to figure out your own strategy for loading images. Pearl wants sprite \(or sprite sheets\) to be loaded as `Image()` objects:
 
 ```typescript
 import {Sprite} from 'pearl';
@@ -309,7 +309,7 @@ const swordImage = new Image();
 swordImage.src = require('./sprites/sword.png');
 ```
 
-Images *need to be loaded when the sprites are constructed.* Eventually I want to provide some generic tools for this (`AssetManager` was an attempt at one, but I don't like its API now, and don't think an asset manager should actually be tied into the Component system). For now, I recommend a preloading strategy:
+Images _need to be loaded when the sprites are constructed._ Eventually I want to provide some generic tools for this \(`AssetManager` was an attempt at one, but I don't like its API now, and don't think an asset manager should actually be tied into the Component system\). For now, I recommend a preloading strategy:
 
 ```typescript
 swordImage.onload = () => {
@@ -370,6 +370,7 @@ class Game extends Component<null> {
   }
 }
 ```
+
 Now, if you refresh the game, you'll see our nice, definitely not stolen from a famous Nintendo game sword sprite, waiting to be picked up. Back in `Player`, we can add logic to check collision with the sword, and set a flag to indicate we picked it up:
 
 ```typescript
@@ -430,7 +431,7 @@ export default class Player extends Component<null> {
 
 Now, when we pick up the sword, we'll see it move along with us!
 
-**TODO**: Eventually, I'd like child objects to render with their _angle_ relative to their parent's, not just their _position_. Once this is done, this would be a good time show off the sword also _rotating_ when the player turns (though I'd also have to add some logic to set the player's angle... maybe this should all be done once player is also rendered by a sprite).
+**TODO**: Eventually, I'd like child objects to render with their _angle_ relative to their parent's, not just their _position_. Once this is done, this would be a good time show off the sword also _rotating_ when the player turns \(though I'd also have to add some logic to set the player's angle... maybe this should all be done once player is also rendered by a sprite\).
 
 ## Slaying the Enemy
 
@@ -493,3 +494,4 @@ Exercises for the reader:
 
 * Can you make it so that the _sword_, not the player, has to collide with the enemy to defeat it? This should require creating a new component for either the sword or the enemy.
 * Experiment with adding sprites for the player and enemy.
+

@@ -2,7 +2,7 @@
 
 If you have a stateful process that lasts across multiple frames - for example, a timed animation cycle, or an entity that waits a certain amount of time before performing an action - you may want to try using coroutines.
 
-Coroutines in Pearl are based off ES6 generators. If you've used [async/await](https://ponyfoo.com/articles/understanding-javascript-async-await) syntax, you'll be right at home. A *coroutine* is a generator function that yields a promise.
+Coroutines in Pearl are based off ES6 generators. If you've used [async/await](https://ponyfoo.com/articles/understanding-javascript-async-await) syntax, you'll be right at home. A _coroutine_ is a generator function that yields a promise.
 
 Here's an example of a component with a simple coroutine that changes a displayed message after 5 seconds:
 
@@ -57,4 +57,5 @@ class LoadMessage extends Pearl.Component<null> {
 }
 ```
 
-Here, the GameObject is destroyed before `getHttp` returns its response and sets the message. When this happens, the `getAsync` coroutine is discarded and never resumed. However, _`getHttp()` itself isn't canceled_ and will complete execution, with its result simply being discarded.
+Here, the GameObject is destroyed before `getHttp` returns its response and sets the message. When this happens, the `getAsync` coroutine is discarded and never resumed. However, `getHttp()` _itself isn't canceled_ and will complete execution, with its result simply being discarded.
+

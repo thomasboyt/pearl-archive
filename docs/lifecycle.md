@@ -55,8 +55,8 @@ One nice guarantee from this is that if you add two entities on the same frame, 
 
 In general:
 
-- Inside a component's `create()`, you should not reference sibling components or components on other entities created in the same frame, as they may not have been created yet.
-- Inside a component's `init()`, you should not expect sibling components, or components on other entities created in the same frame, to have had their `init()` methods run yet.
+* Inside a component's `create()`, you should not reference sibling components or components on other entities created in the same frame, as they may not have been created yet.
+* Inside a component's `init()`, you should not expect sibling components, or components on other entities created in the same frame, to have had their `init()` methods run yet.
 
 Of course, there are potential workarounds for this behavior. For example, you could defer initialization of some dependent property on a component until its first `update()`:
 
@@ -89,3 +89,4 @@ class BComponent extends Component<null> {
 ```
 
 This should _only_ be done as a last resort - obviously, in this case, there would be several other ways to handle this, such as setting the string in `create()`, or simply not copying the string and instead accessing it through `AComponent` every time.
+
