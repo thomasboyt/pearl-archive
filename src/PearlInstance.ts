@@ -4,6 +4,8 @@ import Ticker from './Ticker';
 import Renderer, { RendererOpts } from './Renderer';
 import AsyncManager from './Async';
 import Runner from './Runner';
+import AssetManager, { AssetMap } from './AssetManager';
+import AudioManager from './AudioManager';
 
 import Component from './Component';
 import GameObject from './GameObject';
@@ -25,6 +27,8 @@ export default class PearlInstance {
   ticker: Ticker;
   runner: Runner;
   async: AsyncManager;
+  audio: AudioManager;
+  assets: AssetManager;
 
   /**
    * The top-level GameObject, which holds components defined in rootComponents.
@@ -43,11 +47,19 @@ export default class PearlInstance {
     this.inputter = new Inputter();
     this.runner = new Runner();
     this.async = new AsyncManager();
+
+    // XXX: AssetManager depends on audio having been instantiated, so it can get the audioCtx
+    this.audio = new AudioManager(this, { defaultGain: 0.5 });
+    this.assets = new AssetManager(this);
+  }
+
+  async loadAssets(assets: AssetMap) {
+    this.assets.setAssets(assets);
+    await this.assets.load();
   }
 
   run(opts: CreatePearlOpts) {
     this.renderer.run(opts);
-
     this.inputter.bind(opts.canvas);
 
     this.ticker = new Ticker((realDt: number) => {
@@ -77,14 +89,18 @@ export interface CreatePearlOpts {
   width: number;
   height: number;
   backgroundColor?: string;
+  assets?: AssetMap;
 }
 
 /**
  * Create a Pearl instance with the passed root components and canvas configuration, initializing
  * your game.
  */
-export function createPearl(opts: CreatePearlOpts): PearlInstance {
+export async function createPearl(
+  opts: CreatePearlOpts
+): Promise<PearlInstance> {
   const game = new PearlInstance();
+  await game.loadAssets(opts.assets || {});
   game.run(opts);
   (window as any).__pearl__ = game;
   return game;

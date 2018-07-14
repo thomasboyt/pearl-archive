@@ -1,5 +1,5 @@
-import Component from '../Component';
-import AssetManager from './AssetManager';
+import PearlInstance from './PearlInstance';
+import AudioAsset from './assets/AudioAsset';
 
 export interface Options {
   defaultGain: number;
@@ -20,13 +20,17 @@ function getAudioContextClass(): typeof AudioContext {
  *   // Will play the asset with the key of `explosion` in your assets configuration.
  *   audioManager.play('explosion');
  */
-export default class AudioManager extends Component<Options> {
+export default class AudioManager {
   ctx: AudioContext;
   muted: boolean;
   volumeNode: GainNode;
-  defaultGain: number;
 
-  create(opts: Options) {
+  private defaultGain: number;
+  private pearl: PearlInstance;
+
+  constructor(pearl: PearlInstance, opts: Options) {
+    this.pearl = pearl;
+
     const envAudioContext = getAudioContextClass();
     this.ctx = new envAudioContext();
 
@@ -38,9 +42,7 @@ export default class AudioManager extends Component<Options> {
     this.muted = false;
   }
 
-  play(name: string) {
-    const sound = this.getComponent(AssetManager).getAudio(name);
-
+  play(sound: AudioBuffer) {
     const src = this.ctx.createBufferSource();
     src.connect(this.volumeNode);
     src.buffer = sound;
