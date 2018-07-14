@@ -75,6 +75,19 @@ export default class GameObject {
   }
 
   /**
+   * Called before the first frame for new entities
+   *
+   * @internal
+   */
+  initialize() {
+    for (let component of this.components) {
+      component.init(component.initialSettings);
+    }
+
+    this._state = 'initialized';
+  }
+
+  /**
    * Check whether this component has the specified tag.
    */
   hasTag(tag: string): boolean {
@@ -185,14 +198,6 @@ export default class GameObject {
   }
 
   update(dt: number) {
-    if (this.state === 'created') {
-      for (let component of this.components) {
-        component.init(component.initialSettings);
-      }
-
-      this._state = 'initialized';
-    }
-
     for (let component of this.components) {
       component.update(dt);
     }

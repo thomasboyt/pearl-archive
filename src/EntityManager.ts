@@ -11,7 +11,17 @@ export default class EntityManager {
   }
 
   update(dt: number) {
-    for (let entity of this._entities) {
+    const frameEntities = [...this._entities];
+
+    const uninstantiated = frameEntities.filter(
+      (entity) => entity.state === 'created'
+    );
+
+    for (let entity of uninstantiated) {
+      entity.initialize();
+    }
+
+    for (let entity of frameEntities) {
       entity.update(dt);
     }
   }
