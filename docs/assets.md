@@ -47,8 +47,8 @@ You can define custom assets to load by extending the `Asset` class. For example
 import {AssetBase} from 'pearl';
 
 class LevelAsset extends AssetBase<string> {
-  async load(): Promise<string> {
-    const resp = await fetch(this.path);
+  async load(path: string): Promise<string> {
+    const resp = await fetch(path);
     const level = await resp.body();
     return level;
   }

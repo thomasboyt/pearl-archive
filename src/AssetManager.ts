@@ -22,7 +22,7 @@ export default class AssetManager {
     return Promise.all(promises);
   }
 
-  get<T>(assetType: new (path: string) => AssetBase<T>, name: string): T {
+  get<T>(assetType: new (...args: any[]) => AssetBase<T>, name: string): T {
     const asset = this.assets[name];
 
     if (!asset) {

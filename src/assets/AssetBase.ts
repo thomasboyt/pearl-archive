@@ -1,7 +1,7 @@
 import PearlInstance from '../PearlInstance';
 
 export default abstract class Asset<T> {
-  path: string;
+  private path: string;
   private loaded?: T;
 
   constructor(path: string) {
@@ -17,8 +17,8 @@ export default abstract class Asset<T> {
   }
 
   async loadAndSet(pearl: PearlInstance) {
-    this.loaded = await this.load(pearl);
+    this.loaded = await this.load(this.path, pearl);
   }
 
-  abstract load(pearl: PearlInstance): Promise<T>;
+  abstract load(path: string, pearl: PearlInstance): Promise<T>;
 }
