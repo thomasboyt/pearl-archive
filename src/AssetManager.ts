@@ -38,19 +38,3 @@ export default class AssetManager {
     return loaded;
   }
 }
-
-// class LevelAsset extends Asset<string> {
-//   async load(): Promise<string> {
-//     const resp = await fetch(this.path);
-//     const level = await resp.text();
-//     return level;
-//   }
-// }
-
-// const assets = {
-//   foo: new LevelAsset('foo'),
-// };
-
-// const loader = new AssetLoader(assets);
-// loader.load();
-// const foo = loader.get(LevelAsset, 'foo');

@@ -1,21 +1,52 @@
 # Assets
 
-Assets are files that get loaded before the game starts, and turned into objects available through the Pearl instance. Assets are loaded based on a _type_ and _location_:
+_Assets_ represent files that get loaded before the game starts. These can include audio, images, and custom assets such as level data.
+
+Using Pearl's asset system saves you from writing custom code to load assets, and provides a simple UI for accessing your assets within your game's components.
+
+Pearl's asset system does _not_ handle the problem of bundling assets with your game, but is very easy to use with a bundler like Webpack, as you'll see below.
+
+{% hint style="warn" %}
+**TODO**: Explain Webpack `require()` a lil bit
+{% endhint %}
+
+## Preloading Assets
+
+Pearl includes a special preloader for loading assets before starting the game.
 
 ```typescript
-import {AssetsList, ImageAsset, AudioAsset} from  'pearl';
+import {createPearl, ImageAsset} from 'pearl';
 
-const assets = new AssetsList({
-  sword: new ImageAsset(require('./sprites/sword.png')),
+createPearl({
+  assets: {
+    swordImage: new ImageAsset(require('../sprites/sword.png')),
+  },
+  // ....
 });
 ```
 
-You can also add custom assets to load by extending the `Asset` class:
+Now, within a component, we can access and use `swordImage`. For example, here we create a `Sprite` with it:
 
 ```typescript
-import {AssetsList, Asset} from 'pearl';
+const swordImage = this.pearl.assets.get(ImageAsset, 'swordImage');
 
-class LevelAsset extends Asset {
+const swordSprite = new Sprite(
+  swordImage,
+  0,
+  0,
+  swordImage.width,
+  swordImage.height
+);
+```
+
+## Custom Assets
+
+You can define custom assets to load by extending the `Asset` class. For example, to load level data from an external file as a string, we could define an asset:
+
+```typescript
+import {AssetBase} from 'pearl';
+
+class LevelAsset extends AssetBase<string> {
   async load(): Promise<string> {
     const resp = await fetch(this.path);
     const level = await resp.body();
@@ -23,27 +54,15 @@ class LevelAsset extends Asset {
   }
 }
 
-const assets = new AssetsList({
-  level: new LevelAsset(require('./level.tmx)),
-});
-```
-
-Assets are then attached when creating Pearl:
-
-```typescript
 createPearl({
-  assets: assets,
-  // ....
-});
-```
+  assets: {
+    levelOne: new LevelAsset(require('../levels/levelOne.txt')),
+  }
+})
 
-Inside Pearl:
-
-```typescript
-class Level {
+class LevelOne extends Component<null> {
   init() {
-    // yes, you have to manually cast it
-    const levelData = this.pearl.assets.get(Level2D, 'level');
+    const levelData = this.pearl.assets.get(LevelAsset, 'levelOne');
   }
 }
 ```
