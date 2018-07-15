@@ -310,40 +310,47 @@ Now, if you run the game, you should see a nice game over message appear when yo
 
 We've seen how to render polygons using `PolygonRenderer`, and text using canvas drawing instructions. Now, for our sword, let's add a proper sword sprite, drawn by `SpriteRenderer`. The `SpriteRenderer` component simply renders a single sprite, while the `AnimationManager` can be used to add timed animations and multiple animation states to a component.
 
-{% hint style="warning" %}
-**TODO:** Pearl should have an actual first class asset loader. For now, you'll need to figure out your own strategy for loading images. Pearl wants sprite \(or sprite sheets\) to be loaded as `Image()` objects:
+To load our image, in `assets/sword.png`, we'll use Webpack's `url-loader` (already pre-configured) and Pearl's built-in assets loader. To start, we add the assets we want to preload to a new `assets` field on `createGame()`:
 
 ```typescript
-import {Sprite} from 'pearl';
+import { /* ... */, ImageAsset } from 'pearl';
 
-const swordImage = new Image();
-swordImage.src = require('./sprites/sword.png');
+createPearl({
+  rootComponents: [new Game()],
+  width: 300,
+  height: 300,
+  canvas: document.getElementById('canvas') as HTMLCanvasElement,
+  assets: {
+    swordImage: new ImageAsset(require('../assets/sword.png')),
+  }
+});
 ```
 
-Images _need to be loaded when the sprites are constructed._ Eventually I want to provide some generic tools for this \(`AssetManager` was an attempt at one, but I don't like its API now, and don't think an asset manager should actually be tied into the Component system\). For now, I recommend a preloading strategy:
+This will allow us to access the sword image (as an `HTMLImageElement`) using the `pearl.assets` API:
 
 ```typescript
-swordImage.onload = () => {
-  createPearl({
-    rootComponents: [new Game()],
-    width: 300,
-    height: 300,
-    canvas: document.getElementById('canvas') as HTMLCanvasElement,
-  });
-};
+// returns HTMLImageElement
+this.pearl.assets.get(ImageAsset,  'swordImage');
 ```
-{% endhint %}
 
 {% hint style="info" %}
-Images can be used to construct either `Sprite` or `SpriteSheet` objects. `AnimationManager` can use the latter, but `SpriteRenderer` needs the former.
+Note that the first argument is used to typecast the asset as well as to check its type _at runtime_. There is no static type safety on asset lookup!
 {% endhint %}
 
-With the sprite image loaded, we can create a `Sprite` from it and use it in an entity:
+We'll use this image to create a `Sprite`, which can be passed to a `SpriteRenderer` for rendering.
+
+{% hint style="info" %}
+We could also use an image to create a `SpriteSheet_` which can handle rendering multiple sprites from the same sheet.
+{% endhint %}
+
+Let's finally create the sword entity:
 
 ```typescript
 class Game extends Component<null> {
   init() {
     /* ... */
+
+    const swordImage = this.pearl.assets.get(ImageAsset,  'swordImage');
 
     const swordSprite = new Sprite(
       // sprite image
@@ -510,4 +517,4 @@ All done!
 
 * Can you make it so that the _sword_, not the player, has to collide with the enemy to defeat it? This should require creating a new component for either the sword or the enemy.
 * Experiment with adding sprites for the player and enemy.
-
+* The repo includes a second asset, `hit.wav`, meant to be played when the player hits the enemy with their sword. Use `AudioAsset` and the `pearl.audio` API to play it at the correct time.
