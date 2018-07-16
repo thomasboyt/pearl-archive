@@ -32,6 +32,7 @@ export default class Renderer {
 
   private _viewSize: Coordinates;
   private _viewCenter: Coordinates;
+  private _scaleFactor: number = 1;
 
   constructor(game: PearlInstance) {
     this._pearl = game;
@@ -46,6 +47,17 @@ export default class Renderer {
     this._ctx = canvas.getContext('2d')!;
     this._backgroundColor = opts.backgroundColor;
 
+    this._viewSize = { x: opts.width, y: opts.height };
+    this._viewCenter = { x: this._viewSize.x / 2, y: this._viewSize.y / 2 };
+
+    this.scale(1);
+  }
+
+  /**
+   * Scale the canvas by a given factor.
+   */
+  scale(factor: number) {
+    const canvas = this._ctx.canvas;
     // Scale for retina displays
     let pixelRatio = 1;
 
@@ -53,19 +65,20 @@ export default class Renderer {
       pixelRatio = window.devicePixelRatio;
     }
 
-    canvas.width = opts.width * pixelRatio;
-    canvas.height = opts.height * pixelRatio;
+    const viewSize = this.getViewSize();
+    const width = viewSize.x;
+    const height = viewSize.y;
 
-    canvas.style.width = `${opts.width}px`;
-    canvas.style.height = `${opts.height}px`;
+    canvas.width = factor * width * pixelRatio;
+    canvas.height = factor * height * pixelRatio;
 
-    this._ctx.scale(pixelRatio, pixelRatio);
+    canvas.style.width = `${factor * width}px`;
+    canvas.style.height = `${factor * height}px`;
 
-    this._viewSize = { x: opts.width, y: opts.height };
-    this._viewCenter = { x: this._viewSize.x / 2, y: this._viewSize.y / 2 };
+    this._scaleFactor = factor * pixelRatio;
 
     // disable image smoothing
-    // TODO: make this an option
+    // XXX: this _has_ to be re-set every time the canvas is resized
     this._ctx.mozImageSmoothingEnabled = false;
     this._ctx.webkitImageSmoothingEnabled = false;
     this._ctx.imageSmoothingEnabled = false;
@@ -105,6 +118,8 @@ export default class Renderer {
     const ctx = this.getCtx();
 
     ctx.save();
+
+    this._ctx.scale(this._scaleFactor, this._scaleFactor);
 
     const viewTranslate = viewOffset(this._viewCenter, this._viewSize);
 
