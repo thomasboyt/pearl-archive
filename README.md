@@ -6,11 +6,7 @@ Pearl aims to be a a simpler, code-only alternative to full-scale frameworks lik
 
 **Pearl is in very early alpha stages,** and will probably undergo many significant breaking changes before the first `0.1.0` release. There are many unanswered questions in the current design.
 
-## Docs & Help
-
-* [Getting Started](docs/getting-started.md)
-* [Documentation](https://github.com/thomasboyt/pearl/tree/a61555e173878c8680e94c606d189df18876d859/docs/README.md)
-* [Roadmap](docs/roadmap.md)
+## [Docs](https://pearl-docs.disco.zone/)
 
 ## Development Overview
 
