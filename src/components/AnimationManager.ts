@@ -3,8 +3,7 @@ import Physical from './Physical';
 
 import Sprite, { RGB } from '../util/Sprite';
 import { ISpriteSheet } from '../util/SpriteSheet';
-
-const blankSprite = new Sprite(new Image(), 0, 0, 0, 0);
+import SpriteRenderer from './SpriteRenderer';
 
 export interface AnimationConfig {
   frames: any[];
@@ -74,13 +73,7 @@ export default class AnimationManager extends Component<Options> {
   private _currentState: string;
   private _current: Animation;
 
-  scaleX: number = 1;
-  scaleY: number = 1;
-
-  masked = false;
-  maskFrom: [number, number, number];
-  maskTo: [number, number, number];
-
+  // TODO: what was this for
   get current() {
     return this._currentState;
   }
@@ -91,22 +84,6 @@ export default class AnimationManager extends Component<Options> {
     this.set(opts.initialState);
   }
 
-  getSprite(): Sprite {
-    return this._current.getSprite();
-  }
-
-  mask(from: RGB, to: RGB) {
-    this.masked = true;
-    this.maskFrom = from;
-    this.maskTo = to;
-  }
-
-  unmask() {
-    this.masked = false;
-    delete this.maskFrom;
-    delete this.maskTo;
-  }
-
   set(state: string) {
     if (state === this._currentState) {
       return;
@@ -115,38 +92,16 @@ export default class AnimationManager extends Component<Options> {
     this._currentState = state;
     const cfg = this._animationConfig[state];
     this._current = new Animation(this._sheet, cfg);
+    this.setSpriteFromAnimation();
   }
 
-  setScale(sx: number, sy: number) {
-    this.scaleX = sx;
-    this.scaleY = sy;
+  private setSpriteFromAnimation() {
+    const sprite = this._current.getSprite();
+    this.getComponent(SpriteRenderer).sprite = sprite;
   }
 
   update(dt: number) {
     this._current.update(dt);
-  }
-
-  render(ctx: CanvasRenderingContext2D) {
-    ctx.save();
-
-    const phys = this.getComponent(Physical);
-
-    ctx.translate(phys.center.x, phys.center.y);
-    ctx.rotate(phys.angle);
-
-    const sprite = this._current.getSprite();
-
-    const destX = -sprite.width / 2;
-    const destY = -sprite.height / 2;
-
-    ctx.scale(this.scaleX, this.scaleY);
-
-    if (this.masked) {
-      sprite.drawMasked(ctx, destX, destY, this.maskFrom, this.maskTo);
-    } else {
-      sprite.draw(ctx, destX, destY);
-    }
-
-    ctx.restore();
+    this.setSpriteFromAnimation();
   }
 }
