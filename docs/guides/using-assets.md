@@ -1,4 +1,4 @@
-# Assets
+# Using Assets
 
 _Assets_ represent files that get loaded before the game starts. These can include audio, images, and custom assets such as level data.
 
