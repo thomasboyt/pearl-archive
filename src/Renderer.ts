@@ -99,11 +99,20 @@ export default class Renderer {
 
   /**
    * Set the center coordinates of the viewport.
+   *
+   * This only translates the view by whole pixels to prevent rendering bugs that appear when
+   * translating a scene by a float. This translation takes into account the game's current scale
+   * factor.
    */
   setViewCenter(pos: Coordinates) {
+    const roundedScaledPos = {
+      x: Math.round(pos.x * this._scaleFactor),
+      y: Math.round(pos.y * this._scaleFactor),
+    };
+
     this._viewCenter = {
-      x: pos.x,
-      y: pos.y,
+      x: roundedScaledPos.x / this._scaleFactor,
+      y: roundedScaledPos.y / this._scaleFactor,
     };
   }
 
