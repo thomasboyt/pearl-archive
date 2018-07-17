@@ -1,30 +1,19 @@
 import Sprite, { RGB } from '../util/Sprite';
 import Physical from './Physical';
-import Component from '../Component';
+import { MagicSettingsComponent } from '../Component';
 
-interface Settings {
+interface Properties {
   sprite?: Sprite;
-  scaleX?: number;
-  scaleY?: number;
+  scaleX: number;
+  scaleY: number;
 }
 
-export default class SpriteRenderer extends Component<Settings> {
+export default class SpriteRenderer extends MagicSettingsComponent<Properties>
+  implements Properties {
   sprite?: Sprite;
 
   scaleX: number = 1;
   scaleY: number = 1;
-
-  create(settings: Settings) {
-    if (settings.sprite) {
-      this.sprite = settings.sprite;
-    }
-    if (settings.scaleX) {
-      this.scaleX = settings.scaleX;
-    }
-    if (settings.scaleY) {
-      this.scaleY = settings.scaleY;
-    }
-  }
 
   private _masked = false;
 

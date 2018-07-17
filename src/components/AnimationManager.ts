@@ -1,4 +1,4 @@
-import Component from '../Component';
+import Component, { MagicSettingsComponent } from '../Component';
 import Physical from './Physical';
 
 import Sprite, { RGB } from '../util/Sprite';
@@ -67,9 +67,11 @@ export interface Options {
   animations: AnimationConfigMap;
 }
 
-export default class AnimationManager extends Component<Options> {
-  private _sheet: ISpriteSheet;
-  private _animationConfig: AnimationConfigMap;
+export default class AnimationManager extends MagicSettingsComponent<Options>
+  implements Options {
+  sheet: ISpriteSheet;
+  animations: AnimationConfigMap;
+  initialState: string;
   private _currentState: string;
   private _current: Animation;
 
@@ -78,10 +80,8 @@ export default class AnimationManager extends Component<Options> {
     return this._currentState;
   }
 
-  create(opts: Options) {
-    this._sheet = opts.sheet;
-    this._animationConfig = opts.animations;
-    this.set(opts.initialState);
+  create() {
+    this.set(this.initialState);
   }
 
   set(state: string) {
@@ -90,8 +90,8 @@ export default class AnimationManager extends Component<Options> {
     }
 
     this._currentState = state;
-    const cfg = this._animationConfig[state];
-    this._current = new Animation(this._sheet, cfg);
+    const cfg = this.animations[state];
+    this._current = new Animation(this.sheet, cfg);
     this.setSpriteFromAnimation();
   }
 

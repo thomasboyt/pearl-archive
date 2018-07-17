@@ -1,29 +1,32 @@
 import { Coordinates } from '../types';
-import Component from '../Component';
+import { MagicSettingsComponent } from '../Component';
 import { addVector } from '../util/maths';
 
-export interface PhysicalSettings {
+export interface Properties {
   /**
    * The center of this object.
    */
-  center?: Coordinates;
+  center: Coordinates;
+
+  localCenter: Coordinates;
 
   /**
    * The angle of this object, in radians.
    */
-  angle?: number;
+  angle: number;
 
-  vel?: Coordinates;
+  vel: Coordinates;
 }
 
 /**
  * Defines the position and angle of this object.
  */
-export default class Physical extends Component<PhysicalSettings> {
+export default class Physical extends MagicSettingsComponent<Properties>
+  implements Properties {
   /**
    * The center of this object.
    */
-  _localCenter: Readonly<Coordinates>;
+  private _localCenter: Readonly<Coordinates>;
 
   get center(): Readonly<Coordinates> {
     return this.localToWorld(this._localCenter);
@@ -44,7 +47,7 @@ export default class Physical extends Component<PhysicalSettings> {
   /**
    * The angle of this object, in radians.
    */
-  angle: number;
+  angle: number = 0;
 
   /**
    * A frozen object does not move, regardless of its set velocity.
@@ -92,21 +95,10 @@ export default class Physical extends Component<PhysicalSettings> {
 
   private getParentPhys(): Physical | null {
     return (
+      this.gameObject &&
       this.gameObject.parent &&
       this.gameObject.parent.maybeGetComponent(Physical)
     );
-  }
-
-  create(settings: PhysicalSettings = {}) {
-    if (settings.center) {
-      this.center = settings.center;
-    }
-
-    if (settings.vel) {
-      this.vel = settings.vel;
-    }
-
-    this.angle = settings.angle || 0;
   }
 
   update(dt: number) {

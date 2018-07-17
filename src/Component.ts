@@ -97,3 +97,12 @@ abstract class Component<Settings> {
 }
 
 export default Component;
+
+export class MagicSettingsComponent<T> extends Component<any> {
+  constructor(settings: Partial<T> = {}) {
+    super();
+    for (let key of Object.keys(settings)) {
+      this[key] = settings[key];
+    }
+  }
+}

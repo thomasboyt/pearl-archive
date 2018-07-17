@@ -1,21 +1,17 @@
-import Component from '../Component';
+import { MagicSettingsComponent } from '../Component';
 import Physical from './Physical';
 
 import PolygonCollider from './PolygonCollider';
 
-export interface Options {
+export interface Properties {
   fillStyle?: string;
   strokeStyle?: string;
 }
 
-export default class PolygonRenderer extends Component<Options> {
-  fillStyle: string | null = null;
-  strokeStyle: string | null = null;
-
-  create(opts: Options = {}) {
-    this.fillStyle = opts.fillStyle || null;
-    this.strokeStyle = opts.strokeStyle || null;
-  }
+export default class PolygonRenderer extends MagicSettingsComponent<Properties>
+  implements Properties {
+  fillStyle?: string;
+  strokeStyle?: string;
 
   render(ctx: CanvasRenderingContext2D) {
     const phys = this.getComponent(Physical);
