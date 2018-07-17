@@ -59,15 +59,99 @@ The important idea here is that instead of relying on a collision system to fire
 * Long-term considerations
   * Collision layers? Would help avoid triggering/calculating unnecessary collisions
 
-## New Features
+## Simpler Entity Creation
 
-### Devtools Inspector
+Entity creation is currently a kind of awkward process, depending on what you want to do. Specifically:
+
+- The _settings_ passed through to `create()` and `init()` create an awkward second set of preconfigured properties
+- Overriding settings created by e.g. a factory or "prefab"-like construct requires the original component to have special logic:
+
+```typescript
+type Settings = {sprite?: Sprite};
+
+class MyComponent<Settings> {
+  sprite?: Sprite;
+
+  init(settings: Settings) {
+    // check to see if this has already had a sprite set on it
+    if (settings.sprite && !this.sprite) {
+      this.sprite = settings.sprite;
+    }
+  }
+}
+```
+
+TypeScript (as of 2.1) now makes it easy to create a type-safe API similar to the original Coquette entity construction API:
+
+```typescript
+export class MagicSettingsComponent<T> extends Component<any> {
+  constructor(settings: Partial<T> = {}) {
+    super();
+    for (let key of Object.keys(settings)) {
+      this[key] = settings[key];
+    }
+  }
+}
+
+interface ISpriteRendererProperties {
+  spritePath: string;
+  scaleX: string;
+}
+
+class SpriteRenderer extends MagicSettingsComponent<ISpriteRendererProperties>
+  implements ISpriteRenderer {
+  spritePath?: string;
+
+  create() {
+    console.log(this.spritePath);
+  }
+
+  renderSprite() {
+    // ...
+  }
+}
+
+new SpriteRenderer({ spritePath: 'foo.png' });
+```
+
+This would make reasoning about setting and using properties before and during initialization much easier.
+
+There are some potential downsides:
+
+a) Settings that are only used during initialization, and then discarded, would still have to defined as properties on the component.
+
+b) TypeScript's `keyof` includes methods/getters/setters, requiring an interface to be defined without these. This is annoying bit of boilerplate :(
+
+c) The component wouldn't have type-safe _required_ settings:
+
+```typescript
+class MyComponent extends Component {
+  a: string;
+
+  create() {
+    console.log(this.a.toUpperCase());
+  }
+}
+
+// errors out because a is not passed
+this.pearl.entities.add(new GameObject({
+  components: [new MyComponent()],
+});
+```
+
+However, this may not be a big deal, as "required" settings are in opposition to being able to update settings after construction anyways. Maybe some kind of helper could be added to throw out automagically if required settings are missing at `create()` (or `init()`) time?
+
+d) Setters that depend on the parent object may error out with this.
+
+An experimental implementation of this exists at the `ideas/magic-components` branch.
+
+## Devtools Inspector
 
 This is its infancy at [Pearl Inspect](https://github.com/thomasboyt/pearl-inspect).
 
 The goal of the Pearl Inspector will be to add a simple display of entities in the world (shown in the parent-child hierarchy) and their components. For more information on the roadmap and status of this project, see [its TODO file](https://github.com/thomasboyt/pearl-inspect/blob/master/TODO.md).
 
-### Canvas scaling utilities
+## Canvas scaling utilities
 
 It'd be great to offer canvas scaling utilities, like scaling-on-resize while maintaining the original aspect ratio \(using `ctx.scale`, that is, not CSS that causes blurry images\). It'd also be cool to have a full-screen toggle.
 

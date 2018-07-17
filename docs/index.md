@@ -9,3 +9,7 @@ Pearl is made up of a small API for creating and rendering entities using _compo
 In addition to allowing you to define your own components, Pearl includes built-in components for handling positioning, collision detection, sprite rendering, and other basic utilities.
 
 To get started with Pearl, begin with the [Tutorial](tutorial.md), which provides a small boilerplate to get started with, and a simple game to make.
+
+### Credits & Inspiration
+
+Pearl started life as a fork of Mary Rose Cook's [Coquette](https://github.com/maryrosecook/coquette), a wonderful microframework for simple JS games. In addition to using code from Coquette, Pearl uses ideas from frameworks including Unity, Godot, and Superpowers.
