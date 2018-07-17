@@ -6,7 +6,6 @@ module.exports = {
 
   entry: {
     helloWorld: './examples/hello-world/game.ts',
-    tutorial: './examples/tutorial/game.ts',
   },
 
   output: {
