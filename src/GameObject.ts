@@ -27,7 +27,7 @@ export interface CreateOpts {
   tags?: string[];
 }
 
-export type GameObjectState = 'created' | 'initialized' | 'destroyed';
+export type GameObjectState = 'new' | 'created' | 'initialized' | 'destroyed';
 
 /**
  * A GameObject is an entity in the world that holds a collection of components.
@@ -48,7 +48,7 @@ export default class GameObject {
   // TODO: maybe make this frozen to the outside world
   components: Component<any>[] = [];
 
-  private _state: GameObjectState = 'created';
+  private _state: GameObjectState = 'new';
   get state() {
     return this._state;
   }
@@ -69,7 +69,12 @@ export default class GameObject {
     }
   }
 
-  private addComponent(component: Component<any>) {
+  addComponent(component: Component<any>) {
+    if (this._state !== 'new') {
+      throw new Error(
+        'cannot add components to an entity that has already been added to the game world'
+      );
+    }
     component.gameObject = this;
     this.components.push(component);
   }
@@ -191,6 +196,8 @@ export default class GameObject {
    */
 
   create() {
+    this._state = 'created';
+
     // game is set at this point
     for (let component of this.components) {
       component.create(component.initialSettings);
