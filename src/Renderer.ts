@@ -33,6 +33,15 @@ export default class Renderer {
   private _viewSize: Coordinates;
   private _viewCenter: Coordinates;
   private _scaleFactor: number = 1;
+  private _pixelRatio: number = 1;
+
+  get logicalScaleFactor() {
+    return this._scaleFactor / this._pixelRatio;
+  }
+
+  get totalScaleFactor() {
+    return this._scaleFactor;
+  }
 
   constructor(game: PearlInstance) {
     this._pearl = game;
@@ -58,24 +67,22 @@ export default class Renderer {
    */
   scale(factor: number) {
     const canvas = this._ctx.canvas;
-    // Scale for retina displays
-    let pixelRatio = 1;
 
     if (window.devicePixelRatio !== undefined) {
-      pixelRatio = window.devicePixelRatio;
+      this._pixelRatio = window.devicePixelRatio;
     }
 
     const viewSize = this.getViewSize();
     const width = viewSize.x;
     const height = viewSize.y;
 
-    canvas.width = factor * width * pixelRatio;
-    canvas.height = factor * height * pixelRatio;
+    canvas.width = factor * width * this._pixelRatio;
+    canvas.height = factor * height * this._pixelRatio;
 
     canvas.style.width = `${factor * width}px`;
     canvas.style.height = `${factor * height}px`;
 
-    this._scaleFactor = factor * pixelRatio;
+    this._scaleFactor = factor * this._pixelRatio;
 
     // disable image smoothing
     // XXX: this _has_ to be re-set every time the canvas is resized
