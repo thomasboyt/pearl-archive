@@ -84,6 +84,9 @@ export default class AnimationManager extends Component<Options> {
     this.set(opts.initialState);
   }
 
+  /**
+   * Set the animation state. Will throw an error if the animation does not exist.
+   */
   set(state: string) {
     if (state === this._currentState) {
       return;
@@ -91,6 +94,15 @@ export default class AnimationManager extends Component<Options> {
 
     this._currentState = state;
     const cfg = this._animationConfig[state];
+
+    if (!cfg) {
+      throw new Error(
+        `Animation state ${state} does not exist for entity ${
+          this.gameObject.name
+        }`
+      );
+    }
+
     this._current = new Animation(this._sheet, cfg);
     this.setSpriteFromAnimation();
   }

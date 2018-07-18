@@ -30,12 +30,22 @@ export default class SpriteRenderer extends Component<Settings> {
   private _maskFrom: [number, number, number];
   private _maskTo: [number, number, number];
 
+  /**
+   * Set a "mask" on the sprite, which simply replaces one color with another. Useful for, e.g.
+   * rendering the same player sprite in different colors.
+   *
+   * A sprite can currently only have one mask at a time, meaning only one color can be changed to
+   * one other color.
+   */
   mask(from: RGB, to: RGB) {
     this._masked = true;
     this._maskFrom = from;
     this._maskTo = to;
   }
 
+  /**
+   * Remove a mask from the sprite, if set.
+   */
   unmask() {
     this._masked = false;
     delete this._maskFrom;
@@ -58,8 +68,6 @@ export default class SpriteRenderer extends Component<Settings> {
 
   /**
    * Draw the sprite, without scale or rotation, to a passed canvas context
-   *
-   * This is intended to be used with a new external
    */
   private draw(ctx: CanvasRenderingContext2D, destX: number, destY: number) {
     const sprite = this.sprite!;
@@ -79,8 +87,8 @@ export default class SpriteRenderer extends Component<Settings> {
     const phys = this.getComponent(Physical);
     ctx.translate(phys.center.x, phys.center.y);
 
-    ctx.rotate(this.getComponent(Physical).angle);
     ctx.scale(this.scaleX, this.scaleY);
+    ctx.rotate(this.getComponent(Physical).angle);
 
     const destX = -this.sprite.width / 2;
     const destY = -this.sprite.height / 2;
