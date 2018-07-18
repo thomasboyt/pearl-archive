@@ -2,13 +2,18 @@ import * as SAT from 'sat';
 
 import Physical from './Physical';
 import PolygonCollider from './PolygonCollider';
-import Collider, { CollisionResponse, ColliderType } from './Collider';
+import Collider, {
+  ICollider,
+  CollisionResponse,
+  ColliderType,
+} from './Collider';
 
 export interface Options {
   radius?: number;
 }
 
-export default class CircleCollider extends Collider<Options> {
+export default class CircleCollider extends Collider<Options>
+  implements ICollider {
   type: ColliderType = ColliderType.Polygon;
 
   radius: number;
@@ -17,6 +22,7 @@ export default class CircleCollider extends Collider<Options> {
     if (options.radius) {
       this.radius = options.radius;
     }
+    this.gameObject.registerCollider(this);
   }
 
   getSATCircle(): SAT.Circle {

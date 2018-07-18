@@ -5,6 +5,8 @@ import Component from '../Component';
 export interface CollisionResponse {
   overlap: number;
   overlapVector: [number, number];
+  aInB: boolean;
+  bInA: boolean;
 }
 
 // Sooo we can't use instanceof Circle/instanceof Polygon internally because it creates a circular
@@ -14,10 +16,29 @@ export enum ColliderType {
   Circle,
 }
 
+export interface ICollider extends Component<any> {
+  isTrigger: boolean;
+  isEnabled: boolean;
+  isColliding(other: ICollider): boolean;
+  getCollision(other: ICollider): CollisionResponse | null;
+  // maybe:
+  // testSATPolygon(other: SAT.Polygon): SAT.Response | undefined;
+  // testSATCircle(other: SAT.Circle): SAT.Response | undefined;
+}
+
 abstract class Collider<T> extends Component<any> {
   abstract type: ColliderType;
 
-  active: boolean = true;
+  /**
+   * Indicates whether this collider should be solid (objects should not go through it) or a trigger
+   * (objects can go through it)
+   */
+  isTrigger = false;
+
+  /**
+   * Indicates whether this collider is enabled, meaning it's not ignored.
+   */
+  isEnabled = true;
 
   /**
    * Returns true if this object is colliding with the passed collider
@@ -31,7 +52,7 @@ abstract class Collider<T> extends Component<any> {
    * there is no collision.
    */
   getCollision(other: Collider<any>): CollisionResponse | null {
-    if (!this.active || !other.active) {
+    if (!this.isEnabled || !other.isEnabled) {
       return null;
     }
 
@@ -50,6 +71,8 @@ abstract class Collider<T> extends Component<any> {
     return {
       overlap: response.overlap,
       overlapVector: vector,
+      aInB: response.aInB,
+      bInA: response.bInA,
     };
   }
 

@@ -3,6 +3,7 @@ import * as uuidv4 from 'uuid/v4';
 import Component from './Component';
 import PearlInstance from './PearlInstance';
 import CoroutineManager, { Yieldable } from '@tboyt/coroutine-manager';
+import { ICollider } from './components/Collider';
 
 export interface CreateOpts {
   /**
@@ -255,5 +256,18 @@ export default class GameObject {
 
   cancelCoroutine(coroutine: IterableIterator<undefined>) {
     this.coroutineManager.cancel(coroutine);
+  }
+
+  private _collider: ICollider;
+
+  get collider() {
+    return this._collider;
+  }
+
+  registerCollider(collider: ICollider) {
+    if (this._collider) {
+      throw new Error('this object already has a collider');
+    }
+    this._collider = collider;
   }
 }

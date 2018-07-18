@@ -2,7 +2,11 @@ import * as SAT from 'sat';
 import crosses from 'robust-segment-intersect';
 
 import Physical from './Physical';
-import Collider, { CollisionResponse, ColliderType } from './Collider';
+import Collider, {
+  ICollider,
+  CollisionResponse,
+  ColliderType,
+} from './Collider';
 import CircleCollider from './CircleCollider';
 
 import { rotatePoint } from '../util/maths';
@@ -52,7 +56,8 @@ function getBoundsFromPolygon(polygon: SAT.Polygon): Bounds {
   return { xMin, yMin, xMax, yMax };
 }
 
-export default class PolygonCollider extends Collider<Options> {
+export default class PolygonCollider extends Collider<Options>
+  implements ICollider {
   /**
    * Convenience method to create a rectangular polygon.
    */
@@ -79,6 +84,8 @@ export default class PolygonCollider extends Collider<Options> {
   width?: number;
   height?: number;
 
+  isVisible = false;
+
   create(options: Options = {}) {
     if (options.points) {
       this.points = options.points;
@@ -86,6 +93,7 @@ export default class PolygonCollider extends Collider<Options> {
     if (options.angle) {
       this.angle = options.angle;
     }
+    this.gameObject.registerCollider(this);
   }
 
   /**
@@ -141,7 +149,7 @@ export default class PolygonCollider extends Collider<Options> {
    * method that more-explictly compares two velocity-shifted objects?
    */
   segmentIntersects(ray: Segment, dt: number) {
-    if (!this.active) {
+    if (!this.isEnabled) {
       return false;
     }
 
@@ -207,5 +215,22 @@ export default class PolygonCollider extends Collider<Options> {
     } else {
       return null;
     }
+  }
+
+  // Debug rendering, defaults to off
+  render(ctx: CanvasRenderingContext2D) {
+    const poly = this.getSATPolygon();
+    const points = poly.points;
+    const pos = poly.pos;
+
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+    ctx.beginPath();
+    ctx.moveTo(pos.x + points[0].x, pos.y + points[0].y);
+    for (let point of points.slice(1)) {
+      ctx.lineTo(pos.x + point.x, pos.y + point.y);
+    }
+
+    ctx.closePath();
+    ctx.fill();
   }
 }

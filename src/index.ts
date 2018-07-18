@@ -21,7 +21,11 @@ export { default as SpriteSheet, ISpriteSheet } from './util/SpriteSheet';
 export { default as Physical } from './components/Physical';
 export { default as AnimationManager } from './components/AnimationManager';
 
-export { default as Collider, CollisionResponse } from './components/Collider';
+export {
+  default as Collider,
+  CollisionResponse,
+  ICollider,
+} from './components/Collider';
 export { default as PolygonCollider } from './components/PolygonCollider';
 export { default as PolygonRenderer } from './components/PolygonRenderer';
 export { default as CircleCollider } from './components/CircleCollider';
