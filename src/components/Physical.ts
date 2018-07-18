@@ -20,11 +20,11 @@ export interface PhysicalSettings {
  * Defines the position and angle of this object.
  */
 export default class Physical extends Component<PhysicalSettings> {
-  /**
-   * The center of this object.
-   */
-  _localCenter: Readonly<Coordinates>;
+  private _localCenter: Readonly<Coordinates>;
 
+  /**
+   * The center of this object, relative to the world.
+   */
   get center(): Readonly<Coordinates> {
     return this.localToWorld(this._localCenter);
   }
@@ -33,6 +33,10 @@ export default class Physical extends Component<PhysicalSettings> {
     this._localCenter = this.worldToLocal(worldCenter);
   }
 
+  /**
+   * The center of the object, relative to its parent. If it does not have a parent, or its parent
+   * does not have a `Physical` component, this will be relative to the world.
+   */
   get localCenter(): Readonly<Coordinates> {
     return this._localCenter;
   }
