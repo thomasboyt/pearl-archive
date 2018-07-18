@@ -1,5 +1,5 @@
 export { Coordinates } from './types';
-export { default as MouseButton } from './Inputter/ButtonListener';
+export { MouseButton } from './Inputter/ButtonListener';
 export { default as Keys } from './util/keyCodes';
 
 // export Maths from './util/maths';
