@@ -3,7 +3,7 @@ import * as uuidv4 from 'uuid/v4';
 import Component from './Component';
 import PearlInstance from './PearlInstance';
 import CoroutineManager, { Yieldable } from '@tboyt/coroutine-manager';
-import { ICollider } from './components/Collider';
+import { ICollider, CollisionInformation } from './components/Collider';
 
 export interface CreateOpts {
   /**
@@ -222,6 +222,12 @@ export default class GameObject {
       ctx.save();
       component.render(ctx);
       ctx.restore();
+    }
+  }
+
+  onCollision(collision: CollisionInformation) {
+    for (let component of this.components) {
+      component.onCollision(collision);
     }
   }
 

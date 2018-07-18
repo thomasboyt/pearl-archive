@@ -25,6 +25,7 @@ export {
   default as Collider,
   CollisionResponse,
   ICollider,
+  CollisionInformation,
 } from './components/Collider';
 export { default as PolygonCollider } from './components/PolygonCollider';
 export { default as PolygonRenderer } from './components/PolygonRenderer';

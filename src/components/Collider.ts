@@ -1,6 +1,7 @@
 import * as SAT from 'sat';
 
 import Component from '../Component';
+import GameObject from '../GameObject';
 
 export interface CollisionResponse {
   overlap: number;
@@ -24,6 +25,27 @@ export interface ICollider extends Component<any> {
   // maybe:
   // testSATPolygon(other: SAT.Polygon): SAT.Response | undefined;
   // testSATCircle(other: SAT.Circle): SAT.Response | undefined;
+}
+
+export class CollisionInformation {
+  collider: ICollider;
+  gameObject: GameObject;
+  response: CollisionResponse;
+
+  constructor(collider: ICollider, response: CollisionResponse) {
+    this.collider = collider;
+    this.gameObject = collider.gameObject;
+    this.response = response;
+  }
+
+  static invertResponse(response: CollisionResponse): CollisionResponse {
+    return {
+      aInB: response.bInA,
+      bInA: response.aInB,
+      overlap: -response.overlap,
+      overlapVector: [-response.overlapVector[0], -response.overlapVector[1]],
+    };
+  }
 }
 
 abstract class Collider<T> extends Component<any> {

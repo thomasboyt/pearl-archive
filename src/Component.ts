@@ -1,6 +1,7 @@
 import GameObject from './GameObject';
 import PearlInstance from './PearlInstance';
 import { Yieldable } from '@tboyt/coroutine-manager';
+import { CollisionInformation } from './components/Collider';
 
 /**
  * A base class for components. The component's options interface should be passed as a type
@@ -62,6 +63,13 @@ abstract class Component<Settings> {
    * Hook called when this object is destroyed.
    */
   onDestroy() {
+    // no-op
+  }
+
+  /**
+   * Hook called when this object is collided with.
+   */
+  onCollision(collision: CollisionInformation) {
     // no-op
   }
 
