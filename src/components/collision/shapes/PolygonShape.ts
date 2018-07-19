@@ -97,14 +97,11 @@ export default class PolygonShape extends CollisionShape {
     otherPosition: Position
   ): CollisionResponse | undefined {
     const selfPolygon = this.getSATShape();
+
     if (selfPosition.angle !== undefined) {
       selfPolygon.rotate(selfPosition.angle);
     }
     selfPolygon.translate(selfPosition.center.x, selfPosition.center.y);
-
-    // ****
-    // TODO: Rotate & translate shape here!!!
-    // ****
 
     const resp = new SAT.Response();
     let collided: boolean;
