@@ -59,6 +59,9 @@ export { CollisionResponse, Position } from './components/collision/utils';
 export { default as KinematicBody } from './components/KinematicBody';
 
 export { default as PolygonRenderer } from './components/PolygonRenderer';
+// BoxRenderer is just an alias for consistency's sake
+export { default as BoxRenderer } from './components/PolygonRenderer';
 export { default as CircleRenderer } from './components/CircleRenderer';
 export { default as SpriteRenderer } from './components/SpriteRenderer';
+
 export { default as AnimationManager } from './components/AnimationManager';
