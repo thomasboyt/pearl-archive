@@ -1,7 +1,7 @@
 import GameObject from './GameObject';
 import PearlInstance from './PearlInstance';
 import { Yieldable } from '@tboyt/coroutine-manager';
-import { CollisionInformation } from './components/Collider';
+import CollisionInformation from './components/collision/CollisionInformation';
 
 /**
  * A base class for components. The component's options interface should be passed as a type

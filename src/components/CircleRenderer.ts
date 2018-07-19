@@ -1,6 +1,6 @@
 import Component from '../Component';
 import Physical from './Physical';
-import CircleCollider from './CircleCollider';
+import CircleCollider from './collision/CircleCollider';
 
 export interface Options {
   fillStyle?: string;
@@ -22,7 +22,13 @@ export default class CircleRenderer extends Component<Options> {
 
     ctx.beginPath();
 
-    ctx.arc(phys.center.x, phys.center.y, circle.radius, 0, 2 * Math.PI);
+    ctx.arc(
+      phys.center.x,
+      phys.center.y,
+      circle.getCollisionShape().radius,
+      0,
+      2 * Math.PI
+    );
 
     if (this.fillStyle) {
       ctx.fillStyle = this.fillStyle;

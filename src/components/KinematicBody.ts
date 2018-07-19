@@ -1,9 +1,11 @@
 import Component from '../Component';
-import { CollisionInformation, ICollider, CollisionResponse } from './Collider';
 import Physical from './Physical';
 import { Coordinates } from '../types';
-import PolygonCollider from './PolygonCollider';
-import CircleCollider from './CircleCollider';
+
+import Collider from './collision/Collider';
+import { CollisionResponse } from './collision/utils';
+import ShapeCollider from './collision/ShapeCollider';
+import CollisionInformation from './collision/CollisionInformation';
 
 export default class KinematicBody extends Component<null> {
   moveAndCollide(vec: Coordinates): CollisionInformation[] {
@@ -66,11 +68,7 @@ export default class KinematicBody extends Component<null> {
   private getCollisions() {
     const thisCollider = this.gameObject.collider;
 
-    const hasCollider =
-      thisCollider instanceof PolygonCollider ||
-      thisCollider instanceof CircleCollider;
-
-    if (!hasCollider) {
+    if (!(thisCollider instanceof ShapeCollider)) {
       throw new Error(
         'KinematicBody requires a PolygonCollider or CircleCollider to be attached'
       );
@@ -80,7 +78,7 @@ export default class KinematicBody extends Component<null> {
       .all()
       .filter((entity) => entity !== this.gameObject)
       .map((entity) => entity.collider)
-      .filter((collider) => collider) as ICollider[];
+      .filter((collider) => collider) as Collider[];
 
     return colliders
       .map((collider) => {

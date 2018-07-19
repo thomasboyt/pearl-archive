@@ -3,7 +3,8 @@ import * as uuidv4 from 'uuid/v4';
 import Component from './Component';
 import PearlInstance from './PearlInstance';
 import CoroutineManager, { Yieldable } from '@tboyt/coroutine-manager';
-import { ICollider, CollisionInformation } from './components/Collider';
+import Collider from './components/collision/Collider';
+import CollisionInformation from './components/collision/CollisionInformation';
 
 export interface CreateOpts {
   /**
@@ -264,13 +265,13 @@ export default class GameObject {
     this.coroutineManager.cancel(coroutine);
   }
 
-  private _collider: ICollider;
+  private _collider: Collider;
 
   get collider() {
     return this._collider;
   }
 
-  registerCollider(collider: ICollider) {
+  registerCollider(collider: Collider) {
     if (this._collider) {
       throw new Error('this object already has a collider');
     }

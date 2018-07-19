@@ -1,7 +1,7 @@
 import Component from '../Component';
 import Physical from './Physical';
 
-import PolygonCollider from './PolygonCollider';
+import PolygonCollider from './collision/PolygonCollider';
 
 export interface Options {
   fillStyle?: string;
@@ -21,9 +21,9 @@ export default class PolygonRenderer extends Component<Options> {
     const phys = this.getComponent(Physical);
     const poly = this.getComponent(PolygonCollider);
 
-    const points = poly.points;
+    const points = poly.getCollisionShape().points;
     ctx.translate(phys.center.x, phys.center.y);
-    ctx.rotate(poly.angle);
+    ctx.rotate(phys.angle);
 
     ctx.beginPath();
 
