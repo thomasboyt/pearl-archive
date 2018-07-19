@@ -13,3 +13,5 @@ To get started with Pearl, begin with the [Tutorial](tutorial.md), which provide
 ### Credits & Inspiration
 
 Pearl started life as a fork of Mary Rose Cook's [Coquette](https://github.com/maryrosecook/coquette), a wonderful microframework for simple JS games. In addition to using code from Coquette, Pearl uses ideas from frameworks including Unity, Godot, and Superpowers.
+
+Pearl relies on the [SAT.js](https://github.com/jriecken/sat-js) library for collisions, in addition to several other supporting Node modules.

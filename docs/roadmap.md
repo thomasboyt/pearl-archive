@@ -2,50 +2,25 @@
 
 ## Collision System
 
-Pearl now has components for polygonal and circular collision, but currently, collision detection has to manually used from the `update()` hook:
+Now that Pearl has a more fleshed-out set of Colliders and a KinematicBody, more stuff can be added to the collision system.
 
-```typescript
-class PlatformerPhysics extends Component<Options> {
-  update(dt: number) {
-    this.testPlatformCollisions();
-  }
+Some things I'd like:
 
-  private testPlatformCollisions() {
-    const blocks = [...this.world.children].filter((entity) => entity.hasTag(Tags.block));
+- how do non-KinematicBody things collide
+  - is it time for RigidBody to happen
+    - physics are hard and scary :(
+- collisionEnter/collisionContinue/collisionExit events
+  - on collide: set colliding to true and collisionEnter fired (along with collisionContinue?)
+  - continue firing collisionContinue every frame
+  - on exit: collisionExit event
+    - how is exit triggered??
+    - this is actually really tricky w/ current KinematicBody implementation :I
+  - if entity destroyed, fire collisionExit
+  - unity handles this by literally just not supporting these events for two kinematic bodies colliding
+    - instead: https://docs.unity3d.com/ScriptReference/CharacterController.OnControllerColliderHit.html
+    - also see: https://docs.unity3d.com/Manual/class-Rigidbody2D.html
+    - I think Godot maybe also does this? hmmm
 
-    const phys = this.getComponent(Physical);
-
-    for (let block of blocks) {
-      const selfPoly = this.getComponent(PolygonCollider);
-      const otherPoly = block.getComponent(PolygonCollider);
-
-      const collision = selfPoly.getCollision(otherPoly);
-      if (collision) {
-        this.resolvePlatformCollision(collision);
-      }
-    }
-  }
-}
-```
-
-This works, but is far from ideal.
-
-Some frameworks, from Coquette to Unity, offer some sort of collision hook at the entity/component level, and then use some process. Other frameworks, like Superpowers, have helpful methods you can call within the `update` hook.
-
-Prior art:
-
-* Unity
-  * [https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnCollisionEnter2D.html](https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnCollisionEnter2D.html)
-* Superpowers
-  * [http://docs.superpowers-html5.com/en/tutorials/collision-2d](http://docs.superpowers-html5.com/en/tutorials/collision-2d)
-* Godot
-  * http://docs.godotengine.org/en/3.0/getting_started/step_by_step/your_first_game.html#preparing-for-collisions
-
-### Kinematic Movement
-
-e.g. http://docs.godotengine.org/en/3.0/tutorials/physics/using_kinematic_body_2d.html
-
-The important idea here is that instead of relying on a collision system to fire events about collision, this just has the player move, and if a collision is detected, it immediately resolves the collision and returns a collision. It also has special-case movement stuff, similar to the [weird logic you need in a platformer](https://github.com/thomasboyt/blorp/blob/master/src/entities/PlatformerPhysicsEntity.js#L37)
 
 ### Other questions
 

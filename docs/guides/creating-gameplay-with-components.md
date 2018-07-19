@@ -1,5 +1,9 @@
 # Writing Components
 
+{% hint style="warning" %}
+This documentation hasn't been finished yet! Sorry about that.
+{% endhint %}
+
 Pearl is a framework built around the [Component pattern](http://gameprogrammingpatterns.com/component.html). Lots of big fancy game frameworks, like Unity and Unreal Engine, use this pattern, so you might find it familiar. If not, don't fret!
 
 If you're familiar with OOP, you might best think of components as _really fancy mixins/traits_. In a component system, you have "entities" \(in our case, actual entities in the game world\), which are objects that only hold a few things:
