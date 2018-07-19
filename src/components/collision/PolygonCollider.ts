@@ -7,11 +7,20 @@ import { Position, CollisionResponse } from './utils';
 
 interface PolygonColliderSettings {
   shape: PolygonShape;
-  angle: number;
 }
 
 export default class PolygonCollider extends ShapeCollider {
   private shape!: PolygonShape;
+
+  // TODO: Move these to a BoxCollider...
+
+  get width() {
+    return this.shape.width;
+  }
+
+  get height() {
+    return this.shape.height;
+  }
 
   create(settings: PolygonColliderSettings) {
     this.shape = settings.shape;

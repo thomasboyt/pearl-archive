@@ -1,7 +1,7 @@
 import * as SAT from 'sat';
 
 import CollisionShape from './CollisionShape';
-import { CollisionResponse, Position } from '../utils';
+import { CollisionResponse, Position, Bounds } from '../utils';
 
 interface CircleSettings {
   radius: number;
@@ -20,6 +20,15 @@ export default class CircleShape extends CollisionShape {
     // TODO: Cache this
     const circle = new SAT.Circle(new SAT.Vector(0, 0), this.radius);
     return circle;
+  }
+
+  getBoundingBox(): Bounds {
+    return {
+      xMin: -this.radius,
+      yMin: -this.radius,
+      xMax: this.radius,
+      yMax: this.radius,
+    };
   }
 
   // TODO

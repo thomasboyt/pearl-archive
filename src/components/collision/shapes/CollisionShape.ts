@@ -1,9 +1,13 @@
 import * as SAT from 'sat';
 
-import { CollisionResponse, Position } from '../utils';
+import { CollisionResponse, Position, Bounds } from '../utils';
 
 export default class CollisionShape {
   getSATShape(): SAT.Polygon | SAT.Circle {
+    throw new Error('not implemented');
+  }
+
+  getBoundingBox(): Bounds {
     throw new Error('not implemented');
   }
 
