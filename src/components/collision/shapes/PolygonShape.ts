@@ -7,12 +7,10 @@ import { CollisionResponse, Point, Position, responseFromSAT } from '../utils';
 export interface BoxOptions {
   width: number;
   height: number;
-  angle?: number;
 }
 
 export interface PolygonSettings {
   points?: [number, number][];
-  angle?: number;
 }
 
 export default class PolygonShape extends CollisionShape {
@@ -25,14 +23,12 @@ export default class PolygonShape extends CollisionShape {
     poly.setBoxSize({
       width: opts.width,
       height: opts.height,
-      angle: opts.angle,
     });
 
     return poly;
   }
 
   points: [number, number][] = [];
-  angle: number = 0;
 
   // These properties only exist on Boxes, and maybe should be moved to an actual BoxShape
   // subclass of this. Hm.
@@ -59,7 +55,6 @@ export default class PolygonShape extends CollisionShape {
     ];
 
     this.points = points;
-    this.angle = opts.angle || 0;
 
     this.width = opts.width;
     this.height = opts.height;
@@ -92,7 +87,8 @@ export default class PolygonShape extends CollisionShape {
 
     if (shape instanceof PolygonShape) {
       const otherPolygon = shape.getSATShape();
-      if (otherPosition.angle !== undefined) {
+      // don't bother rotating for undefined _or_ 0, since the default is always 0
+      if (otherPosition.angle) {
         otherPolygon.rotate(otherPosition.angle);
       }
       otherPolygon.translate(otherPosition.center.x, otherPosition.center.y);

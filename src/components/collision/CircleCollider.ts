@@ -7,7 +7,6 @@ import { Position, CollisionResponse } from './utils';
 
 interface CircleColliderSettings {
   shape: CircleShape;
-  angle: number;
 }
 
 export default class CircleCollider extends ShapeCollider {
