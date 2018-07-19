@@ -2,6 +2,7 @@ import Component from '../Component';
 import Physical from './Physical';
 
 import PolygonCollider from './collision/PolygonCollider';
+import BoxCollider from './collision/BoxCollider';
 
 export interface Options {
   fillStyle?: string;
@@ -19,7 +20,15 @@ export default class PolygonRenderer extends Component<Options> {
 
   render(ctx: CanvasRenderingContext2D) {
     const phys = this.getComponent(Physical);
-    const poly = this.getComponent(PolygonCollider);
+    const poly =
+      this.gameObject.maybeGetComponent(PolygonCollider) ||
+      this.gameObject.maybeGetComponent(BoxCollider);
+
+    if (!poly) {
+      throw new Error(
+        'PolygonRenderer cannot render without PolygonCollider or BoxCollider'
+      );
+    }
 
     const points = poly.getCollisionShape().points;
     ctx.translate(phys.center.x, phys.center.y);

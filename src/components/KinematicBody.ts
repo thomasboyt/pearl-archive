@@ -70,7 +70,7 @@ export default class KinematicBody extends Component<null> {
 
     if (!(thisCollider instanceof ShapeCollider)) {
       throw new Error(
-        'KinematicBody requires a PolygonCollider or CircleCollider to be attached'
+        'KinematicBody requires a PolygonCollider, BoxCollider, or CircleCollider to be attached'
       );
     }
 

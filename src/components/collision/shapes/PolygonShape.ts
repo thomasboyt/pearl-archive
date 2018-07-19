@@ -10,7 +10,7 @@ import {
   Bounds,
 } from '../utils';
 
-export interface BoxOptions {
+interface BoxOptions {
   width: number;
   height: number;
 }
@@ -20,6 +20,15 @@ export interface PolygonSettings {
 }
 
 export default class PolygonShape extends CollisionShape {
+  points: [number, number][] = [];
+
+  constructor(settings: PolygonSettings = {}) {
+    super();
+    if (settings.points) {
+      this.points = settings.points;
+    }
+  }
+
   /**
    * Convenience method to create a rectangular polygon.
    */
@@ -34,21 +43,6 @@ export default class PolygonShape extends CollisionShape {
     return poly;
   }
 
-  points: [number, number][] = [];
-
-  // These properties only exist on Boxes, and maybe should be moved to an actual BoxShape
-  // subclass of this. Hm.
-  // https://docs.unity3d.com/ScriptReference/Renderer-bounds.html might be worth looking into
-  width?: number;
-  height?: number;
-
-  constructor(settings: PolygonSettings = {}) {
-    super();
-    if (settings.points) {
-      this.points = settings.points;
-    }
-  }
-
   /**
    * Replace the points in this collider with a box.
    */
@@ -61,9 +55,6 @@ export default class PolygonShape extends CollisionShape {
     ];
 
     this.points = points;
-
-    this.width = opts.width;
-    this.height = opts.height;
   }
 
   getSATShape(): SAT.Polygon {

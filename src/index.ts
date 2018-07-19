@@ -49,6 +49,7 @@ export {
 export {
   default as CircleCollider,
 } from './components/collision/CircleCollider';
+export { default as BoxCollider } from './components/collision/BoxCollider';
 
 export {
   default as CollisionInformation,

@@ -5,15 +5,30 @@ import CollisionShape from './shapes/CollisionShape';
 import PolygonShape from './shapes/PolygonShape';
 import { Position, CollisionResponse } from './utils';
 
-interface PolygonColliderSettings {
-  shape: PolygonShape;
+interface BoxColliderSettings {
+  width: number;
+  height: number;
 }
 
-export default class PolygonCollider extends ShapeCollider {
+export default class BoxCollider extends ShapeCollider {
   private shape!: PolygonShape;
 
-  create(settings: PolygonColliderSettings) {
-    this.shape = settings.shape;
+  get width() {
+    const boundingBox = this.shape.getBoundingBox();
+    return boundingBox.xMax - boundingBox.xMin;
+  }
+
+  get height() {
+    const boundingBox = this.shape.getBoundingBox();
+    return boundingBox.yMax - boundingBox.yMin;
+  }
+
+  create(settings: BoxColliderSettings) {
+    this.shape = PolygonShape.createBox({
+      width: settings.width,
+      height: settings.height,
+    });
+
     this.gameObject.registerCollider(this);
   }
 
