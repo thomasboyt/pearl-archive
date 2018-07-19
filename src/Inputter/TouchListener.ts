@@ -4,11 +4,13 @@ export default class TouchListener {
   private _touchPositions = new Map<number, Coordinates>();
 
   bind(canvas: HTMLCanvasElement) {
+    // TODO: Make this relative to canvas, and not viewport
+    // See MouseMoveListener
+
     canvas.addEventListener('touchstart', (e) => {
       e.preventDefault();
 
       for (let touch of Array.from(e.changedTouches)) {
-        // TODO: what is clientX/clientY relative to? log this
         const position = {
           x: touch.clientX,
           y: touch.clientY,
@@ -47,8 +49,4 @@ export default class TouchListener {
   getTouchPositions() {
     return this._touchPositions;
   }
-
-  // getMousePosition(): Coordinates {
-  //   return this._mousePosition;
-  // }
 }
