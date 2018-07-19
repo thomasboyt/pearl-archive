@@ -1,6 +1,8 @@
 import Renderer from '../Renderer';
 import PearlInstance from '../PearlInstance';
 
+jest.mock('../AudioManager');
+
 beforeEach(() => {
   (window as any).devicePixelRatio = 1;
 });
@@ -23,15 +25,17 @@ describe('renderer', () => {
       scaleY = y;
     };
 
-    const renderer = new Renderer(createPearl());
+    const pearl = new PearlInstance();
 
-    renderer.run({
+    pearl.renderer.run({
       canvas,
       width: 400,
       height: 300,
     });
 
-    const ctx = renderer.getCtx();
+    pearl.renderer.update();
+
+    const ctx = pearl.renderer.getCtx();
 
     expect(scaleX).toBe(2);
     expect(scaleY).toBe(2);
