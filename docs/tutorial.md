@@ -28,8 +28,8 @@ import {
   createPearl,
   GameObject,
   Physical,
-  PolygonCollider,
-  PolygonRenderer,
+  BoxCollider,
+  BoxRenderer,
 } from 'pearl';
 
 class Game extends Component<null> {
@@ -45,12 +45,12 @@ class Game extends Component<null> {
             },
           }),
 
-          PolygonCollider.createBox({
+          new BoxCollider({
             width: 20,
             height: 20,
           }),
 
-          new PolygonRenderer({
+          new BoxRenderer({
             fillStyle: 'cyan',
           }),
         ],
@@ -69,7 +69,11 @@ createPearl({
 
 Start by looking at the bottom of the file: we're creating a new Pearl instance using `createPearl`. In addition to setting the canvas to use, and its width and height, we define a _root component_. This component is instantiated when the game starts, and is generally used as an "entry point" into the game. It's attached to a root entity, which can be accessed at `this.pearl.obj`.
 
-When the game component is initialized, we create a new entity, the player. The player entity is composed of a `Physical` component, giving it a position, a `PolygonCollider` component, which creates a rectangular collider, and a `PolygonRenderer` component, which renders the polygon defined by the `PolygonCollider`.
+When the game component is initialized, we create a new entity, the player. The player entity is composed of a `Physical` component, giving it a position, a `BoxCollider` component, which creates a rectangular collider, and a `BoxRenderer` component, which renders the box defined by the `BoxCollider`.
+
+{% hint style="info" %}
+In addition to `BoxCollider`, Pearl also includes a `PolygonCollider` and `CircleCollider`, and corresponding `Render` components for both.
+{% endhint %}
 
 Now, when we start the game, we see a cyan box at the top of the screen. Our valiant player will venture down to face an enemy at the bottom of the screen, which we will add in a moment. However, before we do so, we need to give the player the ability to move.
 
@@ -173,12 +177,12 @@ class Game extends Component<null> {
             },
           }),
 
-          PolygonCollider.createBox({
+          new BoxCollider({
             width: 40,
             height: 40,
           }),
 
-          new PolygonRenderer({
+          new BoxRenderer({
             fillStyle: 'red',
           }),
         ],
@@ -194,7 +198,7 @@ If you refresh, you'll see a big red box at the bottom of the screen, our new en
 
 ## Adding collision detection
 
-While Pearl includes `PolygonCollider` and `CircleCollider` components, it doesn't automatically _do_ anything with them, unlike some fancier frameworks. This is partially so that you have control over handling and resolving collisions - since the way Pac-Man handles collisions is a heck of a lot different than how Mario would - but is also because I haven't come up with a good, magical collision API yet. It might get there eventually!
+While Pearl includes several `Collider` components for various shapes, it doesn't automatically _do_ anything with them, unlike some fancier frameworks. This is partially so that you have control over handling and resolving collisions - since the way Pac-Man handles collisions is a heck of a lot different than how Mario would - but is also because I haven't come up with a good, magical collision API yet. It might get there eventually!
 
 For now, we'll add collision detection inside the `Player` component. We need to check to see if the player has collided with the enemy, and if so, set the player to dead. Back in our player component, we add a new field to the player, and a new placeholder function for checking collisions:
 
@@ -233,8 +237,8 @@ class Player extends Component<null> {
 
     if (
       enemy
-        .getComponent(PolygonCollider)
-        .isColliding(this.getComponent(PolygonCollider))
+        .getComponent(BoxCollider)
+        .isColliding(this.getComponent(BoxCollider))
     ) {
       this.isAlive = false;
     }
@@ -258,13 +262,13 @@ However, what if we later wanted to add multiple enemies? Managing an array of e
 
 In general, looking up entities from the game world is Fast Enough\(tm\) for most games. If you profile your game and find `entities.all()` becoming a bottleneck, you might want to add some level of caching - especially if you need to do some complex filtering beyond just looking at tags, such as "only get entities in a certain area of the world" - but using `entities.all()` is the easiest way to get started.
 
-So, with entity lookup taken care of, we then use the `isColliding()` method of `PolygonCollider`, which can check against another `PolygonCollider`, to see if the entities are colliding. If they are, we just set the player to dead. Now, if you refresh the game, you should see the player rendered helplessly immobile after touching the enemy, presumedly because the enemy has eaten or stabbed or done something equally horrendous.
+So, with entity lookup taken care of, we then use the `isColliding()` method of `BoxCollider`, which can check against another `BoxCollider`, to see if the entities are colliding. If they are, we just set the player to dead. Now, if you refresh the game, you should see the player rendered helplessly immobile after touching the enemy, presumedly because the enemy has eaten or stabbed or done something equally horrendous.
 
 So now the player dies when they poke the evil enemy, and can no longer move or win the game. To emphasize this point, we'll add a _game over_ display.
 
 ## Creating a game over display
 
-A simple UI will serve as a good introduction to canvas rendering in Pearl. Unlike `PolygonRenderer`, Pearl currently doesn't have a drop-in component for displaying text content. That's okay, though, as it's very easy to add.
+A simple UI will serve as a good introduction to canvas rendering in Pearl. Unlike `BoxRenderer`, Pearl currently doesn't have a drop-in component for displaying text content. That's okay, though, as it's very easy to add.
 
 Any component can have a `render()` function on it. Traditionally, you'd probably make a new UI component that would probably live in a UI entity, or maybe be a sibling component of your main `Game` component. For simplicity's sake, we'll just add a `render()` method to our root `Game` component:
 
@@ -308,7 +312,7 @@ Now, if you run the game, you should see a nice game over message appear when yo
 
 ## Creating a sword
 
-We've seen how to render polygons using `PolygonRenderer`, and text using canvas drawing instructions. Now, for our sword, let's add a proper sword sprite, drawn by `SpriteRenderer`. The `SpriteRenderer` component simply renders a single sprite, while the `AnimationManager` can be used to add timed animations and multiple animation states to a component.
+We've seen how to render boxes using `BoxRenderer`, and text using canvas drawing instructions. Now, for our sword, let's add a proper sword sprite, drawn by `SpriteRenderer`. The `SpriteRenderer` component simply renders a single sprite, while the `AnimationManager` can be used to add timed animations and multiple animation states to a component.
 
 To load our image, in `assets/sword.png`, we'll use Webpack's `url-loader` (already pre-configured) and Pearl's built-in assets loader. To start, we add the assets we want to preload to a new `assets` field on `createGame()`:
 
@@ -377,7 +381,7 @@ class Game extends Component<null> {
             },
           }),
 
-          PolygonCollider.createBox({
+          new BoxCollider({
             width: swordSprite.width,
             height: swordSprite.height,
           }),
@@ -408,8 +412,8 @@ export default class Player extends Component<null> {
 
       if (
         sword
-          .getComponent(PolygonCollider)
-          .isColliding(this.getComponent(PolygonCollider))
+          .getComponent(BoxCollider)
+          .isColliding(this.getComponent(BoxCollider))
       ) {
         this.hasSword = true;
       }
@@ -434,8 +438,8 @@ export default class Player extends Component<null> {
 
       if (
         sword
-          .getComponent(PolygonCollider)
-          .isColliding(this.getComponent(PolygonCollider))
+          .getComponent(BoxCollider)
+          .isColliding(this.getComponent(BoxCollider))
       ) {
         this.hasSword = true;
 
@@ -473,8 +477,8 @@ export default class Player extends Component<null> {
       // it would error out!
       enemy &&
       enemy
-        .getComponent(PolygonCollider)
-        .isColliding(this.getComponent(PolygonCollider))
+        .getComponent(BoxCollider)
+        .isColliding(this.getComponent(BoxCollider))
     ) {
       if (this.hasSword) {
         this.pearl.entities.destroy(enemy);
