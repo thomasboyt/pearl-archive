@@ -3,6 +3,7 @@ import { CollisionInformation, ICollider, CollisionResponse } from './Collider';
 import Physical from './Physical';
 import { Coordinates } from '../types';
 import PolygonCollider from './PolygonCollider';
+import CircleCollider from './CircleCollider';
 
 export default class KinematicBody extends Component<null> {
   moveAndCollide(vec: Coordinates): CollisionInformation[] {
@@ -65,9 +66,13 @@ export default class KinematicBody extends Component<null> {
   private getCollisions() {
     const thisCollider = this.gameObject.collider;
 
-    if (!(thisCollider instanceof PolygonCollider)) {
+    const hasCollider =
+      thisCollider instanceof PolygonCollider ||
+      thisCollider instanceof CircleCollider;
+
+    if (!hasCollider) {
       throw new Error(
-        'Kinematic Body only supports PolygonCollider currently!'
+        'KinematicBody requires a PolygonCollider or CircleCollider to be attached'
       );
     }
 
@@ -80,14 +85,7 @@ export default class KinematicBody extends Component<null> {
     return colliders
       .map((collider) => {
         const isTrigger = collider.isTrigger;
-
-        // TODO: this "guard" is currently needed for some reason idk
-        let response: CollisionResponse | null;
-        if (collider instanceof PolygonCollider) {
-          response = collider.getCollision(thisCollider);
-        } else {
-          response = collider.getCollision(thisCollider);
-        }
+        const response = collider.getCollision(thisCollider);
 
         if (!response) {
           return null;
