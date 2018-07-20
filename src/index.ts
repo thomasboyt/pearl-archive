@@ -1,9 +1,12 @@
-export { Coordinates } from './types';
+export { Coordinates, Vector2 } from './types';
 export { MouseButton } from './Inputter/ButtonListener';
 export { default as Keys } from './util/keyCodes';
 
 import * as Maths from './util/maths';
 export { Maths };
+
+import * as VectorMaths from './util/vectorMaths';
+export { VectorMaths };
 
 export { default as PearlInstance, createPearl } from './PearlInstance';
 

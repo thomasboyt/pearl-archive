@@ -1,16 +1,7 @@
-import { Coordinates } from '../types';
+export const radiansToDegrees = (radians: number): number => {
+  return radians * (180 / Math.PI);
+};
 
-export function rotatePoint(
-  [x, y]: [number, number],
-  radians: number
-): [number, number] {
-  const cos = Math.cos(radians);
-  const sin = Math.sin(radians);
-
-  return [cos * x - sin * y, cos * y + sin * x];
-}
-
-export const addVector = (a: Coordinates, b: Coordinates): Coordinates => ({
-  x: a.x + b.x,
-  y: a.y + b.y,
-});
+export const degreesToRadians = (degrees: number): number => {
+  return degrees * (Math.PI / 180);
+};
