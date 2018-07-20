@@ -3,17 +3,15 @@ import * as SAT from 'sat';
 
 export interface CollisionResponse {
   overlap: number;
-  overlapVector: [number, number];
+  overlapVector: Vector2;
   aInB: boolean;
   bInA: boolean;
 }
 
 export function responseFromSAT(response: SAT.Response): CollisionResponse {
-  const vector: [number, number] = [response.overlapV.x, response.overlapV.y];
-
   return {
     overlap: response.overlap,
-    overlapVector: vector,
+    overlapVector: response.overlapV,
     aInB: response.aInB,
     bInA: response.bInA,
   };

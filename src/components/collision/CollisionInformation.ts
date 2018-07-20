@@ -1,6 +1,7 @@
 import Collider from './Collider';
 import { CollisionResponse } from './utils';
 import GameObject from '../../GameObject';
+import * as V from '../../util/vectorMaths';
 
 export default class CollisionInformation {
   collider: Collider;
@@ -18,7 +19,7 @@ export default class CollisionInformation {
       aInB: response.bInA,
       bInA: response.aInB,
       overlap: -response.overlap,
-      overlapVector: [-response.overlapVector[0], -response.overlapVector[1]],
+      overlapVector: V.negative(response.overlapVector),
     };
   }
 }
