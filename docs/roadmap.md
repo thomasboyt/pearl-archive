@@ -21,7 +21,6 @@ Some things I'd like:
     - also see: https://docs.unity3d.com/Manual/class-Rigidbody2D.html
     - I think Godot maybe also does this? hmmm
 
-
 ### Other questions
 
 * Could entities be grouped into a single top-level "scene" component?
@@ -33,6 +32,14 @@ Some things I'd like:
     * Pre-update hook?
 * Long-term considerations
   * Collision layers? Would help avoid triggering/calculating unnecessary collisions
+
+## Networking Thoughts
+
+There's ~zero chance networked multiplayer will ever be a core component in Pearl, but it's good to keep in mind, especially as Sledgehammer is theoretically ongoing.
+
+For example: `Physical.vel` is being removed in favor of manually moving entities and, eventually, maybe using physics, or at least some sort of `MovingBody` that you can apply a velocity to. However, `Physical.vel` had the nice property of allowing (sorta) "predictive" movement, rather than purely relying on the incoming position. Adding a real physics engine might help with this, but that's obviously fraught with its own peril, as Manygolf showed.
+
+Any automated collision system should keep this in mind, too. It'd be annoying to have collisions duplicated on server and client, requiring a `if (!isHost) {return}` check, but it might make sense.
 
 ## Simpler Entity Creation
 
