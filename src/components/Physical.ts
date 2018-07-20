@@ -12,8 +12,6 @@ export interface PhysicalSettings {
    * The angle of this object, in radians.
    */
   angle?: number;
-
-  vel?: Vector2;
 }
 
 /**
@@ -49,20 +47,6 @@ export default class Physical extends Component<PhysicalSettings> {
    * The angle of this object, in radians.
    */
   angle: number;
-
-  /**
-   * A frozen object does not move, regardless of its set velocity.
-   */
-  frozen: boolean = false;
-
-  /**
-   * The current velocity of this object.
-   */
-  // TODO: This maybe belongs somewhere else? Especially if it's going to be this generic?
-  vel: Vector2 = {
-    x: 0,
-    y: 0,
-  };
 
   translate(vec: Vector2) {
     this.center = V.add(this.center, vec);
@@ -106,20 +90,6 @@ export default class Physical extends Component<PhysicalSettings> {
       this.center = settings.center;
     }
 
-    if (settings.vel) {
-      this.vel = settings.vel;
-    }
-
     this.angle = settings.angle || 0;
-  }
-
-  update(dt: number) {
-    if (!this.frozen) {
-      // TODO: Use angle here
-      this.translate({
-        x: this.vel.x * dt,
-        y: this.vel.y * dt,
-      });
-    }
   }
 }
