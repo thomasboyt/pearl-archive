@@ -1,4 +1,4 @@
-import { Coordinates } from '../types';
+import { Vector2 } from '../types';
 import ButtonListener, { MouseButton } from './ButtonListener';
 import MouseMoveListener, { MouseListenerFn } from './MouseMoveListener';
 import TouchListener from './TouchListener';
@@ -34,7 +34,7 @@ export default class Inputter {
     return this._buttonListener.isMousePressed(mouseButton);
   }
 
-  getMousePosition(): Coordinates {
+  getMousePosition(): Vector2 {
     return this._mouseMoveListener.getMousePosition();
   }
 

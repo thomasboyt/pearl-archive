@@ -1,11 +1,8 @@
 import PearlInstance from './PearlInstance';
-import { Coordinates } from './types';
+import { Vector2 } from './types';
 import GameObject from './GameObject';
 
-function viewOffset(
-  viewCenter: Coordinates,
-  viewSize: Coordinates
-): Coordinates {
+function viewOffset(viewCenter: Vector2, viewSize: Vector2): Vector2 {
   return {
     x: -(viewCenter.x - viewSize.x / 2),
     y: -(viewCenter.y - viewSize.y / 2),
@@ -30,8 +27,8 @@ export default class Renderer {
   private _ctx: CanvasRenderingContext2D;
   private _backgroundColor?: string;
 
-  private _viewSize: Coordinates;
-  private _viewCenter: Coordinates;
+  private _viewSize: Vector2;
+  private _viewCenter: Vector2;
   private _scaleFactor: number = 1;
   private _pixelRatio: number = 1;
 
@@ -96,22 +93,22 @@ export default class Renderer {
     return this._ctx;
   }
 
-  getViewSize(): Coordinates {
+  getViewSize(): Vector2 {
     return this._viewSize;
   }
 
-  getViewCenter(): Coordinates {
+  getViewCenter(): Vector2 {
     return this._viewCenter;
   }
 
   /**
-   * Set the center coordinates of the viewport.
+   * Set the center point of the viewport.
    *
    * This only translates the view by whole pixels to prevent rendering bugs that appear when
    * translating a scene by a float. This translation takes into account the game's current scale
    * factor.
    */
-  setViewCenter(pos: Coordinates) {
+  setViewCenter(pos: Vector2) {
     const roundedScaledPos = {
       x: Math.round(pos.x * this._scaleFactor),
       y: Math.round(pos.y * this._scaleFactor),

@@ -1,6 +1,6 @@
 import Component from '../Component';
 import Physical from './Physical';
-import { Coordinates } from '../types';
+import { Vector2 } from '../types';
 
 import Collider from './collision/Collider';
 import { CollisionResponse } from './collision/utils';
@@ -8,13 +8,13 @@ import ShapeCollider from './collision/ShapeCollider';
 import CollisionInformation from './collision/CollisionInformation';
 
 export default class KinematicBody extends Component<null> {
-  moveAndCollide(vec: Coordinates): CollisionInformation[] {
+  moveAndCollide(vec: Vector2): CollisionInformation[] {
     const collisions = this._moveAndCollide(vec);
     this.fireCollisions(collisions);
     return collisions;
   }
 
-  private _moveAndCollide(vec: Coordinates): CollisionInformation[] {
+  private _moveAndCollide(vec: Vector2): CollisionInformation[] {
     const phys = this.getComponent(Physical);
 
     const prevCenter = { ...phys.center };
@@ -44,7 +44,7 @@ export default class KinematicBody extends Component<null> {
   //
   // Notably, fixing this would solve some bugs around moving around corners, I
   // think? Especially for AI.
-  moveAndSlide(vec: Coordinates): CollisionInformation[] {
+  moveAndSlide(vec: Vector2): CollisionInformation[] {
     const xCollisions = this._moveAndCollide({ x: vec.x, y: 0 });
     const yCollisions = this._moveAndCollide({ x: 0, y: vec.y });
     // remove duplicates

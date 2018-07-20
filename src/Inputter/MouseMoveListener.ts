@@ -1,13 +1,13 @@
-import { Coordinates } from '../types';
+import { Vector2 } from '../types';
 
-export type MouseListenerFn = (mousePos: Coordinates) => void;
+export type MouseListenerFn = (mousePos: Vector2) => void;
 
 // TODO: what should document actually be here?
 function getWindow(document: any): Window {
   return document.parentWindow || document.defaultView;
 }
 
-function getElementPosition(element: HTMLElement): Coordinates {
+function getElementPosition(element: HTMLElement): Vector2 {
   const rect = element.getBoundingClientRect();
   const document = element.ownerDocument;
   const body = document.body;
@@ -24,7 +24,7 @@ function getElementPosition(element: HTMLElement): Coordinates {
 
 export default class MouseMoveListener {
   private _bindings: Set<MouseListenerFn> = new Set();
-  private _mousePosition: Coordinates = { x: 0, y: 0 };
+  private _mousePosition: Vector2 = { x: 0, y: 0 };
 
   bind(canvas: HTMLCanvasElement) {
     canvas.addEventListener('mousemove', (e) => {
@@ -42,7 +42,7 @@ export default class MouseMoveListener {
     });
   }
 
-  getMousePosition(): Coordinates {
+  getMousePosition(): Vector2 {
     return this._mousePosition;
   }
 
@@ -54,7 +54,7 @@ export default class MouseMoveListener {
     this._bindings.delete(fn);
   }
 
-  private _getAbsoluteMousePosition(e: MouseEvent): Coordinates {
+  private _getAbsoluteMousePosition(e: MouseEvent): Vector2 {
     if (e.pageX) {
       return { x: e.pageX, y: e.pageY };
     } else {

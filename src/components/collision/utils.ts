@@ -1,4 +1,4 @@
-import { Coordinates } from '../../types';
+import { Vector2 } from '../../types';
 import * as SAT from 'sat';
 
 export interface CollisionResponse {
@@ -20,7 +20,7 @@ export function responseFromSAT(response: SAT.Response): CollisionResponse {
 }
 
 export interface Position {
-  center: Coordinates;
+  center: Vector2;
   angle?: number;
 }
 

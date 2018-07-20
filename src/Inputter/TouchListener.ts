@@ -1,7 +1,7 @@
-import { Coordinates } from '../types';
+import { Vector2 } from '../types';
 
 export default class TouchListener {
-  private _touchPositions = new Map<number, Coordinates>();
+  private _touchPositions = new Map<number, Vector2>();
 
   bind(canvas: HTMLCanvasElement) {
     // TODO: Make this relative to canvas, and not viewport
