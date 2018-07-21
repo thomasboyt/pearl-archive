@@ -3,6 +3,15 @@ import { deepEqual } from 'fast-equals';
 
 export type RGB = [number, number, number];
 
+/**
+ * The Sprite class simply wraps an <img> element (HTMLImageElement), which can
+ * be rendered into a <canvas> using draw(ctx). It also supports drawing a
+ * _masked_ Sprite - that is, one with one color replaced with another - using
+ * drawMasked().
+ *
+ * Sprites support an offset X and Y value when created, so that the underlying
+ * image can be an unmodified sprite sheet.
+ */
 export default class Sprite {
   img: HTMLImageElement;
   x: number;

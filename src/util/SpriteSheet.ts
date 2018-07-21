@@ -1,11 +1,29 @@
 import Sprite from './Sprite';
 
+/**
+ * Interface representing a SpriteSheet. It only has to implement one method,
+ * `createSprite(name: any)`, that returns a Sprite.
+ */
 export interface ISpriteSheet {
   createSprite(name: any): Sprite;
 }
 
 /**
  * Creates `Sprite` objects from a sprite sheet.
+ *
+ * This class is very naive, and makes the following big assumptions:
+ *
+ * - Every sprite is the same size (as defined by spriteWidth and spriteHeight)
+ * - All sprites are aligned in rows and columns with no padding.
+ *
+ * `createSprite(n)` then returns the sprite at that index. So, if you had a 4x4
+ * sprite sheet, `createSprite(0)` would get you the first sprite in the first
+ * row, `createSprite(4)` would get you the first sprite in the _second_ row,
+ * etc.
+ *
+ * If you need a more advanced SpriteSheet, such as one that can handle a sprite
+ * atlas, simply implement the ISpriteSheet interface that this class
+ * implements.
  */
 export default class SpriteSheet implements ISpriteSheet {
   img: HTMLImageElement;

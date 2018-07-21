@@ -10,7 +10,7 @@ export default class Animation {
   private _sheet: ISpriteSheet;
   private _frameLengthMs: number | null;
 
-  private _frames: number[];
+  private _frames: any[];
   private _sprites: Sprite[] = [];
   private _currentFrameIdx: number;
 
