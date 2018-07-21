@@ -1,5 +1,17 @@
 # Roadmap
 
+## Planned for 0.1.0
+
+* Simplify component creation using one of the strategies detailed below (see below)
+* Rename `GameObject` to `Entity`. `GameObject` is just some stolen Unity vocab and I use the term "entity" in the docs. This should be relatively easy to do across the board since it's a very literal `s/GameObject/Entity`.
+* Tiled platformer example! Probably will port over Blorp, probably with shinier new sprites from a free asset pack.
+
+### Beyond that, probably
+
+* More collisions stuff
+* First-class events
+* DOM rendering thing/React integration?
+
 ## Collision System
 
 Now that Pearl has a more fleshed-out set of Colliders and a KinematicBody, more stuff can be added to the collision system.
@@ -62,6 +74,11 @@ class MyComponent<Settings> {
   }
 }
 ```
+
+- On the other hand, strategies like the above could leave a component in an invalid state - e.g. what if MyComponent can't function without a set `sprite`?
+- It's also hard to subclass components when base class needs settings - have to copy logic to apply settings, or create helper method.
+
+### Magic Components
 
 TypeScript (as of 2.1) now makes it easy to create a type-safe API similar to the original Coquette entity construction API:
 
@@ -126,6 +143,13 @@ However, this may not be a big deal, as "required" settings are in opposition to
 d) Setters that depend on the parent object may error out with this.
 
 An experimental implementation of this exists at the `ideas/magic-components` branch.
+
+### Alternatives To Magic Components
+
+* Add merge-properties helper, which additionally ensures that properties passed in settings don't override properties that have been set
+* Validate _required_ properties at construction time, with type guarantees - non-optional settings
+  * What if the user really wants to defer setting properties on the object for some reason?
+    * User should just suck it up and e.g. pass partially-filled out setting through control flow
 
 ## Devtools Inspector
 
