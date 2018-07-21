@@ -10,6 +10,10 @@ interface BoxColliderSettings {
   height: number;
 }
 
+/**
+ * A ShapeCollider that uses a PolygonShape, but one constrained to being a
+ * rectangular box.
+ */
 export default class BoxCollider extends ShapeCollider {
   private shape!: PolygonShape;
 

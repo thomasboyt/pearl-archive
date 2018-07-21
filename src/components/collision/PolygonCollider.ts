@@ -6,14 +6,20 @@ import PolygonShape from './shapes/PolygonShape';
 import { Position, CollisionResponse } from './utils';
 
 interface PolygonColliderSettings {
-  shape: PolygonShape;
+  points: [number, number][];
 }
 
+/**
+ * A ShapeCollider with a PolygonShape, representing a convex polygon.
+ */
 export default class PolygonCollider extends ShapeCollider {
   private shape!: PolygonShape;
 
   create(settings: PolygonColliderSettings) {
-    this.shape = settings.shape;
+    this.shape = new PolygonShape({
+      points: settings.points,
+    });
+
     this.gameObject.registerCollider(this);
   }
 

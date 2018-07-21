@@ -6,14 +6,20 @@ import CircleShape from './shapes/CircleShape';
 import { Position, CollisionResponse } from './utils';
 
 interface CircleColliderSettings {
-  shape: CircleShape;
+  radius: number;
 }
 
+/**
+ * A ShapeCollider that uses a CircleShape.
+ */
 export default class CircleCollider extends ShapeCollider {
   private shape!: CircleShape;
 
   create(settings: CircleColliderSettings) {
-    this.shape = settings.shape;
+    this.shape = new CircleShape({
+      radius: settings.radius,
+    });
+
     this.gameObject.registerCollider(this);
   }
 

@@ -6,8 +6,8 @@ import { Position, CollisionResponse } from './utils';
 
 export default abstract class Collider extends Component<any> {
   /**
-   * Indicates whether this collider should be solid (objects should not go through it) or a trigger
-   * (objects can go through it)
+   * Indicates whether this collider should be solid (objects should not go
+   * through it) or a trigger (objects can go through it)
    */
   isTrigger = false;
 
@@ -24,8 +24,8 @@ export default abstract class Collider extends Component<any> {
   }
 
   /**
-   * Returns a collision response for the collision between this and another collider, or null if
-   * there is no collision.
+   * Returns a collision response for the collision between this and another
+   * collider, or null if there is no collision.
    */
   getCollision(other: ShapeCollider): CollisionResponse | undefined {
     if (!this.isEnabled || !other.isEnabled) {
@@ -38,6 +38,10 @@ export default abstract class Collider extends Component<any> {
     );
   }
 
+  /**
+   * Tests whether the passed shape is colliding with this collider, translating
+   * and rotating by a position (center and angle).
+   */
   abstract testShape(
     shape: CollisionShape,
     otherPosition: Position
