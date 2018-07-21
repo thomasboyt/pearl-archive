@@ -1,26 +1,7 @@
 import { Vector2 } from '../types';
+import getPositionRelativeToElement from './getPositionRelativeToElement';
 
 export type MouseListenerFn = (mousePos: Vector2) => void;
-
-// TODO: what should document actually be here?
-function getWindow(document: any): Window {
-  return document.parentWindow || document.defaultView;
-}
-
-function getElementPosition(element: HTMLElement): Vector2 {
-  const rect = element.getBoundingClientRect();
-  const document = element.ownerDocument;
-  const body = document.body;
-  const window = getWindow(document);
-  return {
-    x:
-      rect.left +
-      (window.pageXOffset || body.scrollLeft) -
-      (body.clientLeft || 0),
-    y:
-      rect.top + (window.pageYOffset || body.scrollTop) - (body.clientTop || 0),
-  };
-}
 
 export default class MouseMoveListener {
   private _bindings: Set<MouseListenerFn> = new Set();
@@ -28,13 +9,10 @@ export default class MouseMoveListener {
 
   bind(canvas: HTMLCanvasElement) {
     canvas.addEventListener('mousemove', (e) => {
-      const absoluteMousePosition = this._getAbsoluteMousePosition(e);
-      const elementPosition = getElementPosition(canvas);
-
-      this._mousePosition = {
-        x: absoluteMousePosition.x - elementPosition.x,
-        y: absoluteMousePosition.y - elementPosition.y,
-      };
+      this._mousePosition = getPositionRelativeToElement(
+        this._getAbsoluteMousePosition(e),
+        canvas
+      );
 
       for (let bindingFn of this._bindings) {
         bindingFn(this.getMousePosition());
