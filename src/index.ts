@@ -25,6 +25,8 @@ export { default as SpriteSheet, ISpriteSheet } from './util/SpriteSheet';
 export { default as AssetBase } from './assets/AssetBase';
 export { default as ImageAsset } from './assets/ImageAsset';
 export { default as AudioAsset } from './assets/AudioAsset';
+export { default as SpriteAsset } from './assets/SpriteAsset';
+export { default as SpriteSheetAsset } from './assets/SpriteSheetAsset';
 
 /*
  *

@@ -1,12 +1,8 @@
 import AssetBase from './AssetBase';
+import loadImage from './loadImage';
 
 export default class ImageAsset extends AssetBase<HTMLImageElement> {
   load(path: string) {
-    return new Promise<HTMLImageElement>((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => resolve(img);
-      img.onerror = (evt) => reject(evt.error);
-      img.src = path;
-    });
+    return loadImage(path);
   }
 }
