@@ -1,61 +1,8 @@
 import Component from '../Component';
-import Physical from './Physical';
-
-import Sprite, { RGB } from '../util/Sprite';
-import { ISpriteSheet } from '../util/SpriteSheet';
 import SpriteRenderer from './SpriteRenderer';
 
-export interface AnimationConfig {
-  frames: any[];
-  frameLengthMs: number | null;
-}
-
-class Animation {
-  private _sheet: ISpriteSheet;
-  private _frameLengthMs: number | null;
-
-  private _frames: number[];
-  private _sprites: Sprite[] = [];
-  private _currentFrameIdx: number;
-
-  private _elapsed: number;
-
-  constructor(sheet: ISpriteSheet, cfg: AnimationConfig) {
-    this._sheet = sheet;
-
-    this._frames = cfg.frames;
-    this._frameLengthMs = cfg.frameLengthMs;
-
-    for (let frame of this._frames) {
-      this._sprites.push(this._sheet.createSprite(frame));
-    }
-
-    this._currentFrameIdx = 0;
-    this._elapsed = 0;
-  }
-
-  update(dt: number) {
-    this._elapsed += dt;
-
-    if (this._frameLengthMs === null) {
-      return;
-    }
-
-    if (this._elapsed > this._frameLengthMs) {
-      this._currentFrameIdx += 1;
-
-      if (this._currentFrameIdx >= this._frames.length) {
-        this._currentFrameIdx = 0;
-      }
-
-      this._elapsed = 0;
-    }
-  }
-
-  getSprite() {
-    return this._sprites[this._currentFrameIdx];
-  }
-}
+import { ISpriteSheet } from '../util/SpriteSheet';
+import Animation, { AnimationConfig } from '../util/Animation';
 
 export interface AnimationConfigMap {
   [key: string]: AnimationConfig;
@@ -85,7 +32,8 @@ export default class AnimationManager extends Component<Options> {
   }
 
   /**
-   * Set the animation state. Will throw an error if the animation does not exist.
+   * Set the animation state. Will throw an error if the animation does not
+   * exist.
    */
   set(state: string) {
     if (state === this._currentState) {
