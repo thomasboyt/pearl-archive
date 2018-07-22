@@ -12,6 +12,10 @@
 * First-class events
 * DOM rendering thing/React integration?
 
+## Preloader/Preloader Hooks
+
+It'd be fun and cute to ship a default preloader, but most games will probably not have enough assets to ever see it anyways, so might be more important to document how you could make your own, and actually provide the hooks needed.
+
 ## Collision System
 
 Now that Pearl has a more fleshed-out set of Colliders and a KinematicBody, more stuff can be added to the collision system.
