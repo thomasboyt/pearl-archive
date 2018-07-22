@@ -54,7 +54,7 @@ export default class KinematicBody extends Component<null> {
     // remove duplicates
     const collisions = uniqBy(
       [...xCollisions, ...yCollisions],
-      (collision) => collision.gameObject
+      (collision) => collision.entity
     );
     this.fireCollisions(collisions);
     return collisions;
@@ -62,10 +62,10 @@ export default class KinematicBody extends Component<null> {
 
   private fireCollisions(collisions: CollisionInformation[]) {
     for (let collision of collisions) {
-      this.gameObject.onCollision(collision);
-      collision.collider.gameObject.onCollision(
+      this.entity.onCollision(collision);
+      collision.collider.entity.onCollision(
         new CollisionInformation(
-          this.gameObject.collider,
+          this.entity.collider,
           CollisionInformation.invertResponse(collision.response)
         )
       );
@@ -73,7 +73,7 @@ export default class KinematicBody extends Component<null> {
   }
 
   private getCollisions() {
-    const thisCollider = this.gameObject.collider;
+    const thisCollider = this.entity.collider;
 
     if (!(thisCollider instanceof ShapeCollider)) {
       throw new Error(
@@ -83,7 +83,7 @@ export default class KinematicBody extends Component<null> {
 
     const colliders = this.pearl.entities
       .all()
-      .filter((entity) => entity !== this.gameObject)
+      .filter((entity) => entity !== this.entity)
       .map((entity) => entity.collider)
       .filter((collider) => collider) as Collider[];
 

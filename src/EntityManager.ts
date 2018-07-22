@@ -1,10 +1,10 @@
-import GameObject from './GameObject';
+import Entity from './Entity';
 import PearlInstance from './PearlInstance';
 
 export default class EntityManager {
   private _pearl: PearlInstance;
 
-  private _entities: Set<GameObject> = new Set();
+  private _entities: Set<Entity> = new Set();
 
   constructor(pearl: PearlInstance) {
     this._pearl = pearl;
@@ -26,21 +26,21 @@ export default class EntityManager {
     }
   }
 
-  all(...tags: string[]): GameObject[] {
+  all(...tags: string[]): Entity[] {
     // TODO: THIS IS KINDA HACKY LOL Prevent rendering or use of objects that have not been
     // instantiated yet
-    const all = [...this._entities.values()].filter((obj) => {
-      return obj.state === 'initialized';
+    const all = [...this._entities.values()].filter((entity) => {
+      return entity.state === 'initialized';
     });
 
     if (tags.length) {
-      return all.filter((obj) => tags.some((tag) => obj.hasTag(tag)));
+      return all.filter((entity) => tags.some((tag) => entity.hasTag(tag)));
     } else {
       return all;
     }
   }
 
-  add(entity: GameObject): GameObject {
+  add(entity: Entity): Entity {
     entity.pearl = this._pearl;
     entity.create();
 
@@ -49,7 +49,7 @@ export default class EntityManager {
     return entity;
   }
 
-  destroy(entity: GameObject) {
+  destroy(entity: Entity) {
     entity.onDestroy();
     this._entities.delete(entity);
   }

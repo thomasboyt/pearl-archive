@@ -33,7 +33,7 @@ export default class BoxCollider extends ShapeCollider {
       height: settings.height,
     });
 
-    this.gameObject.registerCollider(this);
+    this.entity.registerCollider(this);
   }
 
   getCollisionShape(): PolygonShape {

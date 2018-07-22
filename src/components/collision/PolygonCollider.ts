@@ -20,7 +20,7 @@ export default class PolygonCollider extends ShapeCollider {
       points: settings.points,
     });
 
-    this.gameObject.registerCollider(this);
+    this.entity.registerCollider(this);
   }
 
   getCollisionShape(): PolygonShape {

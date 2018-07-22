@@ -79,10 +79,7 @@ export default class Physical extends Component<PhysicalSettings> {
   }
 
   private getParentPhys(): Physical | null {
-    return (
-      this.gameObject.parent &&
-      this.gameObject.parent.maybeGetComponent(Physical)
-    );
+    return this.entity.parent && this.entity.parent.maybeGetComponent(Physical);
   }
 
   create(settings: PhysicalSettings = {}) {

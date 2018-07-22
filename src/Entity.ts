@@ -8,36 +8,36 @@ import CollisionInformation from './components/collision/CollisionInformation';
 
 export interface CreateOpts {
   /**
-   * The name of this GameObject, used to for displaying in debug tools.
+   * The name of this Entity, used to for displaying in debug tools.
    */
   name: string;
 
   /**
-   * The components attached to this GameObject
+   * The components attached to this Entity
    */
   components: Component<any>[];
 
   /**
-   * The z-layer that this GameObject's components should render at. Defaults to 0, except for the
-   * root GameObject, which defaults to -1.
+   * The z-layer that this Entity's components should render at. Defaults to 0,
+   * except for the root Entity, which defaults to -1.
    */
   zIndex?: number;
 
   /**
-   * Tags attached to this GameObject (see hasTag())
+   * Tags attached to this Entity (see hasTag())
    */
   tags?: string[];
 }
 
-export type GameObjectState = 'new' | 'created' | 'initialized' | 'destroyed';
+export type EntityState = 'new' | 'created' | 'initialized' | 'destroyed';
 
 /**
- * A GameObject is an entity in the world that holds a collection of components.
+ * A Entity is an entity in the world that holds a collection of components.
  *
- * It is instantiated directly, but is not registered in the world until passed to
- * pearl.entities.add() or gameObject.addChild().
+ * It is instantiated directly, but is not registered in the world until passed
+ * to pearl.entities.add() or entity.addChild().
  */
-export default class GameObject {
+export default class Entity {
   pearl: PearlInstance;
 
   zIndex: number = 0;
@@ -50,7 +50,7 @@ export default class GameObject {
   // TODO: maybe make this frozen to the outside world
   components: Component<any>[] = [];
 
-  private _state: GameObjectState = 'new';
+  private _state: EntityState = 'new';
   get state() {
     return this._state;
   }
@@ -77,7 +77,7 @@ export default class GameObject {
         'cannot add components to an entity that has already been added to the game world'
       );
     }
-    component.gameObject = this;
+    component.entity = this;
     this.components.push(component);
   }
 
@@ -144,37 +144,37 @@ export default class GameObject {
 
   /* Object tree system */
 
-  private _parent: GameObject | null = null; // top-level game object doesn't have a parent
-  private _children: Set<GameObject> = new Set();
+  private _parent: Entity | null = null; // top-level game object doesn't have a parent
+  private _children: Set<Entity> = new Set();
 
   /**
-   * This GameObject's child GameObjects.
+   * This Entity's child entities.
    *
    * This Set should not be mutated (use `addChild` instead)!
    */
-  get children(): Set<GameObject> {
+  get children(): Set<Entity> {
     return this._children;
   }
 
   /**
-   * This GameObject's parent GameObject, or null if it is a top-level object.
+   * This Entity's parent Entity, or null if it is a top-level object.
    */
-  get parent(): GameObject | null {
+  get parent(): Entity | null {
     return this._parent;
   }
 
-  private setParent(parent: GameObject) {
+  private setParent(parent: Entity) {
     this._parent = parent;
   }
 
   /**
-   * Instantiates a passed GameObject and adds it as a child object to this GameObject.
+   * Instantiates a passed Entity and adds it as a child object to this Entity.
    *
-   * Returns the GameObject for convenience.
+   * Returns the Entity for convenience.
    *
    * @deprecated
    */
-  addChild(child: GameObject): GameObject {
+  addChild(child: Entity): Entity {
     child.setParent(this);
     this._children.add(child);
     this.pearl.entities.add(child);
@@ -184,12 +184,12 @@ export default class GameObject {
   /**
    * Adds an existing child object to this object's children, and update the parent of the child.
    */
-  appendChild(child: GameObject) {
+  appendChild(child: Entity) {
     child.setParent(this);
     this._children.add(child);
   }
 
-  private removeChild(child: GameObject) {
+  private removeChild(child: Entity) {
     this._children.delete(child);
   }
 

@@ -26,7 +26,7 @@ First off, let's just create a game world that contains the player. `index.ts` a
 import {
   Component,
   createPearl,
-  GameObject,
+  Entity,
   Physical,
   BoxCollider,
   BoxRenderer,
@@ -35,7 +35,7 @@ import {
 class Game extends Component<null> {
   init() {
     this.pearl.entities.add(
-      new GameObject({
+      new Entity({
         name: 'player',
         components: [
           new Physical({
@@ -67,7 +67,7 @@ createPearl({
 });
 ```
 
-Start by looking at the bottom of the file: we're creating a new Pearl instance using `createPearl`. In addition to setting the canvas to use, and its width and height, we define a _root component_. This component is instantiated when the game starts, and is generally used as an "entry point" into the game. It's attached to a root entity, which can be accessed at `this.pearl.obj`.
+Start by looking at the bottom of the file: we're creating a new Pearl instance using `createPearl`. In addition to setting the canvas to use, and its width and height, we define a _root component_. This component is instantiated when the game starts, and is generally used as an "entry point" into the game. It's attached to a root entity, which can be accessed at `this.pearl.root`.
 
 When the game component is initialized, we create a new entity, the player. The player entity is composed of a `Physical` component, giving it a position, a `BoxCollider` component, which creates a rectangular collider, and a `BoxRenderer` component, which renders the box defined by the `BoxCollider`.
 
@@ -99,7 +99,7 @@ import Player from './components/Player';
 class Game extends Component<null> {
   init() {
     this.pearl.entities.add(
-      new GameObject({
+      new Entity({
         name: 'player',
         components: [
           // snip previously shown components...
@@ -165,7 +165,7 @@ class Game extends Component<null> {
     // ... snip player creation code ...
 
     this.pearl.entities.add(
-      new GameObject({
+      new Entity({
         name: 'enemy',
         tags: ['enemy'],
 
@@ -192,7 +192,7 @@ class Game extends Component<null> {
 }
 ```
 
-This code should look familar, with only a few values changed from the player creation. One notable change is the addition of `tags` - these are strings that can be used to identify _types of entities_. In a traditional OOP game, you might use `instanceof` to determine what kind of object you're looking at - say, `entity instanceof Enemy` - but since here, all entities are merely instances of `GameObject`, we use `tags` to distinguish them. You'll see this in use in the next section.
+This code should look familar, with only a few values changed from the player creation. One notable change is the addition of `tags` - these are strings that can be used to identify _types of entities_. In a traditional OOP game, you might use `instanceof` to determine what kind of object you're looking at - say, `entity instanceof Enemy` - but since here, all entities are merely instances of `Entity`, we use `tags` to distinguish them. You'll see this in use in the next section.
 
 If you refresh, you'll see a big red box at the bottom of the screen, our new enemy. Currently, we can run right up to it - or through it - and laugh at it, since it currently has no way to fight back. Let's make it so that if you run into the enemy without a weapon, the enemy will, as expected, kill you.
 
@@ -251,8 +251,8 @@ A couple new APIs show up here. First off, we need to find the enemy entity. The
 ```typescript
 class Game extends Component<null> {
   init() {
-    const player = this.pearl.entities.add(new GameObject(/* ... */));
-    const enemy = this.pearl.entities.add(new GameObject(/* ... */));
+    const player = this.pearl.entities.add(new Entity(/* ... */));
+    const enemy = this.pearl.entities.add(new Entity(/* ... */));
     player.enemy = enemy;
   }
 }
@@ -289,16 +289,16 @@ To determine whether to render our game over text, we need to check to see if th
 
 ```typescript
 class Game extends Component<null> {
-  playerObj: GameObject;
+  playerEntity: Entity;
 
   init() {
-    this.playerObj = this.pearl.entities.add(new GameObject(/* ... */));
+    this.playerEntity = this.pearl.entities.add(new Entity(/* ... */));
 
     /* ... */
   }
 
   render(ctx: CanvasRenderingContext2D) {
-    if (!this.playerObj.getComponent(Player).isAlive) {
+    if (!this.playerEntity.getComponent(Player).isAlive) {
       ctx.textAlign = 'center';
       ctx.font = '16px monospace';
       ctx.fillStyle = 'black';
@@ -370,7 +370,7 @@ class Game extends Component<null> {
     );
 
     this.pearl.entities.add(
-      new GameObject({
+      new Entity({
         name: 'sword',
         tags: ['sword'],
         components: [
@@ -443,7 +443,7 @@ export default class Player extends Component<null> {
       ) {
         this.hasSword = true;
 
-        this.gameObject.appendChild(sword);
+        this.entity.appendChild(sword);
         sword.getComponent(Physical).localCenter = {
           x: -5,
           y: 15,
@@ -504,7 +504,7 @@ class Game extends Component<null> {
     ctx.font = '16px monospace';
     ctx.fillStyle = 'black';
 
-    if (!this.playerObj.getComponent(Player).isAlive) {
+    if (!this.playerEntity.getComponent(Player).isAlive) {
       ctx.fillText('game over :(', 150, 150);
     }
 

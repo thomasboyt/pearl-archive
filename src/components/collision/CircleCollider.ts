@@ -20,7 +20,7 @@ export default class CircleCollider extends ShapeCollider {
       radius: settings.radius,
     });
 
-    this.gameObject.registerCollider(this);
+    this.entity.registerCollider(this);
   }
 
   getCollisionShape(): CircleShape {

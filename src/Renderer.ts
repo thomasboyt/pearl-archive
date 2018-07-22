@@ -1,6 +1,6 @@
 import PearlInstance from './PearlInstance';
 import { Vector2 } from './types';
-import GameObject from './GameObject';
+import Entity from './Entity';
 
 function viewOffset(viewCenter: Vector2, viewSize: Vector2): Vector2 {
   return {
@@ -11,7 +11,7 @@ function viewOffset(viewCenter: Vector2, viewSize: Vector2): Vector2 {
 
 // sorts passed array by zindex
 // elements with a higher zindex are drawn on top of those with a lower zindex
-function zIndexSort(a: GameObject, b: GameObject): number {
+function zIndexSort(a: Entity, b: Entity): number {
   return (a.zIndex || 0) < (b.zIndex || 0) ? -1 : 1;
 }
 

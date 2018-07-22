@@ -21,8 +21,8 @@ export default class PolygonRenderer extends Component<Options> {
   render(ctx: CanvasRenderingContext2D) {
     const phys = this.getComponent(Physical);
     const poly =
-      this.gameObject.maybeGetComponent(PolygonCollider) ||
-      this.gameObject.maybeGetComponent(BoxCollider);
+      this.entity.maybeGetComponent(PolygonCollider) ||
+      this.entity.maybeGetComponent(BoxCollider);
 
     if (!poly) {
       throw new Error(

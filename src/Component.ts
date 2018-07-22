@@ -1,4 +1,4 @@
-import GameObject from './GameObject';
+import Entity from './Entity';
 import PearlInstance from './PearlInstance';
 import { Yieldable } from '@tboyt/coroutine-manager';
 import CollisionInformation from './components/collision/CollisionInformation';
@@ -12,9 +12,16 @@ abstract class Component<Settings> {
   initialSettings?: Settings;
 
   /**
-   * The gameObject that this component is attached to.
+   * The entity that this component is attached to.
    */
-  gameObject: GameObject;
+  entity: Entity;
+
+  /**
+   * @deprecated
+   */
+  get gameObject() {
+    return this.entity;
+  }
 
   /**
    * Whether this component's render() should be skipped.
@@ -74,14 +81,14 @@ abstract class Component<Settings> {
   }
 
   /*
-   * Convenience stuff that maps back to gameObject
+   * Convenience stuff that maps back to entity
    */
 
   /**
    * Return the current Pearl instance.
    */
   get pearl(): PearlInstance {
-    return this.gameObject.pearl;
+    return this.entity.pearl;
   }
 
   /**
@@ -90,17 +97,17 @@ abstract class Component<Settings> {
   getComponent<T extends Component<any>>(componentType: {
     new (...args: any[]): T;
   }): T {
-    return this.gameObject.getComponent(componentType);
+    return this.entity.getComponent(componentType);
   }
 
   runCoroutine(
     generatorFn: () => IterableIterator<Yieldable>
   ): IterableIterator<undefined> {
-    return this.gameObject.runCoroutine(generatorFn.bind(this));
+    return this.entity.runCoroutine(generatorFn.bind(this));
   }
 
   cancelCoroutine(coroutine: IterableIterator<undefined>) {
-    this.gameObject.cancelCoroutine(coroutine);
+    this.entity.cancelCoroutine(coroutine);
   }
 }
 

@@ -45,9 +45,7 @@ export default class AnimationManager extends Component<Options> {
 
     if (!cfg) {
       throw new Error(
-        `Animation state ${state} does not exist for entity ${
-          this.gameObject.name
-        }`
+        `Animation state ${state} does not exist for entity ${this.entity.name}`
       );
     }
 

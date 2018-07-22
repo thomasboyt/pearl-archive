@@ -1,5 +1,3 @@
-import GameObject from './GameObject';
-
 type Resolve = (value?: any) => void;
 
 export default class AsyncManager {

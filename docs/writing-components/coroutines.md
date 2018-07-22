@@ -27,7 +27,7 @@ class TimedMessage extends Pearl.Component<null> {
 
 Unlike traditional async/await methods or simple promise chaining, coroutine execution is tied into the game's run loop.
 
-Coroutines started using `runCoroutine` inside a component are stopped when that component's GameObject is destroyed. Internally, this works by simply discarding the coroutine. However, any asynchronous operations spawned by the coroutine will still finish, as JavaScript promises currently can't be canceled. Take the following example:
+Coroutines started using `runCoroutine` inside a component are stopped when that component's Entity is destroyed. Internally, this works by simply discarding the coroutine. However, any asynchronous operations spawned by the coroutine will still finish, as JavaScript promises currently can't be canceled. Take the following example:
 
 ```typescript
 import {getHttp} from 'some-http-library';
@@ -37,7 +37,7 @@ class LoadMessage extends Pearl.Component<null> {
 
   init() {
     this.runCoroutine(this.getAsync);
-    this.runCoroutine(this.destroyObject);
+    this.runCoroutine(this.cancelAsync);
   }
 
   *getAsync() {
@@ -48,7 +48,7 @@ class LoadMessage extends Pearl.Component<null> {
 
   *cancelAsync() {
     yield this.pearl.async.waitMs(50);
-    this.pearl.entities.destroy(this.gameObject);
+    this.pearl.entities.destroy(this.entity);
   }
 
   render(ctx: CanvasRenderingContext2D) {
@@ -57,5 +57,5 @@ class LoadMessage extends Pearl.Component<null> {
 }
 ```
 
-Here, the GameObject is destroyed before `getHttp` returns its response and sets the message. When this happens, the `getAsync` coroutine is discarded and never resumed. However, `getHttp()` _itself isn't canceled_ and will complete execution, with its result simply being discarded.
+Here, the Entity is destroyed before `getHttp` returns its response and sets the message. When this happens, the `getAsync` coroutine is discarded and never resumed. However, `getHttp()` _itself isn't canceled_ and will complete execution, with its result simply being discarded.
 

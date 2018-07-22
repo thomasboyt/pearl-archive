@@ -32,7 +32,7 @@ The distinction between `create` and `init` specifically can be confusing, so it
 Creating an entity constructs instances of your components, but does nothing else:
 
 ```typescript
-const obj = new GameObject(components: [new MyComponent()])
+const entity = new Entity(components: [new MyComponent()])
 ```
 
 At this point, no hooks on components are called, and the object hasn't been added to the game world.
@@ -40,7 +40,7 @@ At this point, no hooks on components are called, and the object hasn't been add
 When an entity is added:
 
 ```typescript
-this.pearl.entities.add(obj);
+this.pearl.entities.add(entity);
 ```
 
 The entity is moved to the `created` state, and the `create()` hook on components is called. The create hook _can_ access sibling components at this point, but it depends on the order they were added in the components array.

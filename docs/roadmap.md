@@ -3,7 +3,6 @@
 ## Planned for 0.1.0
 
 * Simplify component creation using one of the strategies detailed below (see below)
-* Rename `GameObject` to `Entity`. `GameObject` is just some stolen Unity vocab and I use the term "entity" in the docs. This should be relatively easy to do across the board since it's a very literal `s/GameObject/Entity`.
 * Tiled platformer example! Probably will port over Blorp, probably with shinier new sprites from a free asset pack.
 
 ### Beyond that, probably
@@ -137,7 +136,7 @@ class MyComponent extends Component {
 }
 
 // errors out because a is not passed
-this.pearl.entities.add(new GameObject({
+this.pearl.entities.add(new Entity({
   components: [new MyComponent()],
 });
 ```
@@ -178,7 +177,6 @@ This is an unsorted list of things I've been thinking about.
 * How are "game controller" level components handled?
   * Singleton example in Unity: [https://unity3d.com/learn/tutorials/projects/2d-roguelike-tutorial/writing-game-manager](https://unity3d.com/learn/tutorials/projects/2d-roguelike-tutorial/writing-game-manager)
   * Useful SA discussion on Unity singletons starts here: [http://forums.somethingawful.com/showthread.php?threadid=2692947&userid=0&perpage=40&pagenumber=444\#post462272736](http://forums.somethingawful.com/showthread.php?threadid=2692947&userid=0&perpage=40&pagenumber=444#post462272736)
-  * Make `game` object a `GameObject`: `this.obj.game.getComponent(GameManager)`
 * Figure out additional hooks for components
   * For example, collision needs to be broken up into "detection" and "resolution" phases, so that e.g. an enemy that turns around when it hits a block can be coded as two separate components
   * `FixedUpdate`-like hook? Does this even make sense in a single-threaded application? Seems suuuper difficult to time and schedule correctly.

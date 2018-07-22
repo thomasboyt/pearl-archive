@@ -1,4 +1,4 @@
-import { Component, createPearl, GameObject, Physical } from '../../src';
+import { Component, createPearl, Entity, Physical } from '../../src';
 
 class HelloWorldText extends Component<null> {
   rotation = 0;
@@ -24,7 +24,7 @@ class HelloWorldText extends Component<null> {
 class Game extends Component<null> {
   init() {
     this.pearl.entities.add(
-      new GameObject({
+      new Entity({
         name: 'hello world text',
         components: [
           new Physical({

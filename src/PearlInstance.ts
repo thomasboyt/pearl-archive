@@ -8,7 +8,7 @@ import AssetManager, { AssetMap } from './AssetManager';
 import AudioManager from './AudioManager';
 
 import Component from './Component';
-import GameObject from './GameObject';
+import Entity from './Entity';
 
 /**
  * The current *instance* of Pearl, which can be referenced by child components
@@ -18,8 +18,8 @@ import GameObject from './GameObject';
  * frameworks, including utilities for adding/removing entities from the world,
  * input handling, and coroutine scheduling.
  *
- * In addition, it also holds a reference to the top-level GameObject at `obj`,
- * which can be used to quickly access root-level components.
+ * In addition, it also holds a reference to the top-level Entity  `root`, which
+ * can be used to quickly access root-level components.
  */
 export default class PearlInstance {
   entities: EntityManager;
@@ -32,9 +32,16 @@ export default class PearlInstance {
   assets: AssetManager;
 
   /**
-   * The top-level GameObject, which holds components defined in rootComponents.
+   * The top-level Entity which holds components defined in rootComponents.
    */
-  obj: GameObject;
+  root: Entity;
+
+  /**
+   * @deprecated
+   */
+  get obj() {
+    return this.root;
+  }
 
   /**
    * Factor by which to speed up or slow down the in-engine time. This affects
@@ -76,13 +83,13 @@ export default class PearlInstance {
 
     this.async.startAt(this.ticker.time);
 
-    this.obj = new GameObject({
+    this.root = new Entity({
       name: 'Game',
       components: opts.rootComponents,
       zIndex: -1,
     });
 
-    this.entities.add(this.obj);
+    this.entities.add(this.root);
   }
 }
 
