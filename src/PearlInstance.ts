@@ -11,14 +11,15 @@ import Component from './Component';
 import GameObject from './GameObject';
 
 /**
- * The current *instance* of Pearl, which can be referenced by child components using `this.pearl`.
+ * The current *instance* of Pearl, which can be referenced by child components
+ * using `this.pearl`.
  *
- * This instance holds things that would often be singletons or globals in other frameworks,
- * including utilities for adding/removing entities from the world, input handling, and coroutine
- * scheduling.
+ * This instance holds things that would often be singletons or globals in other
+ * frameworks, including utilities for adding/removing entities from the world,
+ * input handling, and coroutine scheduling.
  *
- * In addition, it also holds a reference to the top-level GameObject at `obj`, which can be used
- * to quickly access root-level components.
+ * In addition, it also holds a reference to the top-level GameObject at `obj`,
+ * which can be used to quickly access root-level components.
  */
 export default class PearlInstance {
   entities: EntityManager;
@@ -36,8 +37,9 @@ export default class PearlInstance {
   obj: GameObject;
 
   /**
-   * Factor by which to speed up or slow down the in-engine time. This affects the delta-time passed
-   * to `update()` as well as the internal timer for `async.waitMs()`.
+   * Factor by which to speed up or slow down the in-engine time. This affects
+   * the delta-time passed to `update()` as well as the internal timer for
+   * `async.waitMs()`.
    */
   timeScale: number = 1;
 
@@ -48,7 +50,8 @@ export default class PearlInstance {
     this.runner = new Runner();
     this.async = new AsyncManager();
 
-    // XXX: AssetManager depends on audio having been instantiated, so it can get the audioCtx
+    // XXX: AssetManager depends on audio having been instantiated, so it can
+    // get the audioCtx
     this.audio = new AudioManager(this, { defaultGain: 0.5 });
     this.assets = new AssetManager(this);
   }
@@ -93,8 +96,8 @@ export interface CreatePearlOpts {
 }
 
 /**
- * Create a Pearl instance with the passed root components and canvas configuration, initializing
- * your game.
+ * Create a Pearl instance with the passed root components and canvas
+ * configuration, initializing your game.
  */
 export async function createPearl(
   opts: CreatePearlOpts
