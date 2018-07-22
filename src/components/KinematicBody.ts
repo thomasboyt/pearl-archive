@@ -51,12 +51,21 @@ export default class KinematicBody extends Component<null> {
     const xCollisions = this._moveAndCollide({ x: vec.x, y: 0 });
     const yCollisions = this._moveAndCollide({ x: 0, y: vec.y });
 
-    // remove duplicates
-    const collisions = uniqBy(
-      [...xCollisions, ...yCollisions],
+    // TODO:
+    //
+    // Currently this only fires a single onCollision() for a collision on both
+    // axes, but returns CollisionInfo for both collisions.
+    //
+    // This is normally okay behavior, but could run into trouble if you wanted
+    // to do something with the full overlap vector in the onCollision() hook.
+    // It might be possible to solve this by merging the overlap vectors if you
+    // are overlapping twice with the same entity?
+    const collisions = [...xCollisions, ...yCollisions];
+    const dedupedCollisions = uniqBy(
+      collisions,
       (collision) => collision.entity
     );
-    this.fireCollisions(collisions);
+    this.fireCollisions(dedupedCollisions);
     return collisions;
   }
 
