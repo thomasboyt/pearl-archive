@@ -6,6 +6,7 @@ import Collider from './collision/Collider';
 import { CollisionResponse } from './collision/utils';
 import ShapeCollider from './collision/ShapeCollider';
 import CollisionInformation from './collision/CollisionInformation';
+import { uniqBy } from 'lodash-es';
 
 export default class KinematicBody extends Component<null> {
   moveAndCollide(vec: Vector2): CollisionInformation[] {
@@ -47,8 +48,12 @@ export default class KinematicBody extends Component<null> {
   moveAndSlide(vec: Vector2): CollisionInformation[] {
     const xCollisions = this._moveAndCollide({ x: vec.x, y: 0 });
     const yCollisions = this._moveAndCollide({ x: 0, y: vec.y });
+
     // remove duplicates
-    const collisions = [...new Set([...xCollisions, ...yCollisions])];
+    const collisions = uniqBy(
+      [...xCollisions, ...yCollisions],
+      (collision) => collision.gameObject
+    );
     this.fireCollisions(collisions);
     return collisions;
   }

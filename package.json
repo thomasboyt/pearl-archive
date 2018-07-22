@@ -32,9 +32,11 @@
   },
   "dependencies": {
     "@tboyt/coroutine-manager": "0.0.2",
+    "@types/lodash-es": "^4.17.0",
     "@types/sat": "0.0.29",
     "@types/uuid": "^3.4.3",
     "fast-equals": "^1.5.3",
+    "lodash-es": "^4.17.10",
     "micro-memoize": "^2.0.3",
     "sat": "^0.5.0",
     "uuid": "^3.2.1"
