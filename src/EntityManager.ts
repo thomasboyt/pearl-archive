@@ -27,8 +27,8 @@ export default class EntityManager {
   }
 
   all(...tags: string[]): Entity[] {
-    // TODO: THIS IS KINDA HACKY LOL Prevent rendering or use of objects that have not been
-    // instantiated yet
+    // TODO: THIS IS KINDA HACKY LOL Prevent rendering or use of objects that
+    // have not been instantiated yet
     const all = [...this._entities.values()].filter((entity) => {
       return entity.state === 'initialized';
     });

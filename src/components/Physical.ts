@@ -32,8 +32,9 @@ export default class Physical extends Component<PhysicalSettings> {
   }
 
   /**
-   * The center of the object, relative to its parent. If it does not have a parent, or its parent
-   * does not have a `Physical` component, this will be relative to the world.
+   * The center of the object, relative to its parent. If it does not have a
+   * parent, or its parent does not have a `Physical` component, this will be
+   * relative to the world.
    */
   get localCenter(): Vector2 {
     return this._localCenter;

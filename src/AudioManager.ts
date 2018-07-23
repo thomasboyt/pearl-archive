@@ -14,11 +14,16 @@ function getAudioContextClass(): typeof AudioContext {
 }
 
 /**
- * Provides a single location for playing audio assets loaded through `AudioManager`.
+ * Provides a single location for playing audio assets loaded through
+ * `AudioManager`.
  *
  * Example usage:
- *   // Will play the asset with the key of `explosion` in your assets configuration.
- *   audioManager.play('explosion');
+ *
+ * ```
+ * // Will play the asset with the key of `explosion` in your assets
+ * // configuration.
+ * audioManager.play('explosion');
+ * ```
  */
 export default class AudioManager {
   ctx: AudioContext;

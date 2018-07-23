@@ -47,7 +47,8 @@ export default class CircleShape extends CollisionShape {
 
     if (shape instanceof PolygonShape) {
       const otherPolygon = shape.getSATShape();
-      // don't bother rotating for undefined _or_ 0, since the default is always 0
+      // don't bother rotating for undefined _or_ 0, since the default is always
+      // 0
       if (otherPosition.angle) {
         otherPolygon.rotate(otherPosition.angle);
       }

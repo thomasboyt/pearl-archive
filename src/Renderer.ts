@@ -10,6 +10,7 @@ function viewOffset(viewCenter: Vector2, viewSize: Vector2): Vector2 {
 }
 
 // sorts passed array by zindex
+//
 // elements with a higher zindex are drawn on top of those with a lower zindex
 function zIndexSort(a: Entity, b: Entity): number {
   return (a.zIndex || 0) < (b.zIndex || 0) ? -1 : 1;
@@ -47,8 +48,11 @@ export default class Renderer {
   run(opts: RendererOpts) {
     const canvas = opts.canvas;
 
-    canvas.style.outline = 'none'; // stop browser outlining canvas when it has focus
-    canvas.style.cursor = 'default'; // keep pointer normal when hovering over canvas
+    // stop browser outlining canvas when it has focus
+    canvas.style.outline = 'none';
+
+    // keep pointer normal when hovering over canvas
+    canvas.style.cursor = 'default';
 
     this._ctx = canvas.getContext('2d')!;
     this._backgroundColor = opts.backgroundColor;
@@ -104,9 +108,9 @@ export default class Renderer {
   /**
    * Set the center point of the viewport.
    *
-   * This only translates the view by whole pixels to prevent rendering bugs that appear when
-   * translating a scene by a float. This translation takes into account the game's current scale
-   * factor.
+   * This only translates the view by whole pixels to prevent rendering bugs
+   * that appear when translating a scene by a float. This translation takes
+   * into account the game's current scale factor.
    */
   setViewCenter(pos: Vector2) {
     const roundedScaledPos = {

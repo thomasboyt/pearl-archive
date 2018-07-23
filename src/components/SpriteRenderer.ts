@@ -31,11 +31,11 @@ export default class SpriteRenderer extends Component<Settings> {
   private _maskTo: [number, number, number];
 
   /**
-   * Set a "mask" on the sprite, which simply replaces one color with another. Useful for, e.g.
-   * rendering the same player sprite in different colors.
+   * Set a "mask" on the sprite, which simply replaces one color with another.
+   * Useful for, e.g. rendering the same player sprite in different colors.
    *
-   * A sprite can currently only have one mask at a time, meaning only one color can be changed to
-   * one other color.
+   * A sprite can currently only have one mask at a time, meaning only one color
+   * can be changed to one other color.
    */
   mask(from: RGB, to: RGB) {
     this._masked = true;
@@ -53,8 +53,8 @@ export default class SpriteRenderer extends Component<Settings> {
   }
 
   /**
-   * Returns the current sprite rendered to a canvas, with its top left corner at [0, 0], without
-   * any scaling or totation applied.
+   * Returns the current sprite rendered to a canvas, with its top left corner
+   * at [0, 0], without any scaling or totation applied.
    */
   getCanvas(): HTMLCanvasElement {
     const sprite = this.sprite!;

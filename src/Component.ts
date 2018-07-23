@@ -4,9 +4,9 @@ import { Yieldable } from '@tboyt/coroutine-manager';
 import CollisionInformation from './components/collision/CollisionInformation';
 
 /**
- * A base class for components. The component's options interface should be passed as a type
- * argument when sublcassing, so that the options interface is correctly type-checked when this
- * component is instantiated.
+ * A base class for components. The component's options interface should be
+ * passed as a type argument when sublcassing, so that the options interface is
+ * correctly type-checked when this component is instantiated.
  */
 abstract class Component<Settings> {
   initialSettings?: Settings;
@@ -51,16 +51,17 @@ abstract class Component<Settings> {
   }
 
   /**
-   * Hook called on every frame, with the delta-time (in milliseconds) since the last frame.
+   * Hook called on every frame, with the delta-time (in milliseconds) since the
+   * last frame.
    */
   update(dt: number) {
     // no-op
   }
 
   /**
-   * Hook called to draw to the canvas on every frame. Any drawing operations in this function are
-   * wrapped with calls to ctx.save()/ctx.restore() to prevent inadvertantly relying on
-   * previously-set canvas state.
+   * Hook called to draw to the canvas on every frame. Any drawing operations in
+   * this function are wrapped with calls to ctx.save()/ctx.restore() to prevent
+   * inadvertantly relying on previously-set canvas state.
    */
   render(ctx: CanvasRenderingContext2D) {
     // no-op

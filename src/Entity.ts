@@ -113,8 +113,8 @@ export default class Entity {
       return null;
     }
 
-    // TODO: TypeScript doesn't know that c here is instanceof componentType, for some reason,
-    // so we unfortunately have to hard-cast here
+    // TODO: TypeScript doesn't know that c here is instanceof componentType,
+    // for some reason, so we unfortunately have to hard-cast here
     return c as T;
   }
 
@@ -130,21 +130,10 @@ export default class Entity {
     return c;
   }
 
-  // This is a re-implementation of Unity's sendMessage() kept around for posterity's sake, but
-  // if you look up "unity sendMessage" like 8 the first 10 results are saying "don't use this trash
-  // API," so I think I'm going to avoid ever uncommenting it.
-  //
-  // sendMessage(name: string, ...args: any[]) {
-  //   for (let component of this.components) {
-  //     if (typeof component[name] === 'function') {
-  //       component[name](...args);
-  //     }
-  //   }
-  // }
-
   /* Object tree system */
 
-  private _parent: Entity | null = null; // top-level game object doesn't have a parent
+  // top-level game object doesn't have a parent
+  private _parent: Entity | null = null;
   private _children: Set<Entity> = new Set();
 
   /**
@@ -182,7 +171,8 @@ export default class Entity {
   }
 
   /**
-   * Adds an existing child object to this object's children, and update the parent of the child.
+   * Adds an existing child object to this object's children, and update the
+   * parent of the child.
    */
   appendChild(child: Entity) {
     child.setParent(this);
