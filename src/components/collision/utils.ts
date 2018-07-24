@@ -8,13 +8,7 @@ export interface CollisionResponse {
   bInA: boolean;
 }
 
-export function responseFromSAT(
-  response: SAT.Response
-): CollisionResponse | undefined {
-  if (!(response.overlap > 0)) {
-    return undefined;
-  }
-
+export function responseFromSAT(response: SAT.Response): CollisionResponse {
   return {
     overlap: response.overlap,
     overlapVector: response.overlapV,

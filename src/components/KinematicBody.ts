@@ -28,7 +28,6 @@ export default class KinematicBody extends Component<null> {
 
     if (solidCollisions.length > 0) {
       for (let collision of solidCollisions) {
-        const collision = solidCollisions[0];
         const overlap = collision.response.overlapVector;
         phys.translate({ x: -overlap.x, y: -overlap.y });
       }
