@@ -1,7 +1,7 @@
 export default class Ticker {
   time: number;
 
-  private _nextTickFn: () => void;
+  private _requestId?: number;
   private _loopFn: (dt: number) => void;
 
   constructor(gameLoop: (dt: number) => void) {
@@ -17,16 +17,15 @@ export default class Ticker {
       const dt = now - this.time;
       this.time = now;
       this._loopFn(dt);
-      requestAnimationFrame(this._nextTickFn);
+      this._requestId = requestAnimationFrame(tick);
     };
 
-    this._nextTickFn = tick;
-    requestAnimationFrame(this._nextTickFn);
+    this._requestId = requestAnimationFrame(tick);
   }
 
   stop() {
-    this._nextTickFn = () => {
-      /* no-op */
-    };
+    if (this._requestId !== undefined) {
+      cancelAnimationFrame(this._requestId);
+    }
   }
 }
