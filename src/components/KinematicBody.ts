@@ -18,7 +18,6 @@ export default class KinematicBody extends Component<null> {
   private _moveAndCollide(vec: Vector2): CollisionInformation[] {
     const phys = this.getComponent(Physical);
 
-    const prevCenter = { ...phys.center };
     phys.translate(vec);
 
     const collisions = this.getCollisions();
@@ -28,9 +27,11 @@ export default class KinematicBody extends Component<null> {
     );
 
     if (solidCollisions.length > 0) {
-      const collision = solidCollisions[0];
-      const overlap = collision.response.overlapVector;
-      phys.translate({ x: -overlap.x, y: -overlap.y });
+      for (let collision of solidCollisions) {
+        const collision = solidCollisions[0];
+        const overlap = collision.response.overlapVector;
+        phys.translate({ x: -overlap.x, y: -overlap.y });
+      }
     }
 
     return collisions;
