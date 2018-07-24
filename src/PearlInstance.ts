@@ -81,7 +81,19 @@ export default class PearlInstance {
       this.inputter.update();
     });
 
-    this.async.startAt(this.ticker.time);
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        this.ticker.stop();
+      } else {
+        this.ticker.start();
+      }
+    };
+
+    document.addEventListener(
+      'visibilitychange',
+      handleVisibilityChange,
+      false
+    );
 
     this.root = new Entity({
       name: 'Game',
