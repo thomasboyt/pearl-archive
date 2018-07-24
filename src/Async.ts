@@ -1,7 +1,7 @@
 type Resolve = (value?: any) => void;
 
 export default class AsyncManager {
-  private _time: number;
+  private _time: number = 0;
   private _timers: Map<number, Resolve[]> = new Map();
 
   /**
@@ -20,10 +20,6 @@ export default class AsyncManager {
         this._timers.set(this._time + ms, [resolve]);
       }
     });
-  }
-
-  startAt(time: number) {
-    this._time = time;
   }
 
   update(dt: number) {
