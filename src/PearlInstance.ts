@@ -112,6 +112,7 @@ export interface CreatePearlOpts {
   height: number;
   backgroundColor?: string;
   assets?: AssetMap;
+  autoFocus?: boolean;
 }
 
 /**
@@ -125,5 +126,8 @@ export async function createPearl(
   await game.loadAssets(opts.assets || {});
   game.run(opts);
   (window as any).__pearl__ = game;
+  if (opts.autoFocus !== false) {
+    opts.canvas.focus();
+  }
   return game;
 }
