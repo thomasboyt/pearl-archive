@@ -6,7 +6,6 @@ import Collider from './collision/Collider';
 import { CollisionResponse } from './collision/utils';
 import ShapeCollider from './collision/ShapeCollider';
 import CollisionInformation from './collision/CollisionInformation';
-import { uniqBy } from 'lodash-es';
 
 export default class KinematicBody extends Component<null> {
   moveAndCollide(vec: Vector2): CollisionInformation[] {
@@ -61,10 +60,23 @@ export default class KinematicBody extends Component<null> {
     // It might be possible to solve this by merging the overlap vectors if you
     // are overlapping twice with the same entity?
     const collisions = [...xCollisions, ...yCollisions];
-    const dedupedCollisions = uniqBy(
-      collisions,
-      (collision) => collision.entity
-    );
+    const filterUnique = (collisions: CollisionInformation[]) => {
+      const seenEntities = new Set();
+      const res = [];
+
+      for (let collision of collisions) {
+        if (seenEntities.has(collision.entity)) {
+          continue;
+        } else {
+          res.push(collision);
+          seenEntities.add(collision.entity);
+        }
+      }
+
+      return res;
+    };
+
+    const dedupedCollisions = filterUnique(collisions);
     this.fireCollisions(dedupedCollisions);
     return collisions;
   }
