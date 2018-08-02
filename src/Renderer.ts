@@ -33,10 +33,24 @@ export default class Renderer {
   private _scaleFactor: number = 1;
   private _pixelRatio: number = 1;
 
+  /**
+   * Return the _logical_ scale factor of the canvas. Multiplying this by
+   * `this.getViewSize()` would return the logical number of pixels wide and
+   * tall the canvas is.
+   *
+   * "Logical" means, unlike `this.totalScaleFactor`, the pixel ratio of high
+   * DPI screens isn't taken into account, similar to how CSS pixels and DOM
+   * positions are handled.
+   */
   get logicalScaleFactor() {
     return this._scaleFactor / this._pixelRatio;
   }
 
+  /**
+   * Return the _physical_ scale factor of the canvas. Multiplying this by
+   * `this.getViewSize()` would return the physical number of pixels wide and
+   * tall the canvas is.
+   */
   get totalScaleFactor() {
     return this._scaleFactor;
   }
@@ -97,10 +111,20 @@ export default class Renderer {
     return this._ctx;
   }
 
+  /**
+   * Return the view size of the game, usually the same as the width and height
+   * set when the Pearl instance is created.
+   *
+   * To get the actual size of the canvas, you can multiply this by
+   * `renderer.logicalScaleFactor` or `renderer.totalScaleFactor`.
+   */
   getViewSize(): Vector2 {
     return this._viewSize;
   }
 
+  /**
+   * Return the current center of the viewport in the game world.
+   */
   getViewCenter(): Vector2 {
     return this._viewCenter;
   }
