@@ -16,7 +16,7 @@ export default class Ticker {
       const now = Date.now();
       const dt = now - this.time;
       this.time = now;
-      this._loopFn(dt);
+      this.step(dt);
       this._requestId = requestAnimationFrame(tick);
     };
 
@@ -27,5 +27,14 @@ export default class Ticker {
     if (this._requestId !== undefined) {
       cancelAnimationFrame(this._requestId);
     }
+  }
+
+  /**
+   * Step forward the game loop one tick with a certain delta time. This is
+   * public because tests and dev tooling both use this to step arbitrary
+   * amounts of time.
+   */
+  step(dt: number) {
+    this._loopFn(dt);
   }
 }

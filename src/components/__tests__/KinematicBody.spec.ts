@@ -54,7 +54,7 @@ describe('KinematicBody', () => {
       pearl.entities.add(lShape);
 
       // tick forward to add both entities to the world
-      pearl.entities.update(0);
+      pearl.ticker.step(0);
 
       const collisions = body.getComponent(KinematicBody).moveAndSlide({
         x: 5,
