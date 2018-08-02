@@ -85,6 +85,9 @@ export default class PearlInstance {
       if (document.hidden) {
         this.ticker.stop();
       } else {
+        // the seemingly-redundant stop() here fixes a bug around tabbing out
+        // before the first tick has happened
+        this.ticker.stop();
         this.ticker.start();
       }
     };
