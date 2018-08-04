@@ -1,6 +1,6 @@
 import Entity from './Entity';
 import PearlInstance from './PearlInstance';
-import { Yieldable } from '@tboyt/coroutine-manager';
+import { Runnable } from '@tboyt/coroutine-manager';
 import CollisionInformation from './components/collision/CollisionInformation';
 
 /**
@@ -101,10 +101,11 @@ abstract class Component<Settings> {
     return this.entity.getComponent(componentType);
   }
 
-  runCoroutine(
-    generatorFn: () => IterableIterator<Yieldable>
-  ): IterableIterator<undefined> {
-    return this.entity.runCoroutine(generatorFn.bind(this));
+  runCoroutine(generator: Runnable): IterableIterator<undefined> {
+    if (typeof generator === 'function') {
+      generator = generator.bind(this);
+    }
+    return this.entity.runCoroutine(generator);
   }
 
   cancelCoroutine(coroutine: IterableIterator<undefined>) {

@@ -2,7 +2,7 @@ import * as uuidv4 from 'uuid/v4';
 
 import Component from './Component';
 import PearlInstance from './PearlInstance';
-import CoroutineManager, { Yieldable } from '@tboyt/coroutine-manager';
+import CoroutineManager, { Runnable } from '@tboyt/coroutine-manager';
 import Collider from './components/collision/Collider';
 import CollisionInformation from './components/collision/CollisionInformation';
 
@@ -245,10 +245,8 @@ export default class Entity {
 
   private coroutineManager = new CoroutineManager();
 
-  runCoroutine(
-    generatorFn: () => IterableIterator<Yieldable>
-  ): IterableIterator<undefined> {
-    return this.coroutineManager.run(generatorFn);
+  runCoroutine(generator: Runnable): IterableIterator<undefined> {
+    return this.coroutineManager.run(generator);
   }
 
   cancelCoroutine(coroutine: IterableIterator<undefined>) {
